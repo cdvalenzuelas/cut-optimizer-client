@@ -4,8 +4,24 @@ const { HotModuleReplacementPlugin } = require('webpack')
 const path = require('path')
 const { env } = require('../src/config')
 
-const plugins = [
+let plugins = [
   new HtmlWebpackPlugin({
-    template: path.join(__dirname, '..', '..', 'src', 'index.html')
+    template: path.join(__dirname, '..', 'src', 'index.html')
   })
 ]
+
+if (env === 'development'){
+  plugins = [
+    ...plugins,
+    new HotModuleReplacementPlugin()
+  ]
+} else {
+  plugins = [
+    ...plugins,
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].css'
+    })
+  ]
+}
+
+module.exports = plugins
