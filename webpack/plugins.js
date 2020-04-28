@@ -1,6 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { HotModuleReplacementPlugin } = require('webpack')
+const { HotModuleReplacementPlugin, DllReferencePlugin } = require('webpack')
 const path = require('path')
 const { env } = require('../src/config')
 
@@ -20,6 +20,9 @@ if (env === 'development'){
     ...plugins,
     new MiniCssExtractPlugin({
       filename: 'css/[name].css'
+    }),
+    new DllReferencePlugin({
+      manifest: require('../dist/js/modules-manifest.json')
     })
   ]
 }

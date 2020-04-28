@@ -6,9 +6,7 @@ let styleLoader
 if (env === 'development'){
   styleLoader = 'style-loader'
 } else {
-  styleLoader = new MiniCssExtractPlugin({
-    filename: 'css/[name].css'
-  })
+  styleLoader = MiniCssExtractPlugin.loader
 }
 
 module.exports = styleLoader
