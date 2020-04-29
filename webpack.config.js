@@ -1,8 +1,6 @@
 // Depencdencies
-const { env } = require('./src/config')
+const { env } = require('./config')
 const path = require('path')
-
-console.log(env)
 
 // Keys
 const plugins = require('./webpack/plugins')
@@ -12,10 +10,13 @@ const optimization = require('./webpack/optimization')
 
 module.exports = {
   mode: env,
-  entry: path.join(__dirname, 'src', 'index.js'),
+  entry: {
+    app: path.join(__dirname, 'src', 'index.js')
+  }   
+  ,
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'js/bundle.js',
+    filename: 'js/app.[hash].js',    
     publicPath: './'
   },
   module: webpackModule,

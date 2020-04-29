@@ -1,9 +1,11 @@
 // Depencdencies
-const { env } = require('./src/config')
+const { env } = require('./config')
 const path = require('path')
 const { DllPlugin } = require('webpack')
+const optimization = require('./webpack/optimization')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
-console.log(env)
+delete optimization.splitChunks
 
 module.exports = {
   mode: env,
@@ -12,14 +14,18 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'js/[name].js',
+    filename: 'js/[name].[hash].dll.js',
     library: '[name]',
     publicPath: './'
   },  
+  optimization,
   plugins: [
     new DllPlugin({
       name: '[name]',
       path: path.join(__dirname, 'dist', 'js', '[name]-manifest.json')
+    }),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ['**/modules.*']
     })
   ]  
 }

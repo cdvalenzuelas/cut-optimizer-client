@@ -1,5 +1,5 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { env } = require('../../src/config')
+const { env } = require('../../config')
 
 let styleLoader
 
@@ -11,4 +11,3 @@ if (env === 'development'){
 
 module.exports = styleLoader
 
-console.log(styleLoader)

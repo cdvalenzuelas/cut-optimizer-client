@@ -1,4 +1,4 @@
-const { env, port } = require('../src/config')
+const { env, port } = require('../config')
 const path = require('path')
 
 let devServer
