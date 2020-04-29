@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "clean": "find ./dist",
+  "scripts": {    
     "client:dll": "cross-env NODE_ENV=production webpack --config webpack.dll.config.js",
     "client:build": "cross-env NODE_ENV=production webpack",
     "client:dev": "webpack-dev-server"
