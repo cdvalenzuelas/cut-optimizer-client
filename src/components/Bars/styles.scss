@@ -1,0 +1,43 @@
+.bars {
+  background-color: white;
+  border-radius: 15px;
+  width: 600px;
+  height: a;
+  margin: 0 auto;
+  padding: 20px;
+  margin-bottom: 15px;
+  h2 {
+    text-align: left;
+    margin-bottom: 10px;
+    background-color: orange;
+  }
+}
+
+.dataContainer {
+  height: 30px; 
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  &__bar {
+    height: 100%;
+    background-color: gray;
+    width: 90%;
+    border-radius: 5px;
+  }
+  &__data {
+    font-size: 12px;    
+    width: auto;
+    span {
+      display: block;
+      text-align: right;
+    }
+  }  
+}
+
+.loadBar {
+  height: 100%;
+  background-color: red;
+  border-radius: inherit;
+}
+
+

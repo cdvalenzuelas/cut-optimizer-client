@@ -1,5 +1,5 @@
 // Depencdencies
-const { env } = require('./config')
+const { env, port } = require('./config')
 const path = require('path')
 
 // Keys
@@ -11,16 +11,16 @@ const optimization = require('./webpack/optimization')
 module.exports = {
   mode: env,
   entry: {
-    app: path.join(__dirname, 'src', 'index.js')
+    app: path.resolve(__dirname, './src/index.js')
   }   
   ,
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'js/app.[hash].js',    
-    publicPath: './'
+    path: path.join(__dirname, 'build'),
+    filename: env === 'development' ? 'js/[name].js' : 'js/[name].[hash].js',    
+    publicPath: env === 'development' ? '/' : './'
   },
-  module: webpackModule,
+  module: webpackModule,  
+  optimization,
   plugins,
-  devServer,
-  optimization
+  devServer  
 }

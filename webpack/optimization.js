@@ -1,4 +1,5 @@
 const TerserWebpackPlugin = require('terser-webpack-plugin')
+const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 
 const optimization = {
   splitChunks: {
@@ -7,7 +8,8 @@ const optimization = {
     name: 'commons'
   },
   minimizer: [
-    new TerserWebpackPlugin()   
+    new TerserWebpackPlugin(),
+    new OptimizeCssAssetsWebpackPlugin()  
   ]
 }
 

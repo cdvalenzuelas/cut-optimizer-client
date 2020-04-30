@@ -1,13 +1,45 @@
 // Dependencies
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import useFetch from '../../hooks/useFetch'
+import { options } from './fakeData'
 
-import forest from './forest.png' 
+// Components
+import Bars from '../Bars'
 
-const App = () => {
+// Styles
+import './styles.scss'
+
+const App = () => {    
+  const [display, setDisplay] = useState([])  
+  const info = useFetch('http://localhost:5000', options)  
+
+  const displayArray = info.data ? new Array(info.data.length).fill({display: 'none'}) : [{}]
+  displayArray[0] = {}
+
+  const handleClick = e => {    
+    if( JSON.stringify(display[Number(e.target.value)]) !== '{}'){
+      const displayArray2 = new Array(info.data.length).fill({display: 'none'})    
+      displayArray2[Number(e.target.value)]={}        
+      setDisplay(displayArray2)
+    }    
+  }
+
+  useEffect(()=>{
+    setDisplay(displayArray)
+  },[])  
+
+  console.log(display)
+  
   return (
     <>
-      <h1>Hola mundo desde react!!!</h1>
-      <img src={forest} alt="forest" />
+      <div className="buttonsContainer">
+        { info.data && info.data.map((item,index)=> 
+          <button key={index} value={`${index}`} onClick={handleClick}>{item.shape}</button>)
+        }
+      </div>      
+      <div>
+        { info.data && info.data.map((item, index) => <Bars item={item} key={index} display={display[index]}/> )}        
+      </div>   
     </>
   )
 }

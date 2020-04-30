@@ -2,8 +2,8 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import './styles/clara.css'
-import './styles/mocus.scss'
+
+import './styles/globals.scss'
 
 // Components
 import App from './components/App'

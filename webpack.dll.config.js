@@ -10,10 +10,10 @@ delete optimization.splitChunks
 module.exports = {
   mode: env,
   entry: {
-    modules: ['react', 'react-dom', 'redux', 'react-redux']
+    libs: ['react', 'react-dom', 'redux', 'react-redux']
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'build'),
     filename: 'js/[name].[hash].dll.js',
     library: '[name]',
     publicPath: './'
@@ -22,7 +22,7 @@ module.exports = {
   plugins: [
     new DllPlugin({
       name: '[name]',
-      path: path.join(__dirname, 'dist', 'js', '[name]-manifest.json')
+      path: path.join(__dirname, 'build', 'js', '[name]-manifest.json')
     }),
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ['**/modules.*']
