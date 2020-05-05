@@ -1,0 +1,28 @@
+.buttonsContainer {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0 auto;
+  margin-bottom: 15px;    
+  grid-area: buttons;    
+  button {
+    text-align: left;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--gray2);
+    height: 50px;
+    border: none;
+    color:white;
+    border-bottom: 2px solid var(--gray1);
+    outline: none;
+    &:hover {
+      background-color: rgba(#000000, 0.7);
+    }    
+    &:active {
+      background-color: rgba(#000000, 0.7);
+    }
+  }
+}
+

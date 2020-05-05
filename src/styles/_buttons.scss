@@ -1,0 +1,12 @@
+.button{
+  width: 200px;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  &--main {
+    @extend .button;
+    color: white;
+    background-color: var(--color1);
+  }
+}

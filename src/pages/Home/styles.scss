@@ -1,0 +1,5 @@
+.container {
+  display: grid;
+  grid-template: 1fr / 1fr 5fr;
+  grid-template-areas: "buttons bars";  
+}

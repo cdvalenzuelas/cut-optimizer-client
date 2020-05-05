@@ -1,0 +1,34 @@
+/*COLORS*/
+$color1: rgba(#36D44F, .70) ;
+$color2: #4776e6;
+$color3: #8e54e9;
+/*GRAY-SCALE*/
+$gray1: #c4c4c4;
+$gray2: #4d4d4d;
+/*GRADIENTS*/
+$gradient1: linear-gradient(90deg, #{$color2}, #{$color3});
+
+:root{
+  --color1: #{$color1};
+  --color2: #{$color2};
+  --color3: #{$color3};
+  --gray1: #{$gray1};
+  --gray2: #{$gray2};
+  --gradient1: #{$gradient1};  
+  font-size: 16px;  
+}
+
+*, ::after, ::before {
+  margin: 0;
+  padding: 0;
+  //outline: 1px solid salmon;
+  box-sizing: border-box;
+  font-family: Roboto, "San-serif";
+}
+
+body {
+  background-color: var(--gray2);
+  color: gray;
+  width: 100%;
+  height: 100%;   
+}
