@@ -1,12 +1,16 @@
 // Dependencies
 import React from 'react'
+import store from '../../redux/store'
+import { Provider } from 'react-redux'
 
 // Pages
-import Home from '../../pages/Home'
+import CutOptimizer from '../../pages/CutOptimizer'
 
 const App = () => {   
   return(
-    <Home />
+    <Provider store={store}>
+      <CutOptimizer />
+    </Provider>
   ) 
 }
 

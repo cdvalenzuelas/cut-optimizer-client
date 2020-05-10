@@ -1,19 +1,27 @@
+.inputBarContainer {
+  display: grid;
+  grid-template: 1fr 1fr 1fr / repeat(1fr);
+  grid-template-areas: 
+   "inputElement inputElement inputBars inputBars . . . . . . . ."
+   "inputElement inputElement inputBars inputBars . . . . . . . .";
+}
+
 .bars {
-  background-image: var(--gradient1);    
+  // background-image: var(--gradient1);    
   width: 100%;
-  height: 80%;  
+  height: 100%;  
   margin: 0 auto; 
   padding: 20px 0;   
-  display: none; 
+  display: initial; 
   grid-area: bars;    
   &__bar {
     margin: 0 auto 15px;       
     width: 80%;
     height: 100px;
     padding: 20px;
-    background-color: white;
-    box-shadow: 0 0 2px 1px #ddd;    
-    color: gray;
+    // background-color: white;
+    // box-shadow: 0 0 2px 1px #ddd;    
+    // color: gray;
     border-radius: 5px;
     h3 {
       margin-bottom: 10px;
@@ -29,7 +37,7 @@
   justify-content: space-between;   
   &__bar {
     height: 100%;
-    background-color: var(--gray1);
+    // background-color: var(--gray1);
     width: 90%;
     border-radius: 15px;
   }
@@ -45,13 +53,13 @@
 
 .loadBar {
   height: 100%;   
-  border: 2px solid var(--gray1);
-  background-color: var(--color1);
+  // border: 2px solid var(--gray1);
+  // background-color: var(--color1);
   border-radius: inherit;
 }
 
 .elements {
-  background-image: var(--gradient1);
+  // background-image: var(--gradient1);
   grid-area: bars;
   width: 100%;
   display: block;  

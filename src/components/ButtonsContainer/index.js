@@ -1,43 +1,39 @@
+// Dependencies
 import React from 'react'
 
+// Hooks
+import useButtonsHook from './useButtonsHook'
+
+// Styles
 import './styles.scss'
-
-const Output = ({ data, handleClick }) => { 
-  return(
-    <div className="buttonsContainer">
-      { data && data.map((item,index) => 
-        <button key={index} value={`${index}`} onClick={handleClick} name='optimizedShape' className=''>
-          {item.shape} {item.material}       
-        </button>)
-      }
-      <button className="button--main" name='edit' onClick={handleClick}>Edit</button>
-    </div>
-  )
-}
-
-const Input = ({ data, handleClick }) => {
-  return(
-    <div className="buttonsContainer">
-      {data.map((item, index) =>        
-        <button key={index} value={`${index}`} onClick={handleClick} name="shapeToOptimize">
-          {item.shape} {item.material}       
-        </button>
-      )}
-      <div>
-        <button className="button--main" name='new' onClick={handleClick}>New</button>
-        <button className="button--main" name='optimize' onClick={handleClick}>Optimize</button>
-      </div>
-    </div>
-  )  
-}
  
-const ButtonContainer = ({data, mode, handleClick}) => {  
-  if (mode === 'output'){
-    return <Output data={data} handleClick={handleClick}/>
-  } else {
-    return <Input data={data} handleClick={handleClick} />
-  }  
+const ButtonContainer = () => {  
+
+  const { handleChange, request, mode } = useButtonsHook()  
+
+  return(
+    <div className='buttonsContainer'>      
+      <div className='shapesButtons'>
+        {request.map((item, index) =>        
+          <button key={index} value={`${index}`} onClick={handleChange} name='shapeInfo'>
+            {index + 1}. {item.shape} {item.material}       
+          </button>
+        )}
+      </div>
+      {
+        mode === 'input' && 
+        <div className='actionsButtosn'>
+          <button className='button--main' name='newShape' onClick={handleChange}>New</button>
+          <button className='button--main' name='optimize' onClick={handleChange}>Optimize</button>
+        </div>
+      }
+      { mode === 'output' && 
+        <div className='actionsButtosn'>
+          <button className='button--main' name='edit' onClick={handleChange}>Edit</button>
+        </div>
+      }      
+    </div>    
+  )    
 }
 
 export default ButtonContainer
-

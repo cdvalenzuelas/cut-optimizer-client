@@ -1,5 +1,6 @@
 //Dependencies
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 // Components
 import Output from './Outpus'
@@ -8,12 +9,15 @@ import Input from './Input'
 // Styles
 import './styles.scss'
 
-const Bars = ({item, display, mode, handleClick, index}) => {  
-  if(mode === 'output'){
-    return <Output item={item} display={display} />
-  } else {
-    return <Input item={item} display={display} index={index} handleClick={handleClick}/>
-  }
+const Bars = () => {  
+  const mode = useSelector(state => state.cutOptimizer.mode) 
+
+  return(
+    <>
+      { mode === 'output' ? <Output /> : <Input  /> }
+    </>
+  )
 }
 
 export default Bars
+

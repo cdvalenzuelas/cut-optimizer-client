@@ -20,15 +20,15 @@ $gradient1: linear-gradient(90deg, #{$color2}, #{$color3});
 
 *, ::after, ::before {
   margin: 0;
-  padding: 0;
-  //outline: 1px solid salmon;
+  padding: 0;  
   box-sizing: border-box;
   font-family: Roboto, "San-serif";
+  outline: 1px solid gray;
 }
 
 body {
-  background-color: var(--gray2);
-  color: gray;
+  /*background-color: var(--gray2);*/
+  // color: gray;
   width: 100%;
   height: 100%;   
 }
