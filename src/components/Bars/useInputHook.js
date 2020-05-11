@@ -2,30 +2,45 @@
 import { useDispatch, useSelector } from 'react-redux'
 
 const useInputHook = () => {
-  const request = useSelector(state => state.cutOptimizer.request)
-  const totalshapes = useSelector(state => state.cutOptimizer.totalshapes)
+  const { request } = useSelector(state => state.cutOptimizer)  
   const dispatch = useDispatch()
-
-  const handleChange = e => {   
+  
+  const handleChange = e => {    
     const { name, value } = e.target    
-    let element 
-    if (name === 'deleteShape'){
-      dispatch({type: 'DELETE_SHAPE', payload: 0})      
-    } else if (name === 'addElement') {
-      dispatch({type: 'ADD_ELEMENT', payload: 0})
-    } else if (name === 'deleteElement'){
-      dispatch({type: 'DELETE_ELEMENT', payload: {shape: 0, element: 0}})
-    } else if (name === 'shape' || name === 'material' || name === 'defaultlengthBar') {
-      dispatch({type: 'MODIFY_SHAPE', payload: {shape: 0, element: 0, field: name, value}})
-    } else if (name.startsWith('elementName') || name.startsWith('elementQuantity') || name.startsWith('elementLength')){
-      const regex = /element(Name|Quantity|Length)(\d{1,})/
+    if (name.startsWith('deleteShape')){
+
+      const regex = /deleteShape(\d{1,})/
       const match = regex.exec(name)
-      element = Number(match[2]) 
-      dispatch({type: 'MODIFY_ELEMENT', payload: {shape: 0, element, field: match[1].toLowerCase(), value}})
+      dispatch({type: 'DELETE_SHAPE', payload: Number(match[1])}) 
+
+    } else if (name.startsWith('addElement')) {
+
+      const regex = /addElement(\d{1,})/
+      const match = regex.exec(name)
+      dispatch({type: 'ADD_ELEMENT', payload: Number(match[1])})
+
+    } else if (name.startsWith('deleteElement')){   
+
+      const regex = /deleteElement(\d{1,})-(\d{1,})/
+      const match = regex.exec(name)
+      dispatch({type: 'DELETE_ELEMENT', payload: {shape: Number(match[1]), element: Number(match[2])}})
+
+    } else if (name.startsWith('shape') || name.startsWith('material') || name.startsWith('defaultlengthBar')) {
+
+      const regex = /(shape|material|defaultlengthBar)(\d{1,})/
+      const match = regex.exec(name)
+      dispatch({type: 'MODIFY_SHAPE', payload: {shape: Number(match[2]), field : match[1], value}})
+
+    } else if (name.startsWith('elementName') || name.startsWith('elementQuantity') || name.startsWith('elementLength')){
+
+      const regex = /element(Name|Quantity|Length)(\d{1,})-(\d{1,})/
+      const match = regex.exec(name)        
+      dispatch({type: 'MODIFY_ELEMENT', payload: {shape: Number(match[2]), element: Number(match[3]), field: match[1].toLowerCase(), value}})
+
     }
   }
-
-  return {request, handleChange, totalshapes}
+  
+  return {request, handleChange}
 }
 
 export default useInputHook

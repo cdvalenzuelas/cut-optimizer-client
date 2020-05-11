@@ -10,63 +10,49 @@ const DEFAULT_SHAPE = {
 
 const INITIAL_STATE = {
   mode: 'input',
-  response: {},
+  response: [],  
   request: [Object.assign({}, DEFAULT_SHAPE)],
+  request2: '[]',
   totalShapes: 1,
   display: [{display:'initial'}]
 }
 
 const cutOptimizer = (state = INITIAL_STATE, { type, payload }) => {
+
+  state = JSON.stringify(state)
+  state = JSON.parse(state)
+
   switch (type) {
     case 'SET_MODE':
-      const NEW_STATE = state.mode === 'input'
-        ? Object.assign(state, {mode: 'output'})
-        : Object.assign(state, {mode: 'input'})
-      return NEW_STATE      
+      state.mode = state.mode === 'input' ? 'output' : 'input'     
+      return state     
     case 'SET_DISPLAY':
       return state      
-    case 'CREATE_NEW_SHAPE':      
-      const { request: request1 } = state
-      request1.push(Object.assign({}, DEFAULT_SHAPE))
-      return Object.assign(state, { 
-        request: request1, 
-        totalShapes: state.totalShapes + 1 
-      })      
-    case 'DELETE_SHAPE':    
-      const { request: request2 } = state       
-      request2.splice(payload, 1)      
-      return Object.assign(state, { 
-        request: request2  
-      })      
+    case 'CREATE_NEW_SHAPE':     
+      state.request.push(Object.assign({}, DEFAULT_SHAPE))
+      return state
+    case 'DELETE_SHAPE':   
+      state.request.splice(payload, 1)            
+      return state      
     case 'ADD_ELEMENT':
-      const { request: request3 } = state
-      let shape = JSON.stringify(state.request[payload])      
-      shape = JSON.parse(shape) 
-      shape.list.push({'name':`p${shape.list.length + 1}`, 'quantity': 5, 'length': 1000})     
-      request3[payload] = shape      
-      return Object.assign(state, {
-        request: request3
-      })     
+      state.request[payload].list.push({'name':'pXXX', 'quantity': 5, 'length': 1000})            
+      return state     
     case 'DELETE_ELEMENT':
-      const { request: request4 } = state      
-      request4[payload.shape].list.splice(payload.element, 1)      
-      return Object.assign(state, {
-        request: request4
-      })
+      state.request[payload.shape].list.splice(payload.element, 1)           
+      return state
     case 'MODIFY_SHAPE':
-      const { request: request5 } = state
       const value1 = payload.field === 'defaultlengthBar' ? Number(payload.value) : payload.value
-      request5[payload.shape][payload.field] = value1
-      return Object.assign(state, {
-        request: request5
-      })
+      state.request[payload.shape][payload.field] = value1       
+      return state
     case 'MODIFY_ELEMENT':
-      const { request: request6 } = state     
-      const value2 = payload.field === 'name' ? payload.value : Number(payload.value)      
-      request6[payload.shape].list[payload.element][payload.field] = value2
-      return Object.assign(state, {
-        request: request6
-      })
+      const value2 = payload.field === 'name' ? payload.value : Number(payload.value)
+      state.request[payload.shape].list[payload.element][payload.field] = value2      
+      return state
+    case 'OPTIMIZE':
+      state.response = payload
+      state.request2 = JSON.stringify(state.request) 
+      state.mode = 'output'     
+      return state
     default:
       return state
   }

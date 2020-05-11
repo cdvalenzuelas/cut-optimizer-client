@@ -15,6 +15,9 @@ if(!process.NODE_ENV){
   reduxDev = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose  
 }
 
-const store = createStore(reducer, {}, reduxDev())
+const GLOBAL_STATE = localStorage.getItem('GLOBAL_STATE');
+const INITIAL_STATE = GLOBAL_STATE ? JSON.parse(GLOBAL_STATE) : {};
+
+const store = createStore(reducer, INITIAL_STATE, reduxDev())
 
 export default store

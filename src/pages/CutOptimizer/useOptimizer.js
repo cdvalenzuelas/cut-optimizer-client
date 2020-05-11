@@ -6,9 +6,7 @@ const useOptimizator = (url, options, mode) => {
 
   useEffect(() => {
     (async () => {          
-      try {          
-        console.log('estoy aqui')  
-        console.log(url)
+      try {             
         const res = await fetch(url, options)
         const data = await res.json()        
         setResponse(data)        

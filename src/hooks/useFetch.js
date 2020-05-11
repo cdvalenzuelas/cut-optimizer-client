@@ -1,18 +1,28 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
-const useFetch = (url, options) => {
-  const [data, setData] = useState({});
-  const [option2, setOption2] = useState(JSON.stringify(options))  
-  useEffect(() => {
-    (async () => {
-      const res = await fetch(url, options);
-      const data = await res.json();
-      console.log('data')
-      setData(data);
-    })();
-  },[url, option2]);
+const options = (data, method) => ({
+  body: JSON.stringify({
+    user: {},
+    items: [...data]
+  }),
+  method,
+  headers: {
+    'Content-Type' : 'application/json',
+    'Access-Control-Allow-Origin' : '*'      
+  }
+})
 
-  return data;
+const useFetch = (url, data, method) => {
+  const [response, setResponse] = useState([])
+  const requestObject = options(data, method)
+
+  (async () => {
+    const res = await fetch(url, requestObject);
+    const data = await res.json();    
+    setResponse(data);
+  })() 
+
+  return {response};
 }
 
 export default useFetch

@@ -8,7 +8,7 @@ import useInputHook from './useInputHook'
 import './styles.scss'
 
 const Input = () => { 
-  const { request, handleChange, totalShapes } = useInputHook()   
+  const { request, handleChange } = useInputHook()   
 
   return(
     <div className='bars'>  
@@ -16,20 +16,20 @@ const Input = () => {
         const { shape, material, defaultlengthBar } = item 
         return(
           <div className='bars__bar' key={index} >
-            <button name='deleteShape' onClick={handleChange}>Delete</button>
+            <button name={`deleteShape${index}`} onClick={handleChange}>Delete</button>
             <label>
               Shape
-              <input type='text' name='shape' onChange={handleChange} value={shape} />
+              <input type='text' name={`shape${index}`} onChange={handleChange} value={shape} />
             </label>    
             <label>
               Material
-              <input type='text' name='material' onChange={handleChange} value={material} />
+              <input type='text' name={`material${index}`} onChange={handleChange} value={material} />
             </label>
             <label>
               Default Length
-              <input type='number' name='defaultlengthBar' onChange={handleChange} value={defaultlengthBar} />
+              <input type='number' name={`defaultlengthBar${index}`} onChange={handleChange} value={defaultlengthBar} />
             </label>
-            <button name='addElement' onClick={handleChange}>+</button>
+            <button name={`addElement${index}`} onClick={handleChange}>+</button>
             <table>
               <thead>
                 <tr>
@@ -44,10 +44,10 @@ const Input = () => {
                 const { name, quantity, length } = item2                    
                 return(
                   <tr key={index2}>                                
-                    <td><input name={`elementName${index2}`} type='text' value={name} onChange={handleChange} /></td>
-                    <td><input name={`elementQuantity${index2}`} type='text' value={quantity} onChange={handleChange} /></td>
-                    <td><input name={`elementLength${index2}`} type='text' value={length} onChange={handleChange} /></td>
-                    <td><button name='deleteElement' onClick={handleChange} value={index2}>-</button></td>
+                    <td><input name={`elementName${index}-${index2}`} type='text' value={name} onChange={handleChange} /></td>
+                    <td><input name={`elementQuantity${index}-${index2}`} type='text' value={quantity} onChange={handleChange} /></td>
+                    <td><input name={`elementLength${index}-${index2}`} type='text' value={length} onChange={handleChange} /></td>
+                    <td><button name={`deleteElement${index}-${index2}`} onClick={handleChange} value={index2}>-</button></td>
                   </tr>
                 )})}
               </tbody>
