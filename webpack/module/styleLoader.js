@@ -3,11 +3,10 @@ const { env } = require('../../config')
 
 let styleLoader
 
-if (env === 'development'){
+if (env === 'development') {
   styleLoader = 'style-loader'
 } else {
   styleLoader = MiniCssExtractPlugin.loader
 }
 
 module.exports = styleLoader
-

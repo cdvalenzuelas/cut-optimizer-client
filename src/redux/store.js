@@ -1,5 +1,5 @@
 // Dependencies
-import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
+import { createStore, combineReducers, compose } from 'redux'
 
 // Reducers
 import cutOptimizer from './reducers/cutOptimizer'
@@ -11,12 +11,12 @@ const reducer = combineReducers({
 
 let reduxDev
 
-if(!process.NODE_ENV){
-  reduxDev = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose  
+if (!process.NODE_ENV) {
+  reduxDev = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 }
 
-const GLOBAL_STATE = localStorage.getItem('GLOBAL_STATE');
-const INITIAL_STATE = GLOBAL_STATE ? JSON.parse(GLOBAL_STATE) : {};
+const GLOBAL_STATE = window.localStorage.getItem('GLOBAL_STATE')
+const INITIAL_STATE = GLOBAL_STATE ? JSON.parse(GLOBAL_STATE) : {}
 
 const store = createStore(reducer, INITIAL_STATE, reduxDev())
 

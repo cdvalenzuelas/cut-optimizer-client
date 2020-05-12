@@ -20,7 +20,7 @@ const webpackModule = {
     {
       test: /\.(jpg|png|gif|svg|ico)$/,
       use: {
-        loader: 'url-loader',        
+        loader: 'url-loader',
         options: {
           limit: 8192,
           name: '[hash].[ext]',
@@ -28,7 +28,7 @@ const webpackModule = {
         }
       },
       exclude: /node_modules/
-    }    
+    }
   ]
 }
 

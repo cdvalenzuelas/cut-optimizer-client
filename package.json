@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {    
+  "scripts": {
     "client:dll": "cross-env NODE_ENV=production webpack --config webpack.dll.config.js",
     "client:build": "cross-env NODE_ENV=production webpack",
-    "client:dev": "webpack-dev-server"
+    "client:dev": "webpack-dev-server",
+    "lint": "standard --fix"
   },
   "keywords": [],
   "author": "",
@@ -38,6 +39,7 @@
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "sass": "1.26.5",
     "sass-loader": "8.0.2",
+    "standard": "^14.3.4",
     "style-loader": "1.2.0",
     "terser-webpack-plugin": "2.3.6",
     "url-loader": "4.1.0",
@@ -45,5 +47,11 @@
     "webpack-cli": "3.3.11",
     "webpack-dev-server": "3.10.3"
   },
-  "proxy": "http://localhost:3000"
+  "proxy": "http://localhost:3000",
+  "standard": {
+    "ignore": []
+  },
+  "eslintConfig": {
+    "extends": ["./node_modules/standard/eslintrc.json"]
+  }
 }

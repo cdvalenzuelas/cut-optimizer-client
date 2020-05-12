@@ -9,21 +9,21 @@ const { env } = require('../config')
 
 let plugins = []
 
-if (env === 'development'){
+if (env === 'development') {
   plugins = [
     ...plugins,
-    new HotModuleReplacementPlugin()     
+    new HotModuleReplacementPlugin()
   ]
 } else {
   plugins = [
     ...plugins,
     new MiniCssExtractPlugin({
       filename: 'css/[name].[hash].css',
-      chunkFilename: 'css/[id].[hash].css'      
+      chunkFilename: 'css/[id].[hash].css'
     }),
     new DllReferencePlugin({
       manifest: require('../build/js/libs-manifest.json')
-    }),       
+    }),
     new AddAssetHtmlWebpackPlugin([
       {
         filepath: path.resolve(__dirname, '../build/js/*.dll.js'),
@@ -31,16 +31,16 @@ if (env === 'development'){
         publicPath: './js',
         includeRelatedFiles: false,
         attributes: {
-          nomodule: false,
-        },          
+          nomodule: false
+        }
       }
     ]),
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ['**/app.*']
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '../src/index.html')    
-    })        
+      template: path.resolve(__dirname, '../src/index.html')
+    })
   ]
 }
 

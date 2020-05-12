@@ -1,5 +1,5 @@
 // Depencdencies
-const { env, port } = require('./config')
+const { env } = require('./config')
 const path = require('path')
 
 // Keys
@@ -12,15 +12,14 @@ module.exports = {
   mode: env,
   entry: {
     app: path.resolve(__dirname, './src/index.js')
-  }   
-  ,
+  },
   output: {
     path: path.join(__dirname, 'build'),
-    filename: env === 'development' ? 'js/[name].js' : 'js/[name].[hash].js',    
+    filename: env === 'development' ? 'js/[name].js' : 'js/[name].[hash].js',
     publicPath: env === 'development' ? '/' : './'
   },
-  module: webpackModule,  
+  module: webpackModule,
   optimization,
   plugins,
-  devServer  
+  devServer
 }

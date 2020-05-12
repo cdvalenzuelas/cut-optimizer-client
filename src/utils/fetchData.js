@@ -8,13 +8,13 @@ const fetchData = async (url, data, method) => {
       }),
       method,
       headers: {
-        'Content-Type' : 'application/json',
-        'Access-Control-Allow-Origin' : '*'      
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       }
-    }  
-    const res = await fetch(url, requestObject)
-    const data2 = await res.json()  
-    return data2    
+    }
+    const res = await window.fetch(url, requestObject)
+    const data2 = await res.json()
+    return data2
   } catch (error) {
     console.log(error)
   }

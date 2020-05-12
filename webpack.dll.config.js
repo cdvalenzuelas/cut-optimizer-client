@@ -17,7 +17,7 @@ module.exports = {
     filename: 'js/[name].[hash].dll.js',
     library: '[name]',
     publicPath: './'
-  },  
+  },
   optimization,
   plugins: [
     new DllPlugin({
@@ -27,5 +27,5 @@ module.exports = {
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ['**/modules.*']
     })
-  ]  
+  ]
 }

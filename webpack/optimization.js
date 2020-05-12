@@ -9,7 +9,7 @@ const optimization = {
   },
   minimizer: [
     new TerserWebpackPlugin(),
-    new OptimizeCssAssetsWebpackPlugin()  
+    new OptimizeCssAssetsWebpackPlugin()
   ]
 }
 

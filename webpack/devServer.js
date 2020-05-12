@@ -3,13 +3,12 @@ const path = require('path')
 
 let devServer
 
-
 if (env === 'development') {
   devServer = {
     open: false,
-    hot : true,     
+    hot: true,
     port,
-    contentBase: path.resolve(__dirname, '../dist') ,
+    contentBase: path.resolve(__dirname, '../dist'),
     compress: true,
     writeToDisk: false
   }
