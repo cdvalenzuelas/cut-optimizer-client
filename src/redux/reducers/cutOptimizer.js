@@ -13,8 +13,8 @@ const INITIAL_STATE = {
   response: [],
   request: [Object.assign({}, DEFAULT_SHAPE)],
   request2: '[]',
-  totalShapes: 1,
-  display: [{ display: 'initial' }]
+  currentShape: 0,
+  totalShapes: 1
 }
 
 const cutOptimizer = (state = INITIAL_STATE, { type, payload }) => {
@@ -49,6 +49,9 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload }) => {
       state.response = payload
       state.request2 = JSON.stringify(state.request)
       state.mode = 'output'
+      return state
+    case 'SET_CURRENT_SHAPE':
+      state.currentShape = payload
       return state
     default:
       return state

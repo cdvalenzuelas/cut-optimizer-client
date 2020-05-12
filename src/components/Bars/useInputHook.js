@@ -2,11 +2,12 @@
 import { useDispatch, useSelector } from 'react-redux'
 
 const useInputHook = () => {
-  const { request } = useSelector(state => state.cutOptimizer)
+  const { request, currentShape } = useSelector(state => state.cutOptimizer)
   const dispatch = useDispatch()
 
   const handleChange = e => {
     const { name, value } = e.target
+
     if (name.startsWith('deleteShape')) {
       const regex = /deleteShape(\d{1,})/
       const match = regex.exec(name)
@@ -32,7 +33,9 @@ const useInputHook = () => {
     }
   }
 
-  return { request, handleChange }
+  const shape = request[currentShape]
+
+  return { shape, handleChange, currentShape }
 }
 
 export default useInputHook

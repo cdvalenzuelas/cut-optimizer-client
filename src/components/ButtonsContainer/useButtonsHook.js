@@ -9,11 +9,12 @@ const useButtonsHook = () => {
   const { request, mode, request2 } = useSelector(state => state.cutOptimizer)
 
   const handleChange = e => {
-    const { name } = e.target
+    const { name, value } = e.target
+
     if (name === 'edit') {
       dispatch({ type: 'SET_MODE' })
     } else if (name === 'shapeInfo') {
-      dispatch({ type: 'SET_DISPLAY' })
+      dispatch({ type: 'SET_CURRENT_SHAPE', payload: Number(value) })
     } else if (name === 'newShape') {
       dispatch({ type: 'CREATE_NEW_SHAPE' })
     } else if (name === 'optimize') {

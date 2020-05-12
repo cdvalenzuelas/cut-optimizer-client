@@ -5,10 +5,10 @@ function ListOfElements ({ elements, index, handleChange }) {
     <table>
       <thead>
         <tr>
-          <th />
           <th>Name</th>
           <th>Quantity</th>
           <th>Length</th>
+          <th />
         </tr>
       </thead>
       <tbody>

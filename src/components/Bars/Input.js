@@ -5,55 +5,32 @@ import './styles.scss'
 import ListOfElements from './ListOfElements'
 
 const Input = () => {
-  const { request, handleChange } = useInputHook()
+  const { shape, handleChange, currentShape } = useInputHook()
+  const { shape: shapeName, material, defaultlengthBar, list } = shape
 
   return (
     <div className='bars'>
-      {request.map((item, index) => {
-        const { shape, material, defaultlengthBar } = item
-        return (
-          <div className='bars__bar' key={index}>
-            <button name={`deleteShape${index}`} onClick={handleChange}>
-              Delete
-            </button>
-            <label>
-              Shape
-              <input
-                type='text'
-                name={`shape${index}`}
-                onChange={handleChange}
-                value={shape}
-              />
-            </label>
-            <label>
-              Material
-              <input
-                type='text'
-                name={`material${index}`}
-                onChange={handleChange}
-                value={material}
-              />
-            </label>
-            <label>
-              Default Length
-              <input
-                type='number'
-                name={`defaultlengthBar${index}`}
-                onChange={handleChange}
-                value={defaultlengthBar}
-              />
-            </label>
-            <button name={`addElement${index}`} onClick={handleChange}>
-              +
-            </button>
-            <ListOfElements
-              elements={item.list}
-              index={index}
-              handleChange={handleChange}
-            />
-          </div>
-        )
-      })}
+      <div className='bars__bar' key={currentShape}>
+        <div className='infoContainer'>
+          <label className='label'>
+            Shape
+            <input type='text' name={`shape${currentShape}`} onChange={handleChange} value={shapeName} />
+          </label>
+          <label className='label'>
+            Material
+            <input type='text' name={`material${currentShape}`} onChange={handleChange} value={material} />
+          </label>
+          <label className='label'>
+            Default Length
+            <input type='number' name={`defaultlengthBar${currentShape}`} onChange={handleChange} value={defaultlengthBar} />
+          </label>
+          <button name={`deleteShape${currentShape}`} onClick={handleChange} className='button--main'>
+            Delete
+          </button>
+        </div>
+        <button name={`addElement${currentShape}`} onClick={handleChange}>+</button>
+        <ListOfElements elements={list} index={currentShape} handleChange={handleChange} />
+      </div>
     </div>
   )
 }
