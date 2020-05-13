@@ -6,7 +6,7 @@ import fetchData from '../../utils/fetchData'
 
 const useButtonsHook = () => {
   const dispatch = useDispatch()
-  const { request, mode, request2 } = useSelector(state => state.cutOptimizer)
+  const { request, mode, request2, currentShape } = useSelector(state => state.cutOptimizer)
 
   const handleChange = e => {
     const { name, value } = e.target
@@ -14,7 +14,9 @@ const useButtonsHook = () => {
     if (name === 'edit') {
       dispatch({ type: 'SET_MODE' })
     } else if (name === 'shapeInfo') {
-      dispatch({ type: 'SET_CURRENT_SHAPE', payload: Number(value) })
+      if (currentShape !== Number(value)) {
+        dispatch({ type: 'SET_CURRENT_SHAPE', payload: Number(value) })
+      }
     } else if (name === 'newShape') {
       dispatch({ type: 'CREATE_NEW_SHAPE' })
     } else if (name === 'optimize') {

@@ -2,31 +2,39 @@
   font-family: var(--font1);
   &1{
     font-weight: 500;
-    font-size: 2em;
+    font-size: 2rem;
   }
   &2{
-    font-size: 1.5em;
+    font-size: 1.5rem;
   }
   &3{
-    font-size: 1.2em;
+    font-size: 1.2rem;
   }
   &4{
-    font-size: 1em;
+    font-size: 1rem;
   }
   &5{
-    font-size: 1em;
+    font-size: 1rem;
   }
   &6{
-    font-size: 1em;
+    font-size: 1rem;
   }
 }
 
-.small {
-  font-size: .5em;
+.p {  
+  @include fontSize(1rem);
+  text-align: left;
+  &-enphasis{
+    @extend .p;
+    font-weight: 500;
+  }
+  &-cite {
+    @extend .p;
+    font-weight: 500;
+    font-style: italic;
+  }
 }
 
-.p {
-  font-family: var(--font1);
-  font-size: .8em;
-  line-height: 1.1em;
+small {
+  @include fontSize(.5rem)
 }

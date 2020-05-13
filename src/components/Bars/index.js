@@ -10,9 +10,16 @@ import Input from './Input'
 import './styles.scss'
 
 const Bars = () => {
-  const mode = useSelector((state) => state.cutOptimizer.mode)
+  const { mode } = useSelector((state) => state.cutOptimizer)
 
-  return <>{mode === 'output' ? <Output /> : <Input />}</>
+  return (
+    <>
+      {
+        mode === 'output'
+          ? <Output />
+          : <Input />
+      }
+    </>)
 }
 
 export default Bars

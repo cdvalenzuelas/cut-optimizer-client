@@ -1,0 +1,16 @@
+@mixin fontSize($fontSize) {
+  font-size: $fontSize;
+  line-height: $fontSize * 1.1;
+}
+
+@mixin inputs {
+  outline: none;
+  border: none;
+  background-color: white; 
+  font-size: 1em;
+  line-height: 1.1em;
+  text-transform: uppercase;
+  height: 2em;
+  text-align: center;
+  min-width: 200px;
+}

@@ -13,8 +13,8 @@ const INITIAL_STATE = {
   response: [],
   request: [Object.assign({}, DEFAULT_SHAPE)],
   request2: '[]',
-  currentShape: 0,
-  totalShapes: 1
+  newElements: true,
+  currentShape: 0
 }
 
 const cutOptimizer = (state = INITIAL_STATE, { type, payload }) => {

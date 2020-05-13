@@ -10,7 +10,6 @@
   // BASE FONT 
   font-size: 16px; 
   --font1: Roboto, "San-serif";
-
 }
 
 *, ::after, ::before {
@@ -23,5 +22,6 @@
 body {  
   width: 100vw;
   height: 100vh; 
-  font-family: var(--font1) 
+  font-family: var(--font1);
+  font-size: 1em;
 }

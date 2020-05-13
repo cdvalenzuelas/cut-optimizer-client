@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 
 const useInputHook = () => {
-  const { request, currentShape } = useSelector(state => state.cutOptimizer)
+  const { request, currentShape, newElements } = useSelector(state => state.cutOptimizer)
   const dispatch = useDispatch()
 
   const handleChange = e => {
@@ -35,7 +35,7 @@ const useInputHook = () => {
 
   const shape = request[currentShape]
 
-  return { shape, handleChange, currentShape }
+  return { shape, handleChange, currentShape, newElements }
 }
 
 export default useInputHook

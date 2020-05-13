@@ -5,5 +5,9 @@ table {
   border: 1px solid red;
   td, th {
     border: 1px solid red;
+    padding: .2rem;
   } 
+  input{
+    text-align: left;
+  }
 }
