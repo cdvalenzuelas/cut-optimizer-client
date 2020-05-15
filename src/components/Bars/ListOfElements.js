@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ListOfElements ({ elements, index, handleChange }) {
+function ListOfElements ({ elements, handleChange }) {
   return (
     <table>
       <thead>
@@ -17,37 +17,16 @@ function ListOfElements ({ elements, index, handleChange }) {
           return (
             <tr key={index2}>
               <td>
-                <input
-                  name={`elementName${index}-${index2}`}
-                  type='text'
-                  value={name}
-                  onChange={handleChange}
-                />
+                <input name={`elementName${index2}`} type='text' value={name} onChange={handleChange} />
               </td>
               <td>
-                <input
-                  name={`elementQuantity${index}-${index2}`}
-                  type='text'
-                  value={quantity}
-                  onChange={handleChange}
-                />
+                <input name={`elementQuantity${index2}`} type='text' value={quantity} onChange={handleChange} />
               </td>
               <td>
-                <input
-                  name={`elementLength${index}-${index2}`}
-                  type='text'
-                  value={length}
-                  onChange={handleChange}
-                />
+                <input name={`elementLength${index2}`} type='text' value={length} onChange={handleChange} />
               </td>
               <td>
-                <button
-                  name={`deleteElement${index}-${index2}`}
-                  onClick={handleChange}
-                  value={index2}
-                >
-                  -
-                </button>
+                <button name={`deleteElement${index2}`} onClick={handleChange} value={index2}>-</button>
               </td>
             </tr>
           )

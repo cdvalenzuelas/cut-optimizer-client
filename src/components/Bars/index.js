@@ -4,22 +4,22 @@ import { useSelector } from 'react-redux'
 
 // Components
 import Output from './Output'
-import Input from './Input'
+import AvailableBars from './AvailableBars'
+import NewElements from './NewElements'
 
 // Styles
 import './styles.scss'
 
 const Bars = () => {
-  const { mode } = useSelector((state) => state.cutOptimizer)
+  const { mode, newElements } = useSelector((state) => state.cutOptimizer)
 
-  return (
-    <>
-      {
-        mode === 'output'
-          ? <Output />
-          : <Input />
-      }
-    </>)
+  if (mode === 'output') {
+    return <Output />
+  } else if (newElements) {
+    return <NewElements />
+  } else if (!newElements) {
+    return <AvailableBars />
+  }
 }
 
 export default Bars

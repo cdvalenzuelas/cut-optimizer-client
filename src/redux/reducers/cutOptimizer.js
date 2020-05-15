@@ -53,6 +53,18 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload }) => {
     case 'SET_CURRENT_SHAPE':
       state.currentShape = payload
       return state
+    case 'CHANGE_NEW_ELEMENTS':
+      state.newElements = payload
+      return state
+    case 'ADD_AVAILABLE_BARS':
+      state.request[payload.shape].availableBars.push(payload.newAvailableBar)
+      return state
+    case 'DELETE_AVAILABLE_BAR':
+      state.request[payload.shape].availableBars.splice(payload.availableBar, 1)
+      return state
+    case 'MODIFY_AVAILABLE_BAR':
+      state.request[payload.shape].availableBars[payload.availableBar][payload.field] = payload.value
+      return state
     default:
       return state
   }
