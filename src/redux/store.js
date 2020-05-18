@@ -18,6 +18,6 @@ if (!process.NODE_ENV) {
 const GLOBAL_STATE = window.localStorage.getItem('GLOBAL_STATE')
 const INITIAL_STATE = GLOBAL_STATE ? JSON.parse(GLOBAL_STATE) : {}
 
-const store = createStore(reducer, INITIAL_STATE, reduxDev())
+const store = createStore(reducer, {}, reduxDev())
 
 export default store

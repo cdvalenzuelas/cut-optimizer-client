@@ -16,7 +16,7 @@ const ButtonContainer = () => {
       <div className='shapesButtons'>
         {request.map((item, index) =>
           <button key={index} value={`${index}`} onClick={handleChange} name='shapeInfo' className='shapeInfo'>
-            <h3>{index + 1}. {item.shape}</h3>
+            <h3>{index + 1}. {item.shapeName}</h3>
             <span>{item.material}</span>
           </button>
         )}

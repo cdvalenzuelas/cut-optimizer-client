@@ -2,45 +2,41 @@
 import { useDispatch, useSelector } from 'react-redux'
 
 function useNewElementsHook () {
-  const { request, currentShape, newElements } = useSelector(state => state.cutOptimizer)
-  const { availableBars } = request[currentShape]
-  const shape = request[currentShape]
-  const { shape: shapeName, material, defaultlengthBar, list } = shape
+  const { request, currentShape, request2 } = useSelector(state => state.cutOptimizer)
+  const list = request[currentShape] ? request[currentShape].list : undefined
   const dispatch = useDispatch()
 
   const handleChange = e => {
-    const { name, value } = e.target
+    let { name, value } = e.target
 
-    if (name === 'newElements' || name === 'availableBars') {
-      if (newElements && name === 'availableBars') {
-        dispatch({ type: 'CHANGE_NEW_ELEMENTS', payload: false })
-      } else if (!newElements && name === 'newElements') {
-        dispatch({ type: 'CHANGE_NEW_ELEMENTS', payload: true })
-      }
-    } else if (name === 'addElement') {
+    if (name === 'addElement') {
       dispatch({ type: 'ADD_ELEMENT', payload: currentShape })
-    } else if (name === 'deleteShape') {
-      dispatch({ type: 'DELETE_SHAPE', payload: currentShape })
     } else if (name.startsWith('deleteElement')) {
       const regex = /deleteElement(\d{1,})/
       const match = regex.exec(name)
-      dispatch({ type: 'DELETE_ELEMENT', payload: { shape: currentShape, element: Number(match[1]) } })
-    } else if (name === 'deleteElement') {
-      const regex = /deleteElement(\d{1,})/
-      const match = regex.exec(name)
-      dispatch({ type: 'DELETE_ELEMENT', payload: { shape: currentShape, element: Number(match[1]) } })
-    } else if (name === 'shape' || name === 'material' || name === 'defaultlengthBar') {
-      const value2 = name === 'defaultlengthBar' ? Number(value) : value
-      dispatch({ type: 'MODIFY_SHAPE', payload: { shape: currentShape, field: name, value: value2 } })
+      const element = Number(match[1])
+      dispatch({ type: 'DELETE_ELEMENT', payload: { currentShape, element } })
     } else if (name.startsWith('elementName') || name.startsWith('elementQuantity') || name.startsWith('elementLength')) {
       const regex = /element(Name|Quantity|Length)(\d{1,})/
       const match = regex.exec(name)
-      const value2 = match[1] === 'name' ? value : Number(value)
-      dispatch({ type: 'MODIFY_ELEMENT', payload: { shape: currentShape, element: Number(match[2]), field: match[1].toLowerCase(), value: value2 } })
+      const element = Number(match[2])
+      const field = match[1].toLowerCase()
+      let request3 = request2
+
+      if (field === 'quantity' || field === 'length') {
+        value = Number(value)
+      } else {
+        if (request2 !== '[]') {
+          request3 = JSON.parse(request3)
+          request3[currentShape].list[element][field] = value.toUpperCase()
+          request3 = JSON.stringify(request3)
+        }
+      }
+      dispatch({ type: 'MODIFY_ELEMENT', payload: { currentShape, element, field, value, request3 } })
     }
   }
 
-  return { handleChange, shapeName, material, defaultlengthBar, availableBars, list }
+  return { handleChange, list }
 }
 
 export default useNewElementsHook
