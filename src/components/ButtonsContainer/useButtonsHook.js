@@ -6,7 +6,7 @@ import fetchData from '../../utils/fetchData'
 
 const useButtonsHook = () => {
   const dispatch = useDispatch()
-  const { request, mode, request2, currentShape } = useSelector(state => state.cutOptimizer)
+  const { request, mode, currentShape, shapesChanges, response } = useSelector(state => state.cutOptimizer)
 
   const handleChange = e => {
     const { name, value } = e.target
@@ -20,9 +20,20 @@ const useButtonsHook = () => {
     } else if (name === 'newShape') {
       dispatch({ type: 'CREATE_NEW_SHAPE' })
     } else if (name === 'optimize') {
-      if (request2 !== JSON.stringify(request)) {
+      const request3 = []
+      const indexes = []
+
+      shapesChanges.forEach((shape, index) => {
+        if (shape === true) {
+          request3.push(request[index])
+          indexes.push(index)
+        }
+      })
+
+      console.log(request3)
+
+      if (request3.length !== 0) {
         console.log('me estoy optimizando')
-        // Sort request
         request.forEach(shape => {
           shape.list.forEach(element => {
             element.id2 = `${element.length} ${element.name}`
@@ -30,10 +41,15 @@ const useButtonsHook = () => {
           shape.list.sort((a, b) => { return a.id2 < b.id2 ? 1 : -1 }) // Order list of elements by id2 DESC
         })
 
-        fetchData('https://cut-optimizator-api.now.sh/', request, 'POST')
+        const shapesChanges = new Array(request.length).fill(false)
+
+        fetchData('https://cut-optimizator-api.now.sh/', request3, 'POST')
           .then(res => {
-            res.data.forEach(shape => {
+            res.data.forEach((shape, index) => {
+              const index2 = indexes[index]
+              response[index2] = shape
               let description = ''
+
               shape.bars.forEach(bar => {
                 bar.elements.forEach((element, index) => {
                   const { quantity2, name, length } = element
@@ -44,7 +60,8 @@ const useButtonsHook = () => {
                 description = ''
               })
             })
-            dispatch({ type: 'OPTIMIZE', payload: res.data })
+
+            dispatch({ type: 'OPTIMIZE', payload: { data: res.data, shapesChanges } })
           })
           .catch(err => console.log(err))
       } else {

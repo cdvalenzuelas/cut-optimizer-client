@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 
 function useNewElementsHook () {
-  const { request, currentShape, request2 } = useSelector(state => state.cutOptimizer)
+  const { request, currentShape, request2, shapesChanges } = useSelector(state => state.cutOptimizer)
   const list = request[currentShape] ? request[currentShape].list : undefined
   const dispatch = useDispatch()
 
@@ -22,9 +22,15 @@ function useNewElementsHook () {
       const element = Number(match[2])
       const field = match[1].toLowerCase()
       let request3 = request2
+      let shapesChanges2 = shapesChanges[currentShape]
 
       if (field === 'quantity' || field === 'length') {
         value = Number(value)
+        if (request2 !== '[]') {
+          // Verify which shape has changed
+          shapesChanges2 = JSON.parse(request2)[currentShape].list[element][field] !== value
+          console.log(shapesChanges2)
+        }
       } else {
         if (request2 !== '[]') {
           request3 = JSON.parse(request3)
@@ -32,7 +38,7 @@ function useNewElementsHook () {
           request3 = JSON.stringify(request3)
         }
       }
-      dispatch({ type: 'MODIFY_ELEMENT', payload: { currentShape, element, field, value, request3 } })
+      dispatch({ type: 'MODIFY_ELEMENT', payload: { currentShape, element, field, value, request3, shapesChanges: shapesChanges2 } })
     }
   }
 
