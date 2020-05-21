@@ -10,8 +10,6 @@ function useShapeInfoHook () {
   const handleChange = e => {
     let { name, value } = e.target
 
-    console.log(name)
-
     if (name === 'deleteShape') {
       let request3 = request2
       if (request2 !== '[]') {
@@ -19,7 +17,7 @@ function useShapeInfoHook () {
         request3.splice(currentShape, 1)
         request3 = JSON.stringify(request3)
       }
-      dispatch({ type: 'DELETE_SHAPE', payload: { currentShape, request3 } })
+      dispatch({ type: 'DELETE_SHAPE', payload: request3 })
     } else if (name === 'shapeName' || name === 'material' || name === 'defaultlengthBar' || name === 'cutLength') {
       let request3 = request2
       let shapesChanges2 = shapesChanges[currentShape]
@@ -39,7 +37,7 @@ function useShapeInfoHook () {
         }
       }
 
-      dispatch({ type: 'MODIFY_SHAPE', payload: { currentShape, field: name, value, request3, shapesChanges: shapesChanges2 } })
+      dispatch({ type: 'MODIFY_SHAPE', payload: { field: name, value, request3, shapesChanges: shapesChanges2 } })
     } else if (name === 'newElements' || name === 'availableBars') {
       if (newElements && name === 'availableBars') {
         dispatch({ type: 'CHANGE_NEW_ELEMENTS', payload: false })

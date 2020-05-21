@@ -2,9 +2,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-// Styles
-import './styles.scss'
-
 const Output = () => {
   const { response, currentShape } = useSelector((state) => state.cutOptimizer)
   const shape = response[currentShape]

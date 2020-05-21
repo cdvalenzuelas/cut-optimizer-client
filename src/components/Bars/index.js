@@ -7,9 +7,6 @@ import Output from './Output'
 import AvailableBars from './AvailableBars'
 import NewElements from './NewElements'
 
-// Styles
-import './styles.scss'
-
 const Bars = () => {
   const { mode, newElements } = useSelector((state) => state.cutOptimizer)
 

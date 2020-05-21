@@ -13,13 +13,14 @@ const INITIAL_STATE = {
   currentShape: -1,
   readyToSend: false,
   shapesChanges: [],
-  shapesNames: [],
+  elementsNames: [],
   request2: '[]',
   request: [],
   response: []
 }
 
 const cutOptimizer = (state = INITIAL_STATE, { type, payload }) => {
+  const { currentShape } = state
   state = JSON.stringify(state)
   state = JSON.parse(state)
 
@@ -34,28 +35,35 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload }) => {
       state.currentShape++
       state.newElements = true
       state.shapesChanges.push(true)
+      state.elementsNames.push([])
       return state
     case 'DELETE_SHAPE':
-      state.request.splice(payload.currentShape, 1)
-      state.shapesChanges.splice(payload.currentShape, 1)
-      state.currentShape = payload.currentShape - 1
-      state.request2 = payload.request3
+      state.request.splice(currentShape, 1)
+      state.shapesChanges.splice(currentShape, 1)
+      state.currentShape -= 1
+      state.request2 = payload
+      state.elementsNames.splice(currentShape, 1)
       return state
     case 'ADD_ELEMENT':
       state.request[payload].list.push({ name: 'PXXX', quantity: 1, length: 1000 })
+      state.elementsNames[currentShape].push('PXXX')
       return state
     case 'DELETE_ELEMENT':
-      state.request[payload.currentShape].list.splice(payload.element, 1)
+      state.request[currentShape].list.splice(payload, 1)
+      state.elementsNames[currentShape].splice(payload, 1)
       return state
     case 'MODIFY_SHAPE':
-      state.request[payload.currentShape][payload.field] = payload.value
+      state.request[currentShape][payload.field] = payload.value
       state.request2 = payload.request3
-      state.shapesChanges[payload.currentShape] = payload.shapesChanges
+      state.shapesChanges[currentShape] = payload.shapesChanges
       return state
     case 'MODIFY_ELEMENT':
-      state.request[payload.currentShape].list[payload.element][payload.field] = payload.value
+      state.request[currentShape].list[payload.element][payload.field] = payload.value
       state.request2 = payload.request3
-      state.shapesChanges[payload.currentShape] = payload.shapesChanges
+      state.shapesChanges[currentShape] = payload.shapesChanges
+      if (payload.field === 'name') {
+        state.elementsNames[currentShape][payload.element] = payload.value
+      }
       return state
     case 'OPTIMIZE':
       state.response = payload.data
@@ -70,13 +78,13 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload }) => {
       state.newElements = payload
       return state
     case 'ADD_AVAILABLE_BARS':
-      state.request[payload.currentShape].availableBars.push(payload.newAvailableBar)
+      state.request[currentShape].availableBars.push(payload.newAvailableBar)
       return state
     case 'DELETE_AVAILABLE_BAR':
-      state.request[payload.currentShape].availableBars.splice(payload.availableBar, 1)
+      state.request[currentShape].availableBars.splice(payload.availableBar, 1)
       return state
     case 'MODIFY_AVAILABLE_BAR':
-      state.request[payload.currentShape].availableBars[payload.availableBar][payload.field] = payload.value
+      state.request[currentShape].availableBars[payload.availableBar][payload.field] = payload.value
       return state
     default:
       return state

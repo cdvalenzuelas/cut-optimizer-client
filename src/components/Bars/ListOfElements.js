@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ListOfElements ({ elements, handleChange }) {
+function ListOfElements ({ elements, handleChange, elementsNames }) {
   return (
     <table>
       <thead>
@@ -14,10 +14,11 @@ function ListOfElements ({ elements, handleChange }) {
       <tbody>
         {elements.map((item2, index2) => {
           const { name, quantity, length } = item2
+          const backgrund = elementsNames.filter(name2 => name2 === name).length > 1 ? { background: 'red' } : { background: 'initial' }
           return (
             <tr key={index2}>
               <td>
-                <input name={`elementName${index2}`} type='text' value={name} onChange={handleChange} />
+                <input name={`elementName${index2}`} type='text' value={name} onChange={handleChange} style={backgrund} />
               </td>
               <td>
                 <input name={`elementQuantity${index2}`} type='text' value={quantity} onChange={handleChange} />

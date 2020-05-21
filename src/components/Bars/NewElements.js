@@ -4,14 +4,14 @@ import ListOfElements from './ListOfElements'
 import ShapeInfo from './ShapeInfo'
 
 const NewElements = () => {
-  const { handleChange, list } = useNewElementsHook()
+  const { handleChange, list, elementsNames } = useNewElementsHook()
   return (
     <div className='bars'>
       {
         list &&
           <div className='bars__bar'>
             <ShapeInfo />
-            <ListOfElements elements={list} handleChange={handleChange} />
+            <ListOfElements elements={list} handleChange={handleChange} elementsNames={elementsNames} />
             <button name='addElement' onClick={handleChange}>+</button>
           </div>
       }

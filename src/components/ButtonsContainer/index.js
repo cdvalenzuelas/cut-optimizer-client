@@ -4,9 +4,6 @@ import React from 'react'
 // Hooks
 import useButtonsHook from './useButtonsHook'
 
-// Styles
-import './styles.scss'
-
 const ButtonContainer = () => {
   const { handleChange, request, mode } = useButtonsHook()
 

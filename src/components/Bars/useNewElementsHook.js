@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 
 function useNewElementsHook () {
-  const { request, currentShape, request2, shapesChanges } = useSelector(state => state.cutOptimizer)
+  const { request, currentShape, request2, shapesChanges, elementsNames } = useSelector(state => state.cutOptimizer)
   const list = request[currentShape] ? request[currentShape].list : undefined
   const dispatch = useDispatch()
 
@@ -15,7 +15,7 @@ function useNewElementsHook () {
       const regex = /deleteElement(\d{1,})/
       const match = regex.exec(name)
       const element = Number(match[1])
-      dispatch({ type: 'DELETE_ELEMENT', payload: { currentShape, element } })
+      dispatch({ type: 'DELETE_ELEMENT', payload: element })
     } else if (name.startsWith('elementName') || name.startsWith('elementQuantity') || name.startsWith('elementLength')) {
       const regex = /element(Name|Quantity|Length)(\d{1,})/
       const match = regex.exec(name)
@@ -29,7 +29,6 @@ function useNewElementsHook () {
         if (request2 !== '[]') {
           // Verify which shape has changed
           shapesChanges2 = JSON.parse(request2)[currentShape].list[element][field] !== value
-          console.log(shapesChanges2)
         }
       } else {
         if (request2 !== '[]') {
@@ -38,11 +37,11 @@ function useNewElementsHook () {
           request3 = JSON.stringify(request3)
         }
       }
-      dispatch({ type: 'MODIFY_ELEMENT', payload: { currentShape, element, field, value, request3, shapesChanges: shapesChanges2 } })
+      dispatch({ type: 'MODIFY_ELEMENT', payload: { element, field, value, request3, shapesChanges: shapesChanges2 } })
     }
   }
 
-  return { handleChange, list }
+  return { handleChange, list, elementsNames: elementsNames.flat() }
 }
 
 export default useNewElementsHook

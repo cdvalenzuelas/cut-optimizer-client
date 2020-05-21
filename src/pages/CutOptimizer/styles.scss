@@ -1,9 +1,111 @@
+$header-height: 70px;
+$buttons-width: 100vw/6;
+
 .container {
-  display: grid;
   width: 100vw;
-  height: 100vh;
-  grid-template: 70px 1fr / 1fr 5fr;
-  grid-template-areas: 
-    "header header"
-    "buttons bars";  
+  height: 100vh;    
+  .header {
+    width: 100vw;
+    height: $header-height;    
+    display: flex;  
+    padding: 20px;  
+    ul {
+      display: flex;
+      justify-content: space-between;
+    }   
+    input {
+      height: 60px;
+      width: 60%;    
+      outline: none;        
+    }
+  }
+  .bars {     
+    width: 5*100vw/6;
+    min-height: calc(100vh - $header-height); 
+    margin: 0 auto; 
+    margin-bottom: 1rem;
+    padding: 20px 0;   
+    display: inline-block;     
+    &__bar {
+      margin: 0 auto;       
+      width: 80%;
+      height: auto;
+      padding: 20px;    
+      border-radius: 5px;
+      margin-bottom: 1rem;
+      h3 {
+        margin-bottom: 10px;
+      }
+    }    
+  }
+  .buttonsContainer {     
+    width: $buttons-width; 
+    height: calc(100vh - $header-height);   
+    display: inline-block;
+    .shapesButtons{
+      width: 100%;
+      height: auto;    
+      outline: 3px solid salmon;
+      overflow-y: scroll;
+      background-color: pink;    
+      .shapeInfo {
+        width: 100%;
+        height: auto;
+        display: block;      
+        text-align: left;
+        padding: 0.5rem;      
+        span, h3 {
+          display: block;
+          width: 100%; 
+          background-color: red;   
+          margin-bottom: 0.2rem;    
+        }
+      }    
+    }
+    .actionsButtons {
+      background-color: red;    
+      padding: 0.5rem; 
+      button {
+        margin: 0 auto;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+    }
+  }
+}
+
+.dataContainer {
+  height: 30px; 
+  margin-bottom: 0px;
+  display: flex;
+  justify-content: space-between;   
+  &__bar {
+    height: 100%;    
+    width: 90%;
+    border-radius: 15px;
+  }
+  &__data {
+    font-size: 12px;    
+    width: auto;
+    span {
+      display: block;
+      text-align: right;
+    }
+  }  
+}
+
+.loadBar {
+  height: 100%;  
+  border-radius: inherit;
+}
+
+.elements {  
+  grid-area: bars;
+  width: 100%;
+  display: block;  
+  margin: 0 auto;
+}
+
+.infoContainer {
+  display: flex;  
 }

@@ -9,11 +9,14 @@ const AvailableBars = () => {
 
   return (
     <div className='bars'>
-      <div className='bars__bar'>
-        <ShapeInfo />
-        <ListOfAvailableBars elements={availableBars} handleChange={handleChange} />
-        <button name='addAvailableBar' onClick={handleChange}>+</button>
-      </div>
+      {
+        availableBars &&
+          <div className='bars__bar'>
+            <ShapeInfo />
+            <ListOfAvailableBars elements={availableBars} handleChange={handleChange} />
+            <button name='addAvailableBar' onClick={handleChange}>+</button>
+          </div>
+      }
     </div>
   )
 }
