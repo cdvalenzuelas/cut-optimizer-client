@@ -3,6 +3,9 @@ import React from 'react'
 function ListOfElements ({ elements, handleChange, elementsNames }) {
   return (
     <table>
+      <colgroup>
+        <col style={{ width: '10rem' }} />
+      </colgroup>
       <thead>
         <tr>
           <th>Name</th>
@@ -27,7 +30,7 @@ function ListOfElements ({ elements, handleChange, elementsNames }) {
                 <input name={`elementLength${index2}`} type='text' value={length} onChange={handleChange} />
               </td>
               <td>
-                <button name={`deleteElement${index2}`} onClick={handleChange} value={index2}>-</button>
+                <button name={`deleteElement${index2}`} onClick={handleChange} value={index2} className='btn-alert'>-</button>
               </td>
             </tr>
           )

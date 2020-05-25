@@ -8,10 +8,10 @@ const AvailableBars = () => {
   const { handleChange, availableBars } = useAvailableBarsHook()
 
   return (
-    <div className='bars'>
+    <div className='Bars'>
       {
         availableBars &&
-          <div className='bars__bar'>
+          <div className='Bars_bar'>
             <ShapeInfo />
             <ListOfAvailableBars elements={availableBars} handleChange={handleChange} />
             <button name='addAvailableBar' onClick={handleChange}>+</button>

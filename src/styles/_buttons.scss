@@ -3,19 +3,35 @@ button {
   @include inputs  
 }
 
-.button{   
-  width: 200px;   
+.btn{   
+  max-width: 150px;   
+  border-radius: 0.5rem;
+  cursor: pointer;
   &-main {
-    @extend .button;    
+    @extend .btn;    
+    background-image: linear-gradient(to right, var(--darkblue2), var(--darkblue1));
+    color: white;
+    box-shadow: 0 0 3px 1px var(--gray4);      
+  }
+  &-alert {
+    @extend .btn; 
+    color: white;
+    background-image: linear-gradient(to right, var(--secundary), var(--orange1));
   }
 }
 
 .label {  
   font-family: var(--font1); 
+  color: var(--darkblue2);
   @include fontSize(.75rem); 
+
   input {
     @include fontSize(1rem);
     text-align: left;
     display: block;    
+    border-bottom: 2px solid var(--darkblue1);
+    margin-right: 1rem;
+    width: inherit;
+    color: inherit;
   }
 }

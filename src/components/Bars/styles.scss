@@ -1,0 +1,78 @@
+.Bars {  
+  // LAYOUT   
+  display: inline-block;   
+  position: fixed;
+  right: 0;
+  top: 70px;
+  z-index: var(--zindex0); 
+  // BOX-MODEL
+  width: 5*(100vw)/6;
+  height: calc(100vh - 70px);   
+  padding: 1rem 0;   
+  margin: 0 auto; 
+  margin-bottom: 1rem;  
+  // STYLES
+  background-image: linear-gradient(to right,var(--lightblue1), var(--lightblue3));
+  overflow-y: scroll;
+  table {
+    margin: 1rem 0;
+  }
+  &_bar {
+    // BOX-MODEL
+    width: 80%;
+    height: auto;
+    margin: 0 auto;       
+    padding: 1rem;    
+    border-radius: .5rem;
+    margin-bottom: 1rem; 
+    // STYLES
+    background-color: white; 
+    box-shadow: 0 0 3px 1px var(--gray4);   
+    h3 {
+      margin-bottom: 1rem;
+    }
+  }    
+}
+
+.dataContainer {
+  height: 30px; 
+  margin-bottom: 0px;
+  display: flex;
+  justify-content: space-between;   
+  &_bar {
+    height: 100%;    
+    width: 90%;
+    border-radius: 1rem;
+  }
+  &_data {
+    font-size: 0.8rem;    
+    width: auto;
+    span {
+      display: block;
+      text-align: right;
+    }
+  }  
+}
+
+.loadBar {
+  height: 100%;  
+  border-radius: inherit;
+}
+
+.elements {  
+  grid-area: bars;
+  width: 100%;
+  display: block;  
+  margin: 0 auto;
+}
+
+.infoContainer {
+  display: flex;    
+}
+
+@each $name, $size in ('1': 8rem, '2':8rem, '3':8rem, '4':5rem) {
+  .input#{$name}{
+    width: $size;
+    margin-right: 1rem;
+  }
+}

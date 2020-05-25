@@ -1,0 +1,21 @@
+.Header {
+  // LAYOUT
+  width: 100vw;
+  height: 70px;    
+  display: flex;  
+  padding: 20px; 
+  position: fixed; 
+  z-index: var(--zindex1);
+  // STYLES
+  background-color: white;
+  box-shadow: 0 2px 2px 0 var(--gray4); 
+  ul {
+    display: flex;
+    justify-content: space-between;
+  }   
+  input {
+    height: 60px;
+    width: 60%;    
+    outline: none;        
+  }
+}

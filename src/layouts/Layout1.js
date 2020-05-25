@@ -4,10 +4,10 @@ import Header from '../components/Header'
 
 const Layout1 = ({ children }) => {
   return (
-    <>
+    <div className='Layout1'>
       <Header />
       {children}
-    </>
+    </div>
   )
 }
 

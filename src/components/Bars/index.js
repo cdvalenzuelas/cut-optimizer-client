@@ -2,6 +2,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
+import './styles.scss'
+
 // Components
 import Output from './Output'
 import AvailableBars from './AvailableBars'

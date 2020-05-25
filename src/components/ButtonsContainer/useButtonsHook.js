@@ -70,7 +70,7 @@ const useButtonsHook = () => {
     }
   }
 
-  return { handleChange, request, mode }
+  return { handleChange, request, mode, currentShape }
 }
 
 export default useButtonsHook
