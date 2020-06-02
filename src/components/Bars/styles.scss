@@ -3,8 +3,7 @@
   display: inline-block;   
   position: fixed;
   right: 0;
-  top: 70px;
-  z-index: var(--zindex0); 
+  top: 70px;  
   // BOX-MODEL
   width: 5*(100vw)/6;
   height: calc(100vh - 70px);   
@@ -12,51 +11,56 @@
   margin: 0 auto; 
   margin-bottom: 1rem;  
   // STYLES
-  background-image: linear-gradient(to right,var(--lightblue1), var(--lightblue3));
+  background-image: linear-gradient(-45deg ,var(--darkblue1), var(--darkblue2));
   overflow-y: scroll;
+
   table {
     margin: 1rem 0;
+    button[class^='btn'] {
+      border-radius: 0;
+    }
   }
+
   &_bar {
     // BOX-MODEL
-    width: 80%;
+    width: max-content;
     height: auto;
     margin: 0 auto;       
     padding: 1rem;    
     border-radius: .5rem;
-    margin-bottom: 1rem; 
+    margin-bottom: 1rem;    
     // STYLES
     background-color: white; 
-    box-shadow: 0 0 3px 1px var(--gray4);   
+    box-shadow: 0 2px 5px 0 var(--lightblue3);   
     h3 {
       margin-bottom: 1rem;
+      color: var(--darkblue3);
     }
-  }    
+  }
+  
+  &-info {
+    display: flex;
+    justify-content: space-between;
+    div span {
+      margin-left: 1rem;
+    }
+  }
+  
 }
 
-.dataContainer {
-  height: 30px; 
-  margin-bottom: 0px;
-  display: flex;
-  justify-content: space-between;   
-  &_bar {
-    height: 100%;    
-    width: 90%;
-    border-radius: 1rem;
-  }
-  &_data {
-    font-size: 0.8rem;    
-    width: auto;
-    span {
-      display: block;
-      text-align: right;
-    }
-  }  
+.loadWrapper {
+  height: 1rem; 
+  margin-top: .5rem;  
+  width: 100%;
+  border-radius: 1rem;
+  background-color: var(--gray4);  
 }
 
 .loadBar {
   height: 100%;  
   border-radius: inherit;
+  background-image: linear-gradient(to left, var(--orange1), var(--secundary));
+  border: 2px solid var(--gray4);
 }
 
 .elements {  
@@ -67,10 +71,25 @@
 }
 
 .infoContainer {
-  display: flex;    
+  display: flex;  
+  justify-content: flex-start;    
+
+  label:nth-child(4) {
+    margin-right: 0;
+  }
 }
 
-@each $name, $size in ('1': 8rem, '2':8rem, '3':8rem, '4':5rem) {
+.control-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  div button {
+    margin-right: 1rem;
+  }
+}
+
+@each $name, $size in ('1': 10rem, '2':10rem, '3': 10rem, '4': 5rem) {
   .input#{$name}{
     width: $size;
     margin-right: 1rem;

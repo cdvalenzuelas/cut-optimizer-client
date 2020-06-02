@@ -14,7 +14,6 @@ const AvailableBars = () => {
           <div className='Bars_bar'>
             <ShapeInfo />
             <ListOfAvailableBars elements={availableBars} handleChange={handleChange} />
-            <button name='addAvailableBar' onClick={handleChange}>+</button>
           </div>
       }
     </div>

@@ -4,9 +4,18 @@ import { useDispatch, useSelector } from 'react-redux'
 // Hooks
 import fetchData from '../../utils/fetchData'
 
+const DEFAULT_SHAPE = {
+  shapeName: 'HEA-180',
+  material: 'ASTM A36',
+  defaultlengthBar: 6000,
+  cutLength: 3,
+  availableBars: [],
+  list: []
+}
+
 const useButtonsHook = () => {
   const dispatch = useDispatch()
-  const { request, mode, currentShape, shapesChanges, response } = useSelector(state => state.cutOptimizer)
+  const { request, request2, mode, currentShape, response } = useSelector(state => state.cutOptimizer)
 
   const handleChange = e => {
     const { name, value } = e.target
@@ -18,32 +27,35 @@ const useButtonsHook = () => {
         dispatch({ type: 'SET_CURRENT_SHAPE', payload: Number(value) })
       }
     } else if (name === 'newShape') {
-      dispatch({ type: 'CREATE_NEW_SHAPE' })
+      request.push(Object.assign({}, DEFAULT_SHAPE))
+      const request3 = JSON.parse(request2)
+      const newShape = Object.assign({}, DEFAULT_SHAPE)
+      newShape.cutLength = 0
+      request3.push(newShape)
+
+      dispatch({ type: 'CREATE_NEW_SHAPE', payload: JSON.stringify(request3) })
     } else if (name === 'optimize') {
       const request3 = []
+      const request4 = JSON.parse(request2)
       const indexes = []
 
-      shapesChanges.forEach((shape, index) => {
-        if (shape === true) {
-          request3.push(request[index])
+      request.forEach((shape, index) => {
+        if (JSON.stringify(shape) !== JSON.stringify(request4[index]) && shape.list.length > 0) {
+          const shape2 = JSON.stringify(shape)
+          request3.push(JSON.parse(shape2))
           indexes.push(index)
         }
       })
 
-      console.log(request3)
-
       if (request3.length !== 0) {
         console.log('me estoy optimizando')
-        request.forEach(shape => {
-          shape.list.forEach(element => {
-            element.id2 = `${element.length} ${element.name}`
-          })
-          shape.list.sort((a, b) => { return a.id2 < b.id2 ? 1 : -1 }) // Order list of elements by id2 DESC
+        request3.forEach(shape => {
+          shape.list.sort((a, b) => b.length - a.length)
         })
 
-        const shapesChanges = new Array(request.length).fill(false)
+        // 'https://cut-optimizator-api.now.sh/'
 
-        fetchData('https://cut-optimizator-api.now.sh/', request3, 'POST')
+        fetchData('http://localhost:5001', request3, 'POST')
           .then(res => {
             res.data.forEach((shape, index) => {
               const index2 = indexes[index]
@@ -61,7 +73,7 @@ const useButtonsHook = () => {
               })
             })
 
-            dispatch({ type: 'OPTIMIZE', payload: { data: res.data, shapesChanges } })
+            dispatch({ type: 'OPTIMIZE', payload: response })
           })
           .catch(err => console.log(err))
       } else {

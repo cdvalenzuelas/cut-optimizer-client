@@ -3,6 +3,10 @@ button {
   @include inputs  
 }
 
+button {
+  cursor: pointer;
+}
+
 .btn{   
   max-width: 150px;   
   border-radius: 0.5rem;
@@ -32,6 +36,6 @@ button {
     border-bottom: 2px solid var(--darkblue1);
     margin-right: 1rem;
     width: inherit;
-    color: inherit;
+    color: inherit;    
   }
 }

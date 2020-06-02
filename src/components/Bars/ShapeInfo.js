@@ -6,8 +6,13 @@ function ShapeInfo () {
 
   return (
     <>
-      <button name='newElements' onClick={handleChange}>Elements</button>
-      <button name='availableBars' onClick={handleChange}>Available Bars</button>
+      <div className='control-buttons'>
+        <div>
+          <button name='newElements' onClick={handleChange} className='btn-alert'>Elements</button>
+          <button name='availableBars' onClick={handleChange} className='btn-alert'>Available Bars</button>
+        </div>
+        <button name='deleteShape' onClick={handleChange} className='btn-alert'>Delete</button>
+      </div>
       <div className='infoContainer'>
         <label className='label input1'>
             Shape
@@ -25,9 +30,6 @@ function ShapeInfo () {
             Cut Length
           <input type='number' name='cutLength' onChange={handleChange} value={cutLength} />
         </label>
-        <button name='deleteShape' onClick={handleChange} className='btn-alert'>
-            Delete
-        </button>
       </div>
     </>
   )
