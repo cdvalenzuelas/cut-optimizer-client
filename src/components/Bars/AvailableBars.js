@@ -1,11 +1,11 @@
 import React from 'react'
-import useAvailableBarsHook from './useAvailableBarsHook'
+import useAvailableBars from './useAvailableBars'
 import ShapeInfo from './ShapeInfo'
 
 import ListOfAvailableBars from './ListOfAvailableBars'
 
 const AvailableBars = () => {
-  const { handleChange, availableBars } = useAvailableBarsHook()
+  const { handleChange, availableBars } = useAvailableBars()
 
   return (
     <div className='Bars'>

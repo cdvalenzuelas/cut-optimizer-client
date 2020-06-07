@@ -32,8 +32,15 @@ function useShapeInfoHook () {
       request.splice(currentShape, 1)
       const request3 = JSON.parse(request2)
       request3.splice(currentShape, 1)
+      let current
 
-      dispatch({ type: 'DELETE_SHAPE', payload: JSON.stringify(request3) })
+      if (currentShape !== 0) {
+        current = currentShape - 1
+      } else {
+        current = request.length !== 0 ? 0 : -1
+      }
+
+      dispatch({ type: 'DELETE_SHAPE', payload: { request2: JSON.stringify(request3), currentShape: current } })
     }
   }
 

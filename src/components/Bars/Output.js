@@ -1,23 +1,9 @@
 // Dependencies
 import React from 'react'
-import { useSelector } from 'react-redux'
+import useOutput from './useOutput'
 
 const Output = () => {
-  const { response, currentShape } = useSelector((state) => state.cutOptimizer)
-  let shape
-  let maxLength
-  let bars
-
-  if (response[currentShape]) {
-    shape = response[currentShape]
-    bars = shape.bars
-    maxLength = bars[0].length
-    bars.forEach(bar => {
-      if (bar.length > maxLength) {
-        maxLength = bar.length
-      }
-    })
-  }
+  const { bars, maxLength } = useOutput()
 
   return (
     <div className='Bars'>

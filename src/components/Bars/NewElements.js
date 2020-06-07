@@ -1,10 +1,10 @@
 import React from 'react'
-import useNewElementsHook from './useNewElementsHook'
+import useNewElements from './useNewElements'
 import ListOfElements from './ListOfElements'
 import ShapeInfo from './ShapeInfo'
 
 const NewElements = () => {
-  const { handleChange, list, elementsNames } = useNewElementsHook()
+  const { handleChange, list, elementsNames } = useNewElements()
   return (
     <div className='Bars'>
       {

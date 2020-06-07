@@ -1,5 +1,5 @@
 import React from 'react'
-import useShapeInfo from './useShapeInfoHook'
+import useShapeInfo from './useShapeInfo'
 
 function ShapeInfo () {
   const { handleChange, shapeName, material, defaultlengthBar, cutLength } = useShapeInfo()

@@ -34,8 +34,8 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload }) => {
       state.request2 = payload.request3
       return state
     case 'DELETE_SHAPE':
-      state.currentShape -= 1
-      state.request2 = payload
+      state.currentShape = payload.currentShape
+      state.request2 = payload.request2
       state.elementsNames.splice(currentShape, 1)
       return state
     case 'ADD_ELEMENT':
@@ -51,7 +51,6 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload }) => {
       return state
     case 'DELETE_ELEMENT':
       state.elementsNames[currentShape].splice(payload, 1)
-      state.request2 = payload
       return state
     case 'OPTIMIZE':
       state.response = payload

@@ -43,3 +43,14 @@ body {
   font-family: var(--font1);
   font-size: 1rem;
 }
+
+::-webkit-scrollbar {
+  width: 0.5rem;     /* Tamaño del scroll en vertical */
+  height: 0.5rem;    /* Tamaño del scroll en horizontal */
+  // display: none;  /* Ocultar scroll */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--orange1);
+  border-radius: 4px;}
+

@@ -32,16 +32,14 @@ function useNewElementsHook () {
 
       dispatch({ type: 'MODIFY_ELEMENT', payload: { element, field, value, request3 } })
     } else if (name.startsWith('deleteElement')) {
+      console.log('estoy aqui')
+      console.log(request2)
       const regex = /deleteElement(\d{1,})/
       const match = regex.exec(name)
       const element = Number(match[1])
-      console.log(request[currentShape].list)
       request[currentShape].list.splice(element, 1)
-      console.log(request[currentShape].list)
-      const request3 = JSON.parse(request2)
-      request3[currentShape].list.splice(element, 1)
 
-      dispatch({ type: 'DELETE_ELEMENT', payload: JSON.stringify(request3) })
+      dispatch({ type: 'DELETE_ELEMENT' })
     }
   }
 

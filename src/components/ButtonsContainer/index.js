@@ -1,13 +1,13 @@
 // Dependencies
-import React from 'react'
+import React, { memo } from 'react'
 
 // Hooks
-import useButtonsHook from './useButtonsHook'
+import useButtons from './useButtons'
 
 import './styles.scss'
 
 const ButtonContainer = () => {
-  const { handleChange, request, mode, currentShape } = useButtonsHook()
+  const { handleChange, request, mode, currentShape } = useButtons()
 
   return (
     <div className='ButtonsContainer'>
@@ -40,4 +40,4 @@ const ButtonContainer = () => {
   )
 }
 
-export default ButtonContainer
+export default memo(ButtonContainer)
