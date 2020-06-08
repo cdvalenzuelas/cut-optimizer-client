@@ -1,5 +1,5 @@
 // Dependencies
-import React, { memo } from 'react'
+import React from 'react'
 
 // Hooks
 import useButtons from './useButtons'
@@ -7,16 +7,19 @@ import useButtons from './useButtons'
 import './styles.scss'
 
 const ButtonContainer = () => {
-  const { handleChange, request, mode, currentShape } = useButtons()
+  const { handleChange, request, mode, currentShape, shapeError } = useButtons()
 
   return (
     <div className='ButtonsContainer'>
       <div className='shapesButtons'>
         {request.map((item, index) => {
           const className = index === currentShape ? 'shapeInfo-selected' : 'shapeInfo'
+          const style = shapeError[index] === 0
+            ? { borderLeft: '0.5rem solid var(--darkblue2)' }
+            : { borderLeft: '0.5rem solid var(--orange1)' }
 
           return (
-            <button key={index} value={`${index}`} onClick={handleChange} name='shapeInfo' className={className}>
+            <button key={index} value={`${index}`} onClick={handleChange} name='shapeInfo' className={className} style={style}>
               <h3>{index + 1}. {item.shapeName}</h3>
               <span>{item.material}</span>
             </button>
@@ -40,4 +43,4 @@ const ButtonContainer = () => {
   )
 }
 
-export default memo(ButtonContainer)
+export default ButtonContainer

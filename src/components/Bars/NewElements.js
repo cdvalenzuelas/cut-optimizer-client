@@ -5,6 +5,7 @@ import ShapeInfo from './ShapeInfo'
 
 const NewElements = () => {
   const { handleChange, list, elementsNames } = useNewElements()
+
   return (
     <div className='Bars'>
       {

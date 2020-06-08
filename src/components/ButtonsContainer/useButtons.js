@@ -4,43 +4,57 @@ import { useDispatch, useSelector } from 'react-redux'
 // Hooks
 import fetchData from '../../utils/fetchData'
 
-const DEFAULT_SHAPE = {
-  shapeName: 'HEA-180',
-  material: 'ASTM A36',
-  defaultlengthBar: 6000,
-  cutLength: 3,
-  availableBars: [],
-  list: []
-}
-
-const useButtonsHook = () => {
+const useButtons = () => {
   const dispatch = useDispatch()
-  const { request, request2, mode, currentShape, response } = useSelector(state => state.cutOptimizer)
+  const { request, mode, currentShape, response, elementsNames, shapeError } = useSelector(state => state.cutOptimizer)
+  let { request2 } = useSelector(state => state.cutOptimizer)
 
   const handleChange = e => {
     const { name, value } = e.target
 
     if (name === 'edit') {
-      dispatch({ type: 'SET_MODE' })
+      dispatch({ type: 'SET_MODE', payload: { mode: mode === 'input' ? 'output' : 'input' } })
     } else if (name === 'shapeInfo') {
       if (currentShape !== Number(value)) {
-        dispatch({ type: 'SET_CURRENT_SHAPE', payload: Number(value) })
+        dispatch({ type: 'SET_CURRENT_SHAPE', payload: { currentShape: Number(value) } })
       }
     } else if (name === 'newShape') {
+      const DEFAULT_SHAPE = {
+        shapeName: 'HEA-180',
+        material: 'ASTM A36',
+        defaultlengthBar: 6000,
+        cutLength: 3,
+        availableBars: [],
+        list: []
+      }
+
       request.push(Object.assign({}, DEFAULT_SHAPE))
       const request3 = JSON.parse(request2)
       const newShape = Object.assign({}, DEFAULT_SHAPE)
       newShape.cutLength = 0
       request3.push(newShape)
 
-      dispatch({ type: 'CREATE_NEW_SHAPE', payload: JSON.stringify(request3) })
+      shapeError.push(1)
+      elementsNames.push([])
+
+      dispatch({
+        type: 'CREATE_NEW_SHAPE',
+        payload: {
+          request,
+          request2: JSON.stringify(request3),
+          currentShape: currentShape + 1,
+          newElements: true,
+          elementsNames,
+          shapeError
+        }
+      })
     } else if (name === 'optimize') {
       const request3 = []
       const request4 = JSON.parse(request2)
       const indexes = []
 
       request.forEach((shape, index) => {
-        if (JSON.stringify(shape) !== JSON.stringify(request4[index]) && shape.list.length > 0) {
+        if (JSON.stringify(shape) !== JSON.stringify(request4[index]) && shapeError[index] === 0) {
           const shape2 = JSON.stringify(shape)
           request3.push(JSON.parse(shape2))
           indexes.push(index)
@@ -52,6 +66,8 @@ const useButtonsHook = () => {
         request3.forEach(shape => {
           shape.list.sort((a, b) => b.length - a.length)
         })
+
+        console.log(request3)
 
         // 'https://cut-optimizator-api.now.sh/'
 
@@ -73,16 +89,25 @@ const useButtonsHook = () => {
               })
             })
 
-            dispatch({ type: 'OPTIMIZE', payload: response })
+            request2 = JSON.stringify(request)
+
+            dispatch({
+              type: 'OPTIMIZE',
+              payload: {
+                request2,
+                response,
+                mode: 'output'
+              }
+            })
           })
           .catch(err => console.log(err))
       } else {
-        dispatch({ type: 'SET_MODE' })
+        dispatch({ type: 'SET_MODE', payload: { mode: mode === 'input' ? 'output' : 'input' } })
       }
     }
   }
 
-  return { handleChange, request, mode, currentShape }
+  return { handleChange, request, mode, currentShape, shapeError }
 }
 
-export default useButtonsHook
+export default useButtons
