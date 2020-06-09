@@ -52,7 +52,8 @@ function useShapeInfo () {
           request2: JSON.stringify(request3),
           currentShape: current,
           elementsNames,
-          shapeError
+          shapeError,
+          readyToSend: shapeError.length !== 0 ? shapeError.reduce((a, b) => a + b, 0) : 1
         }
       })
     }

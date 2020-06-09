@@ -45,7 +45,8 @@ const useButtons = () => {
           currentShape: currentShape + 1,
           newElements: true,
           elementsNames,
-          shapeError
+          shapeError,
+          readyToSend: shapeError.reduce((a, b) => a + b, 0)
         }
       })
     } else if (name === 'optimize') {
@@ -55,9 +56,11 @@ const useButtons = () => {
 
       request.forEach((shape, index) => {
         if (JSON.stringify(shape) !== JSON.stringify(request4[index]) && shapeError[index] === 0) {
-          const shape2 = JSON.stringify(shape)
-          request3.push(JSON.parse(shape2))
+          const shape2 = Object.assign({}, shape)
+          request3.push(shape2)
           indexes.push(index)
+          /* const shape2 = JSON.stringify(shape)
+          request3.push(JSON.parse(shape2)) */
         }
       })
 

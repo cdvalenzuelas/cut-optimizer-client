@@ -4,7 +4,7 @@ import ListOfElements from './ListOfElements'
 import ShapeInfo from './ShapeInfo'
 
 const NewElements = () => {
-  const { handleChange, list, elementsNames } = useNewElements()
+  const { handleChange, list, elementsNames, defaultlengthBar } = useNewElements()
 
   return (
     <div className='Bars'>
@@ -12,7 +12,12 @@ const NewElements = () => {
         list &&
           <div className='Bars_bar'>
             <ShapeInfo />
-            <ListOfElements elements={list} handleChange={handleChange} elementsNames={elementsNames} />
+            <ListOfElements
+              elements={list}
+              handleChange={handleChange}
+              elementsNames={elementsNames}
+              defaultlengthBar={defaultlengthBar}
+            />
           </div>
       }
     </div>

@@ -24,11 +24,23 @@ function ShapeInfo () {
         </label>
         <label className='label input3'>
             Default Length
-          <input type='number' name='defaultlengthBar' onChange={handleChange} value={defaultlengthBar} />
+          <input
+            type='number'
+            name='defaultlengthBar'
+            onChange={handleChange}
+            value={defaultlengthBar}
+            min={cutLength !== 0 ? cutLength : 1}
+          />
         </label>
         <label className='label input4'>
             Cut Length
-          <input type='number' name='cutLength' onChange={handleChange} value={cutLength} />
+          <input
+            type='number'
+            name='cutLength'
+            onChange={handleChange}
+            value={cutLength}
+            min={0}
+          />
         </label>
       </div>
     </>

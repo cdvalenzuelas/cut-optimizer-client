@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ListOfElements ({ elements, handleChange, elementsNames }) {
+function ListOfElements ({ elements, handleChange, elementsNames, defaultlengthBar }) {
   return (
     <table>
       <colgroup>
@@ -22,18 +22,33 @@ function ListOfElements ({ elements, handleChange, elementsNames }) {
       <tbody>
         {elements.map((item2, index2) => {
           const { name, quantity, length } = item2
-          const backgrund = elementsNames.filter(name2 => name2 === name).length > 1 ? { background: 'red' } : { background: 'initial' }
+          { /* const backgrund = elementsNames.filter(name2 => name2 === name).length > 1 ? { background: 'red' } : { background: 'initial' } */ }
 
           return (
             <tr key={index2}>
               <td>
-                <input name={`elementName${index2}`} type='text' value={name} onChange={handleChange} style={backgrund} />
+                <input name={`elementName${index2}`} type='text' value={name} onChange={handleChange} />
               </td>
               <td>
-                <input name={`elementQuantity${index2}`} type='text' value={quantity} onChange={handleChange} />
+                <input
+                  name={`elementQuantity${index2}`}
+                  type='number'
+                  value={quantity}
+                  onChange={handleChange}
+                  min={1}
+                  step={0.1}
+                />
               </td>
               <td>
-                <input name={`elementLength${index2}`} type='text' value={length} onChange={handleChange} />
+                <input
+                  name={`elementLength${index2}`}
+                  type='number'
+                  value={length}
+                  onChange={handleChange}
+                  max={defaultlengthBar}
+                  min={1}
+                  step={0.1}
+                />
               </td>
               <td>
                 <button name={`deleteElement${index2}`} onClick={handleChange} value={index2} className='btn-alert'>-</button>
