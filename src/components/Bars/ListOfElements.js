@@ -27,14 +27,21 @@ function ListOfElements ({ elements, handleChange, elementsNames, defaultlengthB
           return (
             <tr key={index2}>
               <td>
-                <input name={`elementName${index2}`} type='text' value={name} onChange={handleChange} />
+                <input
+                  name={`elementName${index2}`}
+                  type='text'
+                  value={name}
+                  onChange={handleChange}
+                  autoComplete='off'
+                />
               </td>
               <td>
                 <input
                   name={`elementQuantity${index2}`}
                   type='number'
-                  value={quantity}
+                  value={quantity.toString()}
                   onChange={handleChange}
+                  autoComplete='off'
                   min={1}
                   step={0.1}
                 />
@@ -43,8 +50,9 @@ function ListOfElements ({ elements, handleChange, elementsNames, defaultlengthB
                 <input
                   name={`elementLength${index2}`}
                   type='number'
-                  value={length}
+                  value={length.toString()}
                   onChange={handleChange}
+                  autoComplete='off'
                   max={defaultlengthBar}
                   min={1}
                   step={0.1}

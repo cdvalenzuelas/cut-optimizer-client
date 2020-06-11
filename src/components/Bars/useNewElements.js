@@ -1,7 +1,9 @@
 // Dependenies
 import { useDispatch, useSelector } from 'react-redux'
+import useValidateShape from '../../Hooks/cutOptimizer/useValidateShape'
 
 function useNewElements () {
+  const { shapeValidator } = useValidateShape()
   const { request, currentShape, request2, elementsNames, shapeError } = useSelector(state => state.cutOptimizer)
   const list = request[currentShape] ? request[currentShape].list : undefined
   const dispatch = useDispatch()
@@ -10,25 +12,14 @@ function useNewElements () {
     let { name, value } = e.target
 
     if (name === 'addElement') {
-      if (request[currentShape].list.length === 0) {
-        shapeError[currentShape] = 0
-      }
+      const { defaultlengthBar } = request[currentShape]
 
-      request[currentShape].list.push({ name: 'PXXX', quantity: 1, length: 1000 })
+      shapeError[currentShape] = shapeValidator(name)
+      list.push({ name: 'PXXX', quantity: 1, length: Math.round(defaultlengthBar * 0.5) })
       const request3 = JSON.parse(request2)
-      request3[currentShape].list.push({ name: 'PXXX', quantity: 0, length: 1000 })
+      request3[currentShape].list.push({ name: 'PXXX', quantity: 0, length: Math.round(defaultlengthBar * 0.5) })
       elementsNames[currentShape].push('PXXX')
-
-      if (request[currentShape].list.length >= 2) {
-        const cond1 = request[currentShape].list.some(element2 => {
-          const internalLenght = elementsNames[currentShape].filter(name2 => name2 === element2.name).length
-          return internalLenght > 1
-        })
-
-        if (cond1) {
-          shapeError[currentShape] = 1
-        }
-      }
+      shapeError[currentShape] = shapeValidator(name)
 
       dispatch({
         type: 'ADD_ELEMENT',
@@ -48,22 +39,25 @@ function useNewElements () {
       const { defaultlengthBar } = request[currentShape]
 
       if (field === 'quantity' || field === 'length') {
-        const regex2 = /([0]?)([0-9]+)([.])?([0-9]+)?/
-        const match2 = regex2.exec(value)
+        if (value) {
+          const regex2 = /([0]+)?([0-9]+)([.])?([0-9]+)?/
+          const match2 = regex2.exec(value)
+          console.log(match2)
 
-        if (!match2[4] || !match2[3]) {
-          value = Number(`${match2[2]}`)
+          if (!match2[4] || !match2[3]) {
+            value = Number(`${match2[2]}`)
+          } else {
+            value = Number(`${match2[2]}${match2[3]}${match2[4]}`)
+          }
+
+          if (field === 'quantity') {
+            value = Number(value) < 1 ? 1 : Number(value)
+          } else {
+            value = Number(value) > defaultlengthBar ? defaultlengthBar : Number(value)
+            value = Number(value) < 1 ? 1 : Number(value)
+          }
         } else {
-          value = Number(`${match2[2]}${match2[3]}${match2[4]}`)
-        }
-
-        console.log(value)
-
-        if (field === 'quantity') {
-          value = Number(value) < 1 ? 1 : Number(value)
-        } else {
-          value = Number(value) > defaultlengthBar ? defaultlengthBar : Number(value)
-          value = Number(value) < 1 ? 1 : Number(value)
+          value = list[element][field]
         }
       } else {
         request3 = JSON.parse(request2)
@@ -75,19 +69,9 @@ function useNewElements () {
         elementsNames[currentShape][element] = value
       }
 
-      request[currentShape].list[element][field] = value
+      list[element][field] = value
 
-      const cond1 = request[currentShape].list.some(element2 => element2.length > request[currentShape].defaultlengthBar)
-      const cond2 = request[currentShape].list.some(element2 => {
-        const internalLenght = elementsNames[currentShape].filter(name2 => name2 === element2.name).length
-        return internalLenght > 1
-      })
-
-      if (cond1 || cond2) {
-        shapeError[currentShape] = 1
-      } else {
-        shapeError[currentShape] = 0
-      }
+      shapeError[currentShape] = shapeValidator(name)
 
       dispatch({
         type: 'MODIFY_ELEMENT',
@@ -102,12 +86,9 @@ function useNewElements () {
       const regex = /deleteElement(\d{1,})/
       const match = regex.exec(name)
       const element = Number(match[1])
-      request[currentShape].list.splice(element, 1)
+      list.splice(element, 1)
       elementsNames[currentShape].splice(element, 1)
-
-      if (request[currentShape].list.length === 0) {
-        shapeError[currentShape] = 1
-      }
+      shapeError[currentShape] = shapeValidator(name)
 
       dispatch({
         type: 'DELETE_ELEMENT',

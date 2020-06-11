@@ -25,7 +25,7 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload }) => {
     case 'CREATE_NEW_SHAPE':
       return Object.assign({}, state, { request, currentShape, newElements, elementsNames, request2, shapeError, readyToSend })
     case 'MODIFY_SHAPE':
-      return Object.assign({}, state, { request, request2 })
+      return Object.assign({}, state, { request, request2, shapeError })
     case 'DELETE_SHAPE':
       return Object.assign({}, state, { currentShape, request2, elementsNames, shapeError, readyToSend })
     case 'ADD_ELEMENT':

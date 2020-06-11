@@ -59,8 +59,6 @@ const useButtons = () => {
           const shape2 = Object.assign({}, shape)
           request3.push(shape2)
           indexes.push(index)
-          /* const shape2 = JSON.stringify(shape)
-          request3.push(JSON.parse(shape2)) */
         }
       })
 

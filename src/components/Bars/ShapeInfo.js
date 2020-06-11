@@ -28,8 +28,9 @@ function ShapeInfo () {
             type='number'
             name='defaultlengthBar'
             onChange={handleChange}
-            value={defaultlengthBar}
-            min={cutLength !== 0 ? cutLength : 1}
+            autoComplete='off'
+            value={defaultlengthBar.toString()}
+            min={cutLength}
           />
         </label>
         <label className='label input4'>
@@ -38,7 +39,9 @@ function ShapeInfo () {
             type='number'
             name='cutLength'
             onChange={handleChange}
-            value={cutLength}
+            autoComplete='off'
+            value={cutLength.toString()}
+            max={defaultlengthBar}
             min={0}
           />
         </label>

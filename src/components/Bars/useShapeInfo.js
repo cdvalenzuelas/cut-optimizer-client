@@ -1,8 +1,10 @@
 // Dependenies
 import { useDispatch, useSelector } from 'react-redux'
+import useValidateShape from '../../Hooks/cutOptimizer/useValidateShape'
 
 function useShapeInfo () {
   const { request, currentShape, newElements, request2, elementsNames, shapeError } = useSelector(state => state.cutOptimizer)
+  const { errorValidator } = useValidateShape()
   const dispatch = useDispatch()
 
   const shape = request[currentShape]
@@ -21,16 +23,30 @@ function useShapeInfo () {
       let request3 = request2
 
       if (name === 'defaultlengthBar' || name === 'cutLength') {
-        value = Number(value)
+        if (value) {
+          const regex2 = /([0-9]+)([.])?([0-9]+)?/
+          const match2 = regex2.exec(value)
+
+          if (!match2[3] || !match2[2]) {
+            value = Number(`${match2[1]}`)
+          } else {
+            value = Number(`${match2[1]}${match2[2]}${match2[3]}`)
+          }
+
+          value = Number(value) < 1 ? 1 : Number(value)
+        } else {
+          value = request[currentShape][name]
+        }
       } else {
         request3 = JSON.parse(request3)
         request3[currentShape][name] = value
         request3 = JSON.stringify(request3)
       }
 
+      shapeError[currentShape] = errorValidator(name, value)
       request[currentShape][name] = value
 
-      dispatch({ type: 'MODIFY_SHAPE', payload: { request, request2: request3 } })
+      dispatch({ type: 'MODIFY_SHAPE', payload: { request, request2: request3, shapeError } })
     } else if (name === 'deleteShape') {
       request.splice(currentShape, 1)
       const request3 = JSON.parse(request2)
