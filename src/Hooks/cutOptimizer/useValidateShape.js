@@ -4,13 +4,13 @@ const useValidateCutOptimizer = () => {
   const { request, currentShape, elementsNames, shapeError } = useSelector(state => state.cutOptimizer)
 
   const shapeValidator = (field, value) => {
-    if (field === 'defaultlengthBar') {
+    if (field === 'defaultlengthBar' && request[currentShape].list.length > 0) {
       const { list } = request[currentShape]
       const cond1 = list.some(element2 => element2.length > value)
       const cond2 = value < request[currentShape].cutLength
 
-      return cond1 || cond2 ? 1 : 0
-    } else if (field === 'cutLength') {
+      return (cond1 || cond2) ? 1 : 0
+    } else if (field === 'cutLength' && request[currentShape].list.length > 0) {
       const cond1 = value > request[currentShape].defaultlengthBar
 
       return cond1 ? 1 : 0
@@ -21,12 +21,15 @@ const useValidateCutOptimizer = () => {
       return cond1 ? 1 : 0
     } else if (field.startsWith('elementName')) {
       const { list } = request[currentShape]
+
       const cond1 = list.some(element2 => {
         const internalLenght = elementsNames[currentShape].filter(name2 => name2 === element2.name).length
         return internalLenght > 1
       })
+      const cond2 = value === ''
+      console.log(cond1, cond2)
 
-      return cond1 ? 1 : 0
+      return cond1 || cond2 ? 1 : 0
     } else if (field === 'addElement') {
       const { list } = request[currentShape]
 

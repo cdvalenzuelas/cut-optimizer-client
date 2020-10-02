@@ -4,7 +4,7 @@ import useValidateShape from '../../Hooks/cutOptimizer/useValidateShape'
 
 function useShapeInfo () {
   const { request, currentShape, newElements, request2, elementsNames, shapeError } = useSelector(state => state.cutOptimizer)
-  const { errorValidator } = useValidateShape()
+  const { shapeValidator } = useValidateShape()
   const dispatch = useDispatch()
 
   const shape = request[currentShape]
@@ -24,15 +24,6 @@ function useShapeInfo () {
 
       if (name === 'defaultlengthBar' || name === 'cutLength') {
         if (value) {
-          const regex2 = /([0-9]+)([.])?([0-9]+)?/
-          const match2 = regex2.exec(value)
-
-          if (!match2[3] || !match2[2]) {
-            value = Number(`${match2[1]}`)
-          } else {
-            value = Number(`${match2[1]}${match2[2]}${match2[3]}`)
-          }
-
           value = Number(value) < 1 ? 1 : Number(value)
         } else {
           value = request[currentShape][name]
@@ -43,8 +34,8 @@ function useShapeInfo () {
         request3 = JSON.stringify(request3)
       }
 
-      shapeError[currentShape] = errorValidator(name, value)
       request[currentShape][name] = value
+      shapeError[currentShape] = shapeValidator(name, value)
 
       dispatch({ type: 'MODIFY_SHAPE', payload: { request, request2: request3, shapeError } })
     } else if (name === 'deleteShape') {
