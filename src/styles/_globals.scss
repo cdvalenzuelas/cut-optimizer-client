@@ -1,56 +1,88 @@
-:root{
+:root {
   // COLORS
-  --primary: #307ABF ;
-  --secundary:#C2290A;
-  // DARKBLUE
-  --darkblue1:#2166A6;
-  --darkblue2:#15538C;
-  --darkblue3:#0B4073;
-  //LIGHTBLUE
-  --lightblue1: #478CCC;
-  --lightblue2: #629FD9;
-  --lightblue3: #7EB4E5;
+  --primary: #ff2426;
+  --secundary: #ff9259;
+  --tertiary: #6816fd;
   // GRAY_SCALE
-  --gray1: #29333D;
-  --gray2: #48596B;
-  --gray3: #677F98;
-  --gray4: #95A5B7; 
-  //ORANGE
-  --orange1: #E53B1A;
-  --orange2: #E06952;
-  --orange3: #E09385;
-  // BASE FONT 
-  font-size: 16px; 
+  --gray1: #d7cfcf;
+  --gray2: #ece7e7;
   --font1: Roboto, "San-serif";
   // ZINDEX
   --zindex-1: -1;
   --zindex0: 0;
   --zindex1: 1;
   --zindex2: 2;
-  --zindex3: 3;  
+  --zindex3: 3;
+  // SCREEN SIZE
+  --large-desktop: 1200px;
+  --desktop: 992px;
+  --tablet: 600px;
+  --mobile: 600px;
+  // BOX-SHADOW
+  --boxShadow1: 0 10px 10px 0 var(--gray1);
+  // GRADIENTS
+  --gradient1: linear-gradient(90deg, var(--primary), var(--secundary));
 }
 
-*, ::after, ::before {
+*,
+::after,
+::before {
   margin: 0;
-  padding: 0;  
-  box-sizing: border-box;  
- //outline: 1px solid gray;
+  padding: 0;
+  box-sizing: border-box;
+  //outline: 1px solid gray;
 }
 
-body {  
+body {
   width: 100vw;
-  height: 100vh; 
+  height: 100vh;
   font-family: var(--font1);
   font-size: 1rem;
 }
 
 ::-webkit-scrollbar {
-  width: 0.5rem;     /* Tamaño del scroll en vertical */
-  height: 0.5rem;    /* Tamaño del scroll en horizontal */
+  width: 0.5rem; /* Tamaño del scroll en vertical */
+  height: 0.5rem; /* Tamaño del scroll en horizontal */
   // display: none;  /* Ocultar scroll */
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--orange1);
-  border-radius: 4px;}
+  border-radius: 4px;
+}
 
+@media only screen and (min-width: 1200px) {
+  :root {
+    font-size: 16px;
+  }
+  body {
+    background-color: var(--gray2);
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  :root {
+    font-size: 14px;
+  }
+  body {
+    background-color: blue;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  :root {
+    font-size: 12px;
+  }
+  body {
+    background-color: yellow;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  :root {
+    font-size: 10px;
+  }
+  body {
+    background-color: green;
+  }
+}

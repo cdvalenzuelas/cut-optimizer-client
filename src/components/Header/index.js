@@ -1,14 +1,20 @@
-import React from 'react'
+import React from "react";
 
-import './styles.scss'
+import "./styles.scss";
+
+import SearchBar from "../SearchBar";
+import NavBar from "../NavBar";
 
 const Header = () => {
   return (
-    <header className='Header' />
-  )
-}
+    <header className="Header">
+      <SearchBar />
+      <NavBar />
+    </header>
+  );
+};
 
-export default Header
+export default Header;
 
 /*  <input type="text"/>
       <nav>

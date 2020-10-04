@@ -45,13 +45,17 @@
     "url-loader": "4.1.0",
     "webpack": "4.43.0",
     "webpack-cli": "3.3.11",
-    "webpack-dev-server": "3.10.3"
+    "webpack-dev-server": "^3.11.0"
   },
   "proxy": "http://localhost:3000",
   "standard": {
-    "ignore": ["./public"]
+    "ignore": [
+      "./public"
+    ]
   },
   "eslintConfig": {
-    "extends": ["./node_modules/standard/eslintrc.json"]
-  }  
+    "extends": [
+      "./node_modules/standard/eslintrc.json"
+    ]
+  }
 }

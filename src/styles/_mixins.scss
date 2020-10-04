@@ -6,11 +6,34 @@
 @mixin inputs {
   outline: none;
   border: none;
-  background-color: white; 
+  background-color: white;
   font-size: 1em;
   line-height: 1.1em;
   text-transform: uppercase;
   height: 2em;
   text-align: center;
-  padding: 0.5rem;  
+  padding: 0.5rem;
+}
+
+@mixin gridContainer($horizontal, $vertical, $hg, $vg) {
+  display: grid;
+  place-content: $vertical $horizontal;
+  grid-gap: $hg $vg;
+}
+
+@mixin gridItem($gridArea, $horizontal, $vertical) {
+  grid-area: $gridArea;
+  place-self: $vertical $horizontal;
+}
+
+@mixin flexContainer($flexDirection, $alignItems, $justifyContent, $flexWrap) {
+  display: flex;
+  flex-direction: $flexDirection;
+  align-items: $alignItems;
+  justify-content: $justifyContent;
+  flex-wrap: $flexWrap;
+}
+
+@mixin flexItem($horizontal, $vertical) {
+  place-self: $vertical/$horizonal;
 }

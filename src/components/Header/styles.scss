@@ -1,21 +1,16 @@
+@import "../../styles/mixins";
+
 .Header {
   // LAYOUT
   width: 100vw;
-  height: 70px;    
-  display: flex;  
-  padding: 20px; 
-  position: fixed; 
+  height: 30px;
+  padding: 30px 10px;
+  @include gridContainer(center, center, 0, 10px);
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-areas: ". . SearchBar SearchBar SearchBar SearchBar SearchBar SearchBar SearchBar SearchBar NavBar NavBar";
+  position: fixed;
   z-index: var(--zindex1);
   // STYLES
-  background-color: white;
-  box-shadow: 0 2px 2px 0 var(--gray2); 
-  ul {
-    display: flex;
-    justify-content: space-between;
-  }   
-  input {
-    height: 60px;
-    width: 60%;    
-    outline: none;        
-  }
+  background-image: var(--gradient1);
+  box-shadow: var(--boxShadow1);
 }
