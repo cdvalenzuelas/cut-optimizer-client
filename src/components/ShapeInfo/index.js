@@ -1,22 +1,32 @@
-import React from "react";
+import React from 'react'
 
-import "./styles.scss";
+import './styles.scss'
 
-const ShapeInfo = ({ index, handleChange, className, style }) => {
+const ShapeInfo = ({
+  index,
+  currentShape,
+  shapeError,
+  handleChange,
+  item: { shapeName, material }
+}) => {
+  const className = index === currentShape ? 'shapeInfo-selected' : 'shapeInfo'
+  const style =
+    shapeError[index] === 0
+      ? { borderLeft: '0.5rem solid var(--prymary)' }
+      : { borderLeft: '0.5rem solid var(--tertiary)' }
+
+  const handle = () => {
+    console.log(index)
+  }
+
   return (
-    <button
-      value={`${index}`}
-      onClick={handleChange}
-      name="shapeInfo"
-      className={className}
-      style={style}
-    >
+    <div onClick={handle} name='shapeInfo' className={className} style={style}>
       <h3>
-        {index + 1}. {item.shapeName}
+        {index + 1}. {shapeName}
       </h3>
-      <span>{item.material}</span>
-    </button>
-  );
-};
+      <span>{material}</span>
+    </div>
+  )
+}
 
-export default ShapeInfo;
+export default ShapeInfo

@@ -1,41 +1,33 @@
 @import "../../styles/mixins";
 
 .SideBar {
-  // LAYOUT
   position: fixed;
-  height: 100vh;
-  width: (100vw)/6;
   display: inline-block;
+  @include dimensions((100vw)/6, 100vh);
   padding-top: 60px;
   z-index: var(--zindex0);
 
-  // STYLE
   background-color: var(--gray1);
   box-shadow: var(--boxShadow1);
 
+  &-Title {
+    color: var(--white);
+    background-color: var(--tertiary);
+    @include box(0.5rem, 0);
+  }
+
   &-Shapes {
-    // LAYOUT
-    height: auto;
     overflow-y: scroll;
-    @include flexContainer(column, flex-start, center, nowrap);
+    @include flexContainer(column, center, flex-start, nowrap);
+    @include dimensions(100%, calc(100vh - 60px - 112px - 38px));
   }
 
   &-Buttons {
-    // LAYOUT
-    width: 100%;
-    height: auto;
+    @include flexContainer(column, center, flex-start, nowrap);
+    @include dimensions(100%, auto);
+    @include box(0.5rem, 0);
     position: absolute;
-    padding: 0.5rem;
     bottom: 0;
-    // STYLES
-    background-color: inherit;
-    box-shadow: 0 -2px 2px 0 var(--gray2);
-
-    button {
-      margin: 0 auto;
-      margin-bottom: 0.3rem;
-      display: block;
-      width: 80%;
-    }
+    z-index: var(--zindex0);
   }
 }

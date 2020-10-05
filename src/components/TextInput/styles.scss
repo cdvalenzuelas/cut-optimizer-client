@@ -1,0 +1,10 @@
+@import "../../styles/mixins";
+
+.TextInput {
+  &-Input {
+    border-bottom: 3px solid var(--primary);
+    background-color: inherit;
+    text-align: left;
+    display: block;
+  }
+}

@@ -37,3 +37,17 @@
 @mixin flexItem($horizontal, $vertical) {
   place-self: $vertical/$horizonal;
 }
+
+@mixin outline {
+  outline: 1px solid salmon;
+}
+
+@mixin dimensions($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin box($padding, $margin) {
+  padding: $padding;
+  margin: $margin;
+}

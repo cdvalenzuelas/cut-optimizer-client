@@ -1,0 +1,37 @@
+@import "../../styles/mixins";
+
+.Main {
+  display: inline-block;
+  position: static;
+  @include dimensions(100vw * 10/12, 100vh);
+  @include box(60px 0 0 0, 0 0 0 100vw * 2/12);
+
+  &-Container {
+    @include flexContainer(column, center, space-between, nowrap);
+    @include dimensions(80%, 100%);
+    @include box(0, auto);
+  }
+}
+
+.SettingsContainer {
+  @include flexContainer(row, flex-start, space-between, nowrap);
+  @include dimensions(100%, auto);
+  @include box(0.5rem 0, 0);
+}
+
+.ActionContainer {
+  @include dimensions(100%, auto);
+
+  hr {
+    @include dimensions(100%, 3px);
+    background-color: var(--primary);
+    margin-bottom: 0.5rem;
+    border: none;
+  }
+
+  &-Buttons {
+    @include flexContainer(row, flex-start, center, nowrap);
+    @include dimensions(100%, auto);
+    @include box(0, 20px auto);
+  }
+}

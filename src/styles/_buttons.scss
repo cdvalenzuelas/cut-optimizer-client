@@ -1,41 +1,49 @@
 input,
 button {
-  @include inputs  
+  @include inputs;
 }
 
 button {
   cursor: pointer;
 }
 
-.btn{   
-  max-width: 150px;   
+.btn {
   border-radius: 0.5rem;
   cursor: pointer;
-  &-main {
-    @extend .btn;    
-    background-image: linear-gradient(to right, var(--darkblue2), var(--darkblue1));
-    color: white;
-    box-shadow: 0 0 3px 1px var(--gray4);      
+  box-shadow: var(--boxShadow2);
+  margin: 0.5rem;
+
+  &-primary {
+    @extend .btn;
+    background-color: var(--primary);
+    color: var(--white);
   }
-  &-alert {
-    @extend .btn; 
-    color: white;
-    background-image: linear-gradient(to right, var(--secundary), var(--orange1));
+
+  &-secondary {
+    @extend .btn;
+    color: var(--primary);
+    background-color: var(--white);
+  }
+
+  &-tertiary {
+    @extend .btn;
+    color: var(--white);
+    background-color: var(--tertiary);
   }
 }
 
-.label {  
-  font-family: var(--font1); 
+.label {
+  font-family: var(--font1);
   color: var(--darkblue2);
-  @include fontSize(.75rem); 
+  @include fontSize(0.75rem);
 
   input {
     @include fontSize(1rem);
     text-align: left;
-    display: block;    
+    display: block;
     border-bottom: 2px solid var(--darkblue1);
     margin-right: 1rem;
     width: inherit;
-    color: inherit;    
+    color: inherit;
   }
 }

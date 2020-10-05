@@ -1,12 +1,12 @@
 // Dependencies
-import React from "react";
+import React from 'react'
 
 // Hooks
-import useButtons from "./useButtons";
+import useButtons from './useButtons'
 
-import "./styles.scss";
+import './styles.scss'
 
-import ShapeInfo from "../ShapeInfo";
+import ShapeInfo from '../ShapeInfo'
 
 const SideBar = () => {
   const {
@@ -14,50 +14,60 @@ const SideBar = () => {
     request,
     mode,
     currentShape,
-    shapeError,
-  } = useButtons();
+    shapeError
+  } = useButtons()
 
   return (
-    <aside className="SideBar">
-      <div className="SideBar-Shapes">
+    <aside className='SideBar'>
+      <h2 className='SideBar-Title'>Shapes</h2>
+      <div className='SideBar-Shapes'>
         {request.map((item, index) => {
-          const className =
-            index === currentShape ? "shapeInfo-selected" : "shapeInfo";
-          const style =
-            shapeError[index] === 0
-              ? { borderLeft: "0.5rem solid var(--prymary)" }
-              : { borderLeft: "0.5rem solid var(--tertiary)" };
-
           return (
             <ShapeInfo
               key={index}
               index={index}
               handleChange={handleChange}
-              className={className}
-              style={style}
+              currentShape={currentShape}
+              shapeError={shapeError}
+              item={item}
             />
-          );
+          )
         })}
       </div>
-      {mode === "input" && (
-        <div className="actionsButtons">
-          <button className="btn-main" name="newShape" onClick={handleChange}>
+      {mode === 'input' && (
+        <div className='SideBar-Buttons'>
+          <button
+            className='btn-secondary'
+            name='newShape'
+            onClick={handleChange}
+            style={{ width: '80%' }}
+          >
             New
           </button>
-          <button className="btn-main" name="optimize" onClick={handleChange}>
+          <button
+            className='btn-primary'
+            name='optimize'
+            onClick={handleChange}
+            style={{ width: '80%' }}
+          >
             Optimize
           </button>
         </div>
       )}
-      {mode === "output" && (
-        <div className="actionsButtons">
-          <button className="btn-main" name="edit" onClick={handleChange}>
+      {mode === 'output' && (
+        <div className='SideBar-Buttons'>
+          <button
+            style={{ width: '80%' }}
+            className='btn-primary'
+            name='edit'
+            onClick={handleChange}
+          >
             Edit
           </button>
         </div>
       )}
     </aside>
-  );
-};
+  )
+}
 
-export default SideBar;
+export default SideBar

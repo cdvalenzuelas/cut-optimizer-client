@@ -1,13 +1,12 @@
+@import "../../styles/mixins";
+
 .shapeInfo {
-  // LAYOUT
-  width: 100%;
-  height: auto;
+  @include dimensions(100%, auto);
+  @include box(0.5rem 1rem 0.2rem, 0 0 1px 0);
   display: block;
   text-align: left;
-  padding: 0.5rem 1rem 0.2rem;
-  background-color: inherit;
-  color: inherit;
-  border-bottom: 1px solid var(--gray4);
+  cursor: pointer;
+  box-shadow: 0 1px 0 0 var(--secundary);
 
   span,
   h3 {
@@ -31,4 +30,10 @@
     @extend .shapeInfo;
     background-color: var(--gray1);
   }
+}
+
+.hr {
+  @include dimensions(100%, 1px);
+  background-color: var(--primary);
+  border: none;
 }

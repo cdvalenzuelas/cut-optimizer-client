@@ -1,0 +1,4 @@
+{
+    "standard.run": "onSave",
+    "files.autoSave": "onFocusChange"
+}

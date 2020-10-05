@@ -1,0 +1,27 @@
+:root {
+  // COLORS
+  --primary: #ff2426;
+  --secundary: #ff9259;
+  --tertiary: #6816fd;
+  --white: #fff;
+  // GRAY_SCALE
+  --gray1: #d7cfcf;
+  --gray2: #ece7e7;
+  --font1: Roboto, "San-serif";
+  // ZINDEX
+  --zindex-1: -1;
+  --zindex0: 0;
+  --zindex1: 1;
+  --zindex2: 2;
+  --zindex3: 3;
+  // SCREEN SIZE
+  --large-desktop: 1200px;
+  --desktop: 992px;
+  --tablet: 600px;
+  --mobile: 600px;
+  // BOX-SHADOW
+  --boxShadow1: 0 10px 10px 0 var(--gray1);
+  --boxShadow2: 0 3px 3px 0 var(--gray2);
+  // GRADIENTS
+  --gradient1: linear-gradient(90deg, var(--primary), var(--secundary));
+}
