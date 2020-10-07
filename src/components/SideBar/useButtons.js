@@ -10,14 +10,10 @@ const useButtons = () => {
   let { request2 } = useSelector(state => state.cutOptimizer)
 
   const handleChange = e => {
-    const { name, value } = e.target
+    const { name } = e.target
 
     if (name === 'edit') {
       dispatch({ type: 'SET_MODE', payload: { mode: mode === 'input' ? 'output' : 'input' } })
-    } else if (name === 'shapeInfo') {
-      if (currentShape !== Number(value)) {
-        dispatch({ type: 'SET_CURRENT_SHAPE', payload: { currentShape: Number(value) } })
-      }
     } else if (name === 'newShape') {
       const DEFAULT_SHAPE = {
         shapeName: 'HEA-180',
@@ -69,8 +65,6 @@ const useButtons = () => {
         })
 
         console.log(request3)
-
-        // 'https://cut-optimizator-api.now.sh/'
 
         fetchData('https://cut-optimizer-api.now.sh/', request3, 'POST')
           .then(res => {

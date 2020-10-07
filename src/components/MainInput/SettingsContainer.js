@@ -11,7 +11,7 @@ const SettingsContainer = () => {
   const { handleChange, shapeName, material, defaultlengthBar, cutLength } = useSettings()
 
   return (
-    <div className='SettingsContainer'>
+    <section className='SettingsContainer'>
       <TextInput
         name='shapeName'
         label='Shape'
@@ -44,7 +44,7 @@ const SettingsContainer = () => {
         placeholder='ASTM A36'
         handleChange={handleChange}
       />
-    </div>
+    </section>
   )
 }
 

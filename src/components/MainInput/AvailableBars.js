@@ -1,10 +1,10 @@
 import React from 'react'
 
-function AvailableBars() {
+function AvailableBars () {
   return (
-    <div>
-      
-    </div>
+    <section>
+      AvailableBars
+    </section>
   )
 }
 

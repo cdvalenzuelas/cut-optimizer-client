@@ -1,11 +1,13 @@
 import React from 'react'
+import useItem from './useItem'
 
-const NewItem = ({ index2, name, handleChange, quantity, length, defaultlengthBar }) => {
+const NewItem = () => {
+  const { handleChange, quantity, defaultlengthBar } = useItem()
+
   return (
-    <div>
+    <div className='Items-Elements'>
       <input
         className='Items-Name'
-        name={`elementName${index2}`}
         type='text'
         value={name}
         onChange={handleChange}
@@ -13,9 +15,8 @@ const NewItem = ({ index2, name, handleChange, quantity, length, defaultlengthBa
       />
       <input
         className='Items-Quantity'
-        name={`elementQuantity${index2}`}
         type='number'
-        value={quantity.toString()}
+        value={quantity}
         onChange={handleChange}
         autoComplete='off'
         min={1}
@@ -23,18 +24,34 @@ const NewItem = ({ index2, name, handleChange, quantity, length, defaultlengthBa
       />
       <input
         className='Items-Lenght'
-        name={`elementLength${index2}`}
         type='number'
-        value={length.toString()}
+        value={length}
         onChange={handleChange}
         autoComplete='off'
         max={defaultlengthBar}
         min={1}
         step={0.1}
       />
-      <div>A</div>
+      <input
+        className='Items-Delete'
+        type='number'
+        value={length}
+        onChange={handleChange}
+        autoComplete='off'
+        max={defaultlengthBar}
+        min={1}
+        step={0.1}
+      />
+      <button name='deleteElement'>Delete</button>
     </div>
   )
 }
 
 export default NewItem
+
+/*
+name={`elementName${index2}`}
+name={`elementQuantity${index2}`}
+name={`elementLength${index2}`}
+name={`elementLength${index2}`}
+*/

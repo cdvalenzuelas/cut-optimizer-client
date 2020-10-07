@@ -1,8 +1,7 @@
-// Dependenies
 import { useDispatch, useSelector } from 'react-redux'
 import useValidateShape from '../../Hooks/cutOptimizer/useValidateShape'
 
-function useNewElements () {
+const useItem = () => {
   const { shapeValidator } = useValidateShape()
   const { request, currentShape, request2, elementsNames, shapeError } = useSelector(state => Object.assign({}, state.cutOptimizer, {}))
   const list = request[currentShape] ? request[currentShape].list : undefined
@@ -10,6 +9,7 @@ function useNewElements () {
 
   const handleChange = e => {
     let { name, value } = e.target
+    console.log(e)
 
     if (name.startsWith('elementName') || name.startsWith('elementQuantity') || name.startsWith('elementLength')) {
       const regex = /element(Name|Quantity|Length)(\d{1,})/
@@ -67,4 +67,4 @@ function useNewElements () {
   }
 }
 
-export default useNewElements
+export default useItem

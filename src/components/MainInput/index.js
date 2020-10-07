@@ -5,14 +5,17 @@ import './styles.scss'
 
 import SettingsContainer from './SettingsContainer'
 import ActionContainer from './ActionContainer'
-import Content from './Content'
+import Items from './Items'
+import AvailableBars from './AvailableBars'
 
 const MainInput = () => {
+  const { newElements } = useSelector(state => state.cutOptimizer)
+
   return (
     <main className='Main'>
       <div className='Main-Container'>
         <SettingsContainer />
-        <Content />
+        {newElements ? <Items /> : <AvailableBars />}
         <ActionContainer />
       </div>
     </main>

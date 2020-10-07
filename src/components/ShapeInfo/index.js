@@ -1,26 +1,14 @@
 import React from 'react'
-
 import './styles.scss'
+import useShape from './useShape'
 
-const ShapeInfo = ({
-  index,
-  currentShape,
-  shapeError,
-  handleChange,
-  item: { shapeName, material }
-}) => {
+const ShapeInfo = ({ index, currentShape, shapeError, item: { shapeName, material } }) => {
+  const { handleChange } = useShape()
   const className = index === currentShape ? 'shapeInfo-selected' : 'shapeInfo'
-  const style =
-    shapeError[index] === 0
-      ? { borderLeft: '0.5rem solid var(--prymary)' }
-      : { borderLeft: '0.5rem solid var(--tertiary)' }
-
-  const handle = () => {
-    console.log(index)
-  }
+  const style = { borderLeft: shapeError[index] === 0 ? '0.5rem solid var(--prymary)' : '0.5rem solid var(--tertiary)' }
 
   return (
-    <div onClick={handle} name='shapeInfo' className={className} style={style}>
+    <div onClick={e => handleChange(e, index)} name='shapeInfo' className={className} style={style}>
       <h3>
         {index + 1}. {shapeName}
       </h3>

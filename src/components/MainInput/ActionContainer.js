@@ -6,11 +6,10 @@ const ActionContainer = () => {
   const { handleChange, currentShape, newElements } = useActions()
 
   return (
-    <div className='ActionContainer'>
+    <section className='ActionContainer'>
       <hr />
       <p>
-        {newElements && 'Items'}
-        {!newElements && 'Bars'}
+        {newElements ? 'Items' : 'Bars'}
       </p>
       <div className='ActionContainer-Buttons'>
         <button style={{ width: '15%' }} className='btn-secondary' name='items' onClick={handleChange}>
@@ -23,7 +22,7 @@ const ActionContainer = () => {
           Delete
         </button>
       </div>
-    </div>
+    </section>
   )
 }
 

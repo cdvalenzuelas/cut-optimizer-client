@@ -35,3 +35,43 @@
     @include box(0, 20px auto);
   }
 }
+
+.Items {  
+  @include flexContainer(column, center, flex-start, nowrap);
+  @include dimensions(100%, auto);
+  flex-grow: 100;
+  overflow-y: scroll;
+
+  &-Title {
+    @include flexContainer(row, center, space-between, nowrap); 
+    @include dimensions (100%, auto);
+    
+    div {
+      @include box(0.5rem, 0);
+      border-top: 2px solid var(--gray1);         
+    }   
+  }
+
+  &-Elements {
+    @include flexContainer(row, center, space-between, nowrap); 
+    @include dimensions (100%, auto);
+  }
+  
+  &-Elements input {
+    background-color: inherit;
+    border-top: 2px solid var(--gray1);
+  }
+
+  &-Name, &-Quantity, &-Lenght {    
+    border-right: 2px solid var(--gray1);
+  }  
+
+  &-New {
+    @include dimensions (100%, auto);
+    border-bottom: 2px solid var(--gray1);
+    border-top: 2px solid var(--gray1); 
+    background-color: inherit;
+    text-align: left;
+    text-transform: capitalize;
+  }
+}

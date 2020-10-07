@@ -4,7 +4,7 @@ import useValidateShape from '../../Hooks/cutOptimizer/useValidateShape'
 
 function useShapeInfo () {
   const { request, currentShape, request2, shapeError } = useSelector(state => state.cutOptimizer)
-  const { cutLength, defaultlengthBar, material, shapeName } = request[currentShape] 
+  const { cutLength, defaultlengthBar, material, shapeName } = request[currentShape]
   const { shapeValidator } = useValidateShape()
   const dispatch = useDispatch()
 
