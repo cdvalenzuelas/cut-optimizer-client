@@ -2,8 +2,8 @@ import React from 'react'
 import './styles.scss'
 import useShape from './useShape'
 
-const ShapeInfo = ({ index, currentShape, shapeError, item: { shapeName, material } }) => {
-  const { handleChange } = useShape()
+const ShapeInfo = ({ index, item: { shapeName, material } }) => {
+  const { handleChange, currentShape, shapeError } = useShape()
   const className = index === currentShape ? 'shapeInfo-selected' : 'shapeInfo'
   const style = { borderLeft: shapeError[index] === 0 ? '0.5rem solid var(--prymary)' : '0.5rem solid var(--tertiary)' }
 

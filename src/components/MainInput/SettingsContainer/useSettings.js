@@ -1,6 +1,6 @@
 // Dependenies
 import { useDispatch, useSelector } from 'react-redux'
-import useValidateShape from '../../Hooks/cutOptimizer/useValidateShape'
+import useValidateShape from '../../../Hooks/cutOptimizer/useValidateShape'
 
 function useShapeInfo () {
   const { request, currentShape, request2, shapeError } = useSelector(state => state.cutOptimizer)

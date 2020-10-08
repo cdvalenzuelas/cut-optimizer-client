@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import useValidateShape from '../../Hooks/cutOptimizer/useValidateShape'
+import useValidateShape from '../../../Hooks/cutOptimizer/useValidateShape'
 
 const useItem = () => {
   const { shapeValidator } = useValidateShape()
@@ -7,27 +7,22 @@ const useItem = () => {
   const list = request[currentShape] ? request[currentShape].list : undefined
   const dispatch = useDispatch()
 
-  const handleChange = e => {
+  const handleChange = (e, item) => {
     let { name, value } = e.target
-    console.log(e)
 
-    if (name.startsWith('elementName') || name.startsWith('elementQuantity') || name.startsWith('elementLength')) {
-      const regex = /element(Name|Quantity|Length)(\d{1,})/
-      const match = regex.exec(name)
-      const element = Number(match[2])
-      const field = match[1].toLowerCase()
+    if (name === 'name' || name === 'quantity' || name === 'length') {
       let request3 = request2
 
-      if (field === 'quantity' || field === 'length') {
-        value = value ? Number(value) : list[element][field]
+      if (name === 'quantity' || name === 'length') {
+        value = value ? Number(value) : list[item][name]
       } else {
-        elementsNames[currentShape][element] = value
+        elementsNames[currentShape][item] = value
         request3 = JSON.parse(request2)
-        request3[currentShape].list[element][field] = value
+        request3[currentShape].list[item][name] = value
         request3 = JSON.stringify(request3)
       }
 
-      list[element][field] = value
+      list[item][name] = value
       shapeError[currentShape] = shapeValidator(name, value)
 
       dispatch({
@@ -39,12 +34,9 @@ const useItem = () => {
           readyToSend: shapeError.reduce((a, b) => a + b, 0)
         }
       })
-    } else if (name.startsWith('deleteElement')) {
-      const regex = /deleteElement(\d{1,})/
-      const match = regex.exec(name)
-      const element = Number(match[1])
-      list.splice(element, 1)
-      elementsNames[currentShape].splice(element, 1)
+    } else if (name === 'delete') {
+      list.splice(item, 1)
+      elementsNames[currentShape].splice(item, 1)
       shapeError[currentShape] = shapeValidator(name)
 
       dispatch({
@@ -59,12 +51,7 @@ const useItem = () => {
     }
   }
 
-  return {
-    handleChange,
-    list,
-    elementsNames: elementsNames[currentShape],
-    defaultlengthBar: request.length !== 0 ? request[currentShape].defaultlengthBar : 0
-  }
+  return { handleChange }
 }
 
 export default useItem

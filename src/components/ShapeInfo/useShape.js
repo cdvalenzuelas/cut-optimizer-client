@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 
 const useShape = () => {
-  const { currentShape } = useSelector(state => state.cutOptimizer)
+  const { currentShape, shapeError } = useSelector(state => state.cutOptimizer)
   const dispatch = useDispatch()
 
   const handleChange = (e, numberOfShape) => {
@@ -12,7 +12,7 @@ const useShape = () => {
     }
   }
 
-  return { handleChange }
+  return { handleChange, currentShape, shapeError }
 }
 
 export default useShape

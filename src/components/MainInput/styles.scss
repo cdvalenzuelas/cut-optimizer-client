@@ -43,7 +43,7 @@
   overflow-y: scroll;
 
   &-Title {
-    @include flexContainer(row, center, space-between, nowrap); 
+    @include flexContainer(row, center, center, nowrap); 
     @include dimensions (100%, auto);
     
     div {
@@ -53,25 +53,35 @@
   }
 
   &-Elements {
-    @include flexContainer(row, center, space-between, nowrap); 
-    @include dimensions (100%, auto);
+    @include flexContainer(row, center, center, nowrap); 
+    @include dimensions (100%, auto);    
   }
   
   &-Elements input {
     background-color: inherit;
     border-top: 2px solid var(--gray1);
+    flex: 1 1 inherit;
   }
-
-  &-Name, &-Quantity, &-Lenght {    
-    border-right: 2px solid var(--gray1);
-  }  
-
+  
   &-New {
     @include dimensions (100%, auto);
     border-bottom: 2px solid var(--gray1);
     border-top: 2px solid var(--gray1); 
-    background-color: inherit;
-    text-align: left;
+    background-color: inherit;    
     text-transform: capitalize;
+    text-align: left;
+  }
+
+  &-Delete {
+    background-color: inherit;
+    width: 10%;
+  }
+}
+
+@each $name in Name, Quantity, Lenght {
+  .Items-#{$name} {
+    width: 30%;
+    border-right: 2px solid var(--gray1);
+    text-align: left;
   }
 }

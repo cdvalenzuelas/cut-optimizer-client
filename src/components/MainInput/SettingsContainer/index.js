@@ -2,10 +2,8 @@ import React from 'react'
 
 import useSettings from './useSettings'
 
-import './styles.scss'
-
-import TextInput from '../TextInput'
-import NumberInput from '../NumberInput'
+import TextInput from '../../TextInput'
+import NumberInput from '../../NumberInput'
 
 const SettingsContainer = () => {
   const { handleChange, shapeName, material, defaultlengthBar, cutLength } = useSettings()

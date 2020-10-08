@@ -1,12 +1,9 @@
-// Dependencies
 import { useDispatch, useSelector } from 'react-redux'
-
-// Hooks
-import fetchData from '../../utils/fetchData'
+import fetchData from '../../../utils/fetchData'
 
 const useButtons = () => {
   const dispatch = useDispatch()
-  const { request, mode, currentShape, response, elementsNames, shapeError } = useSelector(state => state.cutOptimizer)
+  const { request, mode, currentShape, response, elementsNames, shapeError } = useSelector(state => Object.assign({}, state.cutOptimizer, {}))
   let { request2 } = useSelector(state => state.cutOptimizer)
 
   const handleChange = e => {
@@ -49,6 +46,7 @@ const useButtons = () => {
       const request3 = []
       const request4 = JSON.parse(request2)
       const indexes = []
+      console.log('me estoy optimizando')
 
       request.forEach((shape, index) => {
         if (JSON.stringify(shape) !== JSON.stringify(request4[index]) && shapeError[index] === 0) {
@@ -59,12 +57,11 @@ const useButtons = () => {
       })
 
       if (request3.length !== 0) {
-        console.log('me estoy optimizando')
         request3.forEach(shape => {
           shape.list.sort((a, b) => b.length - a.length)
         })
 
-        console.log(request3)
+        console.log('hola')
 
         fetchData('https://cut-optimizer-api.now.sh/', request3, 'POST')
           .then(res => {

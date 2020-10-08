@@ -40,10 +40,6 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload }) => {
       return Object.assign({}, state, { newElements })
     case 'ADD_AVAILABLE_BARS':
       return Object.assign({}, state, { request })
-    case 'MODIFY_AVAILABLE_BAR':
-      return Object.assign({}, state, { request })
-    case 'DELETE_AVAILABLE_BAR':
-      return Object.assign({}, state, { request })
     default:
       return state
   }
