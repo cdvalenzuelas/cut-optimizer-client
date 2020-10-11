@@ -78,7 +78,7 @@
   }
 }
 
-@each $name in Name, Quantity, Lenght {
+@each $name in Name, Quantity, Length {
   .Items-#{$name} {
     width: 30%;
     border-right: 2px solid var(--gray1);

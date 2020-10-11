@@ -8,7 +8,7 @@ function AvailableBars () {
   return (
     <section className='Items'>
       <div className='Items-Title'>
-        <div className='Items-Lenght'>Lenght</div>
+        <div className='Items-Length'>length</div>
         <div className='Items-Quantity'>Quantity</div>
         <div className='Items-Delete'>Delete</div>
       </div>

@@ -1,52 +1,38 @@
 import { useSelector } from 'react-redux'
 
-const useValidateCutOptimizer = () => {
-  const { request, currentShape, elementsNames, shapeError } = useSelector(state => state.cutOptimizer)
+const useValidateShape = () => {
+  const { request, currentShape, elementsNames, shapeError } = useSelector(state => Object.assign({}, state.cutOptimizer, {}))
+  const { list, defaultlengthBar } = request[currentShape]
 
   const shapeValidator = (field, value) => {
     if (field === 'defaultlengthBar' && request[currentShape].list.length > 0) {
-      const { list } = request[currentShape]
       const cond1 = list.some(element2 => element2.length > value)
       const cond2 = value < request[currentShape].cutLength
 
       return (cond1 || cond2) ? 1 : 0
     } else if (field === 'cutLength' && request[currentShape].list.length > 0) {
-      const cond1 = value > request[currentShape].defaultlengthBar
-
-      return cond1 ? 1 : 0
-    } else if (field.startsWith('elementQuantity') || field.startsWith('elementLength')) {
-      const { list, defaultlengthBar } = request[currentShape]
-      const cond1 = list.some(element2 => element2.length > defaultlengthBar)
-
-      return cond1 ? 1 : 0
-    } else if (field.startsWith('elementName')) {
-      const { list } = request[currentShape]
-
-      const cond1 = list.some(element2 => {
-        const internalLenght = elementsNames[currentShape].filter(name2 => name2 === element2.name).length
-        return internalLenght > 1
-      })
-      const cond2 = value === ''
-      console.log(cond1, cond2)
-
-      return cond1 || cond2 ? 1 : 0
-    } else if (field === 'addElement') {
-      const { list } = request[currentShape]
-
-      if (list.length === 0) {
-        return 0
-      } else if (list.length >= 2) {
-        const cond1 = list.some(element2 => {
-          const internalLenght = elementsNames[currentShape].filter(name2 => name2 === element2.name).length
-          return internalLenght > 1
-        })
-        return cond1 ? 1 : shapeError[currentShape]
+      return value > request[currentShape].defaultlengthBar ? 1 : shapeError[currentShape]
+    } else if (field === 'elementLength') {
+      return value > defaultlengthBar || value < 1 ? 1 : shapeError[currentShape]
+    } else if (field === 'elementQuantity') {
+      return value < 1 ? 1 : shapeError[currentShape]
+    } else if (field === 'elementName') {
+      if (value === '') {
+        return 1
       } else {
-        return shapeError[currentShape]
+        const d = elementsNames[currentShape].reduce((a, b) => {
+          const c = b === value ? 1 : 0
+          return a + c
+        }, 0)
+        return d > 1 ? 1 : 0
       }
-    } else if (field.startsWith('deleteElement')) {
-      const { list } = request[currentShape]
-
+    } else if (field === 'addElement') {
+      if (list.length === 1) {
+        return 0
+      } else if (list.length > 1) {
+        return elementsNames[currentShape].includes(value.toUpperCase()) ? 1 : shapeError[currentShape]
+      }
+    } else if (field === 'deleteElement') {
       return list.length === 0 ? 1 : shapeError[currentShape]
     }
   }
@@ -54,4 +40,4 @@ const useValidateCutOptimizer = () => {
   return { shapeValidator }
 }
 
-export default useValidateCutOptimizer
+export default useValidateShape

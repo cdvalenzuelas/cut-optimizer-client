@@ -19,7 +19,7 @@ const SettingsContainer = () => {
       />
       <NumberInput
         name='defaultlengthBar'
-        label='Lenght'
+        label='length'
         value={defaultlengthBar}
         placeholder={6000}
         min={0}
@@ -28,7 +28,7 @@ const SettingsContainer = () => {
       />
       <NumberInput
         name='cutLength'
-        label='Cut Lenght'
+        label='Cut length'
         value={cutLength}
         placeholder={3}
         min={0}

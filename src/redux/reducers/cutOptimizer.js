@@ -15,31 +15,33 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload }) => {
     payload = {}
   }
 
-  const { mode, currentShape, newElements, shapeError, readyToSend, elementsNames, request2, request, response } = payload
-
   switch (type) {
     case 'SET_MODE':
-      return Object.assign({}, state, { mode })
+      return Object.assign({}, state, payload)
     case 'SET_CURRENT_SHAPE':
-      return Object.assign({}, state, { currentShape })
+      return Object.assign({}, state, payload)
     case 'CREATE_NEW_SHAPE':
-      return Object.assign({}, state, { request, currentShape, newElements, elementsNames, request2, shapeError, readyToSend })
+      return Object.assign({}, state, payload)
     case 'MODIFY_SHAPE':
-      return Object.assign({}, state, { request, request2, shapeError })
+      return Object.assign({}, state, payload)
     case 'DELETE_SHAPE':
-      return Object.assign({}, state, { currentShape, request2, elementsNames, shapeError, readyToSend })
+      return Object.assign({}, state, payload)
     case 'ADD_ELEMENT':
-      return Object.assign({}, state, { request2, elementsNames, shapeError, readyToSend })
+      return Object.assign({}, state, payload)
     case 'MODIFY_ELEMENT':
-      return Object.assign({}, state, { request, request2, elementsNames, readyToSend })
+      return Object.assign({}, state, payload)
     case 'DELETE_ELEMENT':
-      return Object.assign({}, state, { request, elementsNames, shapeError, readyToSend })
+      return Object.assign({}, state, payload)
     case 'OPTIMIZE':
-      return Object.assign({}, state, { request2, response, mode })
+      return Object.assign({}, state, payload)
     case 'CHANGE_NEW_ELEMENTS':
-      return Object.assign({}, state, { newElements })
+      return Object.assign({}, state, payload)
     case 'ADD_AVAILABLE_BARS':
-      return Object.assign({}, state, { request })
+      return Object.assign({}, state, payload)
+    case 'MODIFY_AVAILABLEBAR':
+      return Object.assign({}, state, payload)
+    case 'DELETE_AVAILABLEBAR':
+      return Object.assign({}, state, payload)
     default:
       return state
   }

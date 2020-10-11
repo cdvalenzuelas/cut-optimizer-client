@@ -1,8 +1,14 @@
 import React from 'react'
 import useItem from './useItem'
 
-const NewItem = ({ name, quantity, length, item }) => {
+const NewItem = ({ name, quantity, length, item, defaultlengthBar }) => {
   const { handleChange } = useItem()
+
+  if (length > defaultlengthBar) {
+    length = defaultlengthBar
+  } else if (length < 1) {
+    length = 1
+  }
 
   return (
     <div className='Items-Elements'>
@@ -15,12 +21,12 @@ const NewItem = ({ name, quantity, length, item }) => {
         name='name'
       />
       <input
-        className='Items-Lenght'
+        className='Items-Length'
         type='number'
         value={length}
         onChange={e => handleChange(e, item)}
         autoComplete='off'
-        max={120000}
+        max={defaultlengthBar}
         min={1}
         step={0.1}
         name='length'
@@ -28,11 +34,11 @@ const NewItem = ({ name, quantity, length, item }) => {
       <input
         className='Items-Quantity'
         type='number'
-        value={quantity}
+        value={quantity < 1 ? 1 : quantity}
         onChange={e => handleChange(e, item)}
         autoComplete='off'
         min={1}
-        step={0.1}
+        step={1}
         name='quantity'
       />
       <button

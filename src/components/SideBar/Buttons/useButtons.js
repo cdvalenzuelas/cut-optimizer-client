@@ -1,10 +1,38 @@
 import { useDispatch, useSelector } from 'react-redux'
 import fetchData from '../../../utils/fetchData'
 
+const DEFAULT_SHAPE = {
+  shapeName: 'HEA-180',
+  material: 'ASTM A36',
+  defaultlengthBar: 6000,
+  cutLength: 3,
+  availableBars: [],
+  list: []
+}
+
+const getShapesAndIndexes = (request, request2) => {
+  const request3 = []
+  const request4 = JSON.parse(request2)
+  const indexes = []
+
+  request.forEach((shape, index) => {
+    if (JSON.stringify(shape) !== JSON.stringify(request4[index])) {
+      const shape2 = Object.assign({}, shape)
+      request3.push(shape2)
+      indexes.push(index)
+    }
+  })
+
+  request3.forEach(shape => shape.list.sort((a, b) => b.length - a.length))
+
+  return { indexes, request3 }
+}
+
 const useButtons = () => {
   const dispatch = useDispatch()
-  const { request, mode, currentShape, response, elementsNames, shapeError } = useSelector(state => Object.assign({}, state.cutOptimizer, {}))
-  let { request2 } = useSelector(state => state.cutOptimizer)
+  const { request, mode, currentShape, response, elementsNames, shapeError, readyToSend } = useSelector(state => Object.assign({}, state.cutOptimizer, {}))
+  const { loading } = useSelector(state => state.global)
+  const { request2 } = useSelector(state => state.cutOptimizer)
 
   const handleChange = e => {
     const { name } = e.target
@@ -12,21 +40,7 @@ const useButtons = () => {
     if (name === 'edit') {
       dispatch({ type: 'SET_MODE', payload: { mode: mode === 'input' ? 'output' : 'input' } })
     } else if (name === 'newShape') {
-      const DEFAULT_SHAPE = {
-        shapeName: 'HEA-180',
-        material: 'ASTM A36',
-        defaultlengthBar: 6000,
-        cutLength: 3,
-        availableBars: [],
-        list: []
-      }
-
       request.push(Object.assign({}, DEFAULT_SHAPE))
-      const request3 = JSON.parse(request2)
-      const newShape = Object.assign({}, DEFAULT_SHAPE)
-      newShape.cutLength = 0
-      request3.push(newShape)
-
       shapeError.push(1)
       elementsNames.push([])
 
@@ -34,7 +48,7 @@ const useButtons = () => {
         type: 'CREATE_NEW_SHAPE',
         payload: {
           request,
-          request2: JSON.stringify(request3),
+          request2: JSON.stringify(request),
           currentShape: currentShape + 1,
           newElements: true,
           elementsNames,
@@ -42,26 +56,11 @@ const useButtons = () => {
           readyToSend: shapeError.reduce((a, b) => a + b, 0)
         }
       })
-    } else if (name === 'optimize') {
-      const request3 = []
-      const request4 = JSON.parse(request2)
-      const indexes = []
-      console.log('me estoy optimizando')
+    } else if (name === 'optimize' && readyToSend === 0) {
+      const { indexes, request3 } = getShapesAndIndexes(request, request2)
 
-      request.forEach((shape, index) => {
-        if (JSON.stringify(shape) !== JSON.stringify(request4[index]) && shapeError[index] === 0) {
-          const shape2 = Object.assign({}, shape)
-          request3.push(shape2)
-          indexes.push(index)
-        }
-      })
-
-      if (request3.length !== 0) {
-        request3.forEach(shape => {
-          shape.list.sort((a, b) => b.length - a.length)
-        })
-
-        console.log('hola')
+      if (request3.length > 0) {
+        dispatch({ type: 'SET_LOADING', payload: { loading: true } })
 
         fetchData('https://cut-optimizer-api.now.sh/', request3, 'POST')
           .then(res => {
@@ -81,12 +80,12 @@ const useButtons = () => {
               })
             })
 
-            request2 = JSON.stringify(request)
+            dispatch({ type: 'SET_LOADING', payload: { loading: false } })
 
             dispatch({
               type: 'OPTIMIZE',
               payload: {
-                request2,
+                request2: JSON.stringify(request),
                 response,
                 mode: 'output'
               }

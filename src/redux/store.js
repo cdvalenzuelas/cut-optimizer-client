@@ -3,10 +3,12 @@ import { createStore, combineReducers, compose } from 'redux'
 
 // Reducers
 import cutOptimizer from './reducers/cutOptimizer'
+import global from './reducers/global'
 
 // CombineReducers
 const reducer = combineReducers({
-  cutOptimizer
+  cutOptimizer,
+  global
 })
 
 let reduxDev

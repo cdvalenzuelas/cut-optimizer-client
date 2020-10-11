@@ -7,12 +7,11 @@ const AvailableBar = ({ quantity, length, item }) => {
   return (
     <div className='Items-Elements'>
       <input
-        className='Items-Lenght'
+        className='Items-Length'
         type='number'
-        value={length}
+        value={length < 1 ? 1 : length}
         onChange={e => handleChange(e, item)}
         autoComplete='off'
-        max={120000}
         min={1}
         step={0.1}
         name='length'
@@ -20,11 +19,11 @@ const AvailableBar = ({ quantity, length, item }) => {
       <input
         className='Items-Quantity'
         type='number'
-        value={quantity}
+        value={quantity < 1 ? 1 : quantity}
         onChange={e => handleChange(e, item)}
         autoComplete='off'
         min={1}
-        step={0.1}
+        step={1}
         name='quantity'
       />
       <button
