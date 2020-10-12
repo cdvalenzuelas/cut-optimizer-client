@@ -1,23 +1,35 @@
 import { useSelector, useDispatch } from 'react-redux'
 import useValidateShape from '../../../Hooks/cutOptimizer/useValidateShape'
+import { useMemo } from 'react'
 
 const useItem = () => {
   const { shapeError, currentShape, request, elementsNames, request2 } = useSelector(state => state.cutOptimizer)
   const dispatch = useDispatch()
   const { shapeValidator } = useValidateShape()
-  const { list } = request[currentShape]
+  const { list, defaultlengthBar } = request[currentShape]
+
+  const styles = useMemo(() => {
+    return {
+      name: 'red',
+      length: 'inherit',
+      quantity: 'inherit'
+    }
+  }, [])
 
   const handleChange = (e, item) => {
     let { name, value } = e.target
 
     if (name === 'name') {
       value = value.toUpperCase()
-      shapeError[currentShape] = shapeValidator('elementName', value)
       elementsNames[currentShape][item] = value
       const request3 = JSON.parse(request2)
       request3[currentShape].list[item][name] = value
 
       list[item][name] = value
+      const { result, nameErrors } = shapeValidator('elementName', { elementsNames: elementsNames[currentShape], newElement: value })
+      shapeError[currentShape] = result
+
+      styles.name = nameErrors[item] ? 'red' : 'inherit'
 
       dispatch({
         type: 'MODIFY_ELEMENT',
@@ -29,9 +41,18 @@ const useItem = () => {
         }
       })
     } else if (name === 'length' || name === 'quantity') {
-      value = value ? Number(value) : list[item][name]
-      shapeError[currentShape] = name === 'length' ? shapeValidator('elementLength', value) : shapeValidator('elementQuantity', value)
+      value = Number(value)
       list[item][name] = value
+
+      if (name === 'length') {
+        const { result, cond3 } = shapeValidator('elementLength', { list, defaultlengthBar })
+        styles.length = cond3 ? 'red' : 'inherit'
+        shapeError[currentShape] = result
+      } else if (name === 'quantity') {
+        const { result, cond2 } = shapeValidator('elementQuantity', { list })
+        styles.quantity = cond2 ? 'red' : 'inherit'
+        shapeError[currentShape] = result
+      }
 
       dispatch({
         type: 'MODIFY_ELEMENT',
@@ -44,7 +65,8 @@ const useItem = () => {
     } else if (name === 'delete') {
       list.splice(item, 1)
       elementsNames[currentShape].splice(item, 1)
-      shapeError[currentShape] = shapeValidator('deleteElement')
+      const { result } = shapeValidator('deleteElememt', { list })
+      shapeError[currentShape] = result
 
       dispatch({
         type: 'DELETE_ELEMENT',
@@ -58,7 +80,7 @@ const useItem = () => {
     }
   }
 
-  return { handleChange }
+  return { handleChange, styles }
 }
 
 export default useItem

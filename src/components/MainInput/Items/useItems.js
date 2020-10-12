@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import useValidateShape from '../../../Hooks/cutOptimizer/useValidateShape'
 
 const useItems = () => {
-  const { shapeError, currentShape, request, elementsNames, request2 } = useSelector(state => state.cutOptimizer)
+  const { shapeError, currentShape, request, elementsNames } = useSelector(state => Object.assign({}, state.cutOptimizer, {}))
   const dispatch = useDispatch()
   const { shapeValidator } = useValidateShape()
   const { list, defaultlengthBar } = request[currentShape]
@@ -10,7 +10,8 @@ const useItems = () => {
 
   const handleChange = (e, item) => {
     list.push(Object.assign({}, defaultItem, {}))
-    shapeError[currentShape] = shapeValidator('addElement', defaultItem.name)
+    const { result, cond6 } = shapeValidator('addElement', { newElement: defaultItem.name.toUpperCase(), elementsNames: elementsNames[currentShape] })
+    shapeError[currentShape] = result
     elementsNames[currentShape].push(defaultItem.name)
 
     dispatch({

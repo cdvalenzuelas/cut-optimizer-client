@@ -1,38 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
 import fetchData from '../../../utils/fetchData'
-
-const DEFAULT_SHAPE = {
-  shapeName: 'HEA-180',
-  material: 'ASTM A36',
-  defaultlengthBar: 6000,
-  cutLength: 3,
-  availableBars: [],
-  list: []
-}
-
-const getShapesAndIndexes = (request, request2) => {
-  const request3 = []
-  const request4 = JSON.parse(request2)
-  const indexes = []
-
-  request.forEach((shape, index) => {
-    if (JSON.stringify(shape) !== JSON.stringify(request4[index])) {
-      const shape2 = Object.assign({}, shape)
-      request3.push(shape2)
-      indexes.push(index)
-    }
-  })
-
-  request3.forEach(shape => shape.list.sort((a, b) => b.length - a.length))
-
-  return { indexes, request3 }
-}
+import getShapesAndIndexes from './getShapesAndIndexes'
 
 const useButtons = () => {
   const dispatch = useDispatch()
-  const { request, mode, currentShape, response, elementsNames, shapeError, readyToSend } = useSelector(state => Object.assign({}, state.cutOptimizer, {}))
-  const { loading } = useSelector(state => state.global)
-  const { request2 } = useSelector(state => state.cutOptimizer)
+  const { request, mode, currentShape, response, elementsNames, shapeError, readyToSend, request2 } = useSelector(state => Object.assign({}, state.cutOptimizer, {}))
 
   const handleChange = e => {
     const { name } = e.target
@@ -40,7 +12,14 @@ const useButtons = () => {
     if (name === 'edit') {
       dispatch({ type: 'SET_MODE', payload: { mode: mode === 'input' ? 'output' : 'input' } })
     } else if (name === 'newShape') {
-      request.push(Object.assign({}, DEFAULT_SHAPE))
+      request.push({
+        shapeName: 'HEA-180',
+        material: 'ASTM A36',
+        defaultlengthBar: 6000,
+        cutLength: 3,
+        availableBars: [],
+        list: []
+      })
       shapeError.push(1)
       elementsNames.push([])
 
@@ -81,17 +60,9 @@ const useButtons = () => {
             })
 
             dispatch({ type: 'SET_LOADING', payload: { loading: false } })
-
-            dispatch({
-              type: 'OPTIMIZE',
-              payload: {
-                request2: JSON.stringify(request),
-                response,
-                mode: 'output'
-              }
-            })
+            dispatch({ type: 'OPTIMIZE', payload: { request2: JSON.stringify(request), response, mode: 'output' } })
           })
-          .catch(err => console.log(err))
+          .catch(err => dispatch({ type: 'SET_ERROR', payload: { errre: 'INTERNAL SERVER ERROR' } }))
       } else {
         dispatch({ type: 'SET_MODE', payload: { mode: mode === 'input' ? 'output' : 'input' } })
       }

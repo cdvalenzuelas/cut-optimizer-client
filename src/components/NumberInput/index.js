@@ -2,23 +2,15 @@ import React from 'react'
 
 import './styles.scss'
 
-const NumberInput = ({
-  label,
-  value,
-  placeholder,
-  min,
-  max,
-  name,
-  handleChange
-}) => {
+const NumberInput = ({ label, value, placeholder, min, max, name, handleChange, style }) => {
   return (
-    <label className='NumberInput'>
+    <label className='NumberInput' style={{ backgroundColor: style }}>
       {`${label}`}
       <input
         className='NumberInput-Input'
         name={name}
         type='number'
-        value={value || placeholder}
+        value={value}
         placeholder={placeholder}
         onChange={handleChange}
         min={min}

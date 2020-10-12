@@ -1,9 +1,17 @@
 import React from 'react'
 import './styles.scss'
-import useShape from './useShape'
+import { useDispatch, useSelector } from 'react-redux'
 
 const ShapeInfo = ({ index, item: { shapeName, material } }) => {
-  const { handleChange, currentShape, shapeError } = useShape()
+  const { currentShape, shapeError } = useSelector(state => state.cutOptimizer)
+  const dispatch = useDispatch()
+
+  const handleChange = (e, numberOfShape) => {
+    if (currentShape !== Number(numberOfShape)) {
+      dispatch({ type: 'SET_CURRENT_SHAPE', payload: { currentShape: Number(numberOfShape) } })
+    }
+  }
+
   const className = index === currentShape ? 'shapeInfo-selected' : 'shapeInfo'
   const style = { borderLeft: shapeError[index] === 1 ? '0.5rem solid var(--primary)' : '0.5rem solid var(--tertiary)' }
 

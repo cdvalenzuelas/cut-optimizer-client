@@ -6,7 +6,7 @@ import TextInput from '../../TextInput'
 import NumberInput from '../../NumberInput'
 
 const SettingsContainer = () => {
-  const { handleChange, shapeName, material, defaultlengthBar, cutLength } = useSettings()
+  const { handleChange, shapeName, material, defaultlengthBar, cutLength, styles } = useSettings()
 
   return (
     <section className='SettingsContainer'>
@@ -16,24 +16,25 @@ const SettingsContainer = () => {
         value={shapeName}
         placeholder='HEA-120'
         handleChange={handleChange}
+        style={styles.shape}
       />
       <NumberInput
         name='defaultlengthBar'
-        label='length'
+        label='Length'
         value={defaultlengthBar}
         placeholder={6000}
         min={0}
-        max={40000}
         handleChange={handleChange}
+        style={styles.defaultLengthBar}
       />
       <NumberInput
         name='cutLength'
-        label='Cut length'
+        label='Cut Length'
         value={cutLength}
         placeholder={3}
         min={0}
-        max={40000}
         handleChange={handleChange}
+        style={styles.cutLength}
       />
       <TextInput
         name='material'
@@ -41,6 +42,7 @@ const SettingsContainer = () => {
         value={material}
         placeholder='ASTM A36'
         handleChange={handleChange}
+        style={styles.material}
       />
     </section>
   )

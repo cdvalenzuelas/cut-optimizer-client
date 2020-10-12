@@ -1,45 +1,42 @@
 import React from 'react'
 import useItem from './useItem'
 
-const NewItem = ({ name, quantity, length, item, defaultlengthBar }) => {
-  const { handleChange } = useItem()
-
-  if (length > defaultlengthBar) {
-    length = defaultlengthBar
-  } else if (length < 1) {
-    length = 1
-  }
+const Item = ({ name, quantity, length, item, defaultlengthBar }) => {
+  const { handleChange, styles } = useItem()
 
   return (
     <div className='Items-Elements'>
       <input
-        className='Items-Name'
+        className='Items-Name Name'
         type='text'
         value={name}
         onChange={e => handleChange(e, item)}
+        placeholder='Name'
         autoComplete='off'
         name='name'
+        style={{ backgroundColor: styles.name }}
       />
       <input
         className='Items-Length'
         type='number'
         value={length}
         onChange={e => handleChange(e, item)}
+        placeholder='Length'
         autoComplete='off'
-        max={defaultlengthBar}
-        min={1}
-        step={0.1}
+        step={1}
         name='length'
+        style={{ backgroundColor: styles.length }}
       />
       <input
         className='Items-Quantity'
         type='number'
-        value={quantity < 1 ? 1 : quantity}
+        value={quantity}
         onChange={e => handleChange(e, item)}
         autoComplete='off'
-        min={1}
+        placeholder='Quantity'
         step={1}
         name='quantity'
+        style={{ backgroundColor: styles.quantity }}
       />
       <button
         className='Items-Delete'
@@ -52,4 +49,4 @@ const NewItem = ({ name, quantity, length, item, defaultlengthBar }) => {
   )
 }
 
-export default NewItem
+export default Item
