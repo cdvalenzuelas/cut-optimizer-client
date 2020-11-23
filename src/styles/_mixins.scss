@@ -51,3 +51,8 @@
   padding: $padding;
   margin: $margin;
 }
+
+@mixin blurBackGround($color) {  
+  background-color: fade-out($color, 0.8);
+  backdrop-filter: blur(1px);
+}

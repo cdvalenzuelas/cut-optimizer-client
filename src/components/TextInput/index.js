@@ -1,10 +1,21 @@
-import React from 'react'
+import React, { memo, useMemo } from 'react'
 
-import './styles.scss'
+import './Styles.scss'
 
-const TextInput = ({ label, value, placeholder, name, handleChange, style }) => {
+const TextInput = ({ label, value, placeholder, name, handleChange, error }) => {
+  const styles = useMemo(() => {
+    return ({
+      error: {
+        backgroundColor: 'red'
+      },
+      succes: {
+        backgroundColor: 'inherit'
+      }
+    })
+  }, [])
+
   return (
-    <label className='TextInput' style={{ backgroundColor: style }}>
+    <label className='TextInput' style={error ? styles.error : styles.succes}>
       {`${label}`}
       <input
         className='TextInput-Input'
@@ -13,9 +24,10 @@ const TextInput = ({ label, value, placeholder, name, handleChange, style }) => 
         value={value}
         placeholder={placeholder}
         onChange={handleChange}
+        autoComplete='false'
       />
     </label>
   )
 }
 
-export default TextInput
+export default memo(TextInput)

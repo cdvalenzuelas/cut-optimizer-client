@@ -1,0 +1,23 @@
+@import "../../../styles/mixins";
+
+.SearchBar {
+  @include gridItem(SearchBar, stretch, stretch);
+  @include flexContainer(row, center, flex-start, nowrap);
+  height: 100%;
+
+  &_Search {
+    background-color: #fff;
+    width: calc(100% * 7 / 8);
+    text-align: left;
+    height: 100%;
+    border-radius: 10px 0 0 10px;
+  }
+  &_Icon {
+    @include flexContainer(row, center, center, nowrap);
+    background-color: var(--tertiary);
+    width: auto;
+    width: calc(100% * 1 / 8);
+    height: 100%;
+    border-radius: 0 10px 10px 0;
+  }
+}

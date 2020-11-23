@@ -1,0 +1,59 @@
+@import '../../Styles/mixins';
+
+.TableContainer {  
+  @include dimensions(80%, auto);
+  overflow-x: scroll;
+}
+
+.Table {  
+  @include dimensions(100%, auto);    
+  @include box(0, 1rem 0 0 0);
+}
+
+.TableTitles {      
+
+  tr th {    
+    border: 1px solid var(--gray1);
+    border-left: none; 
+    color:black;   
+    
+    &:last-child {    
+      border-right: none;
+    }
+  }
+}
+
+.TableRow {
+  height: 2rem;  
+  transition: 500ms;
+
+  &:hover {
+    background-color: var(--gray1);
+  } 
+}
+
+.TableData {  
+  border-bottom: 1px solid var(--gray1);
+  border-right: 1px solid var(--gray1); 
+  padding: 0 0.5rem;
+
+  input {
+    padding: 0;
+  }
+
+  &:last-child {    
+    border-right: none;
+  } 
+}
+
+.NewRow {
+  @include box(0.5rem, 0);
+  @include dimensions(100%, auto);
+  text-align: left;  
+  border-bottom: 1px solid var(--gray1);  
+  background-color: inherit;
+
+  &:hover {
+    background-color: var(--gray1);
+  }
+}

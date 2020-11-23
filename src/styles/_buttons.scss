@@ -12,6 +12,11 @@ button {
   cursor: pointer;
   box-shadow: var(--boxShadow2);
   margin: 0.5rem;
+  transition: 350ms;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
 
   &-primary {
     @extend .btn;
@@ -46,4 +51,10 @@ button {
     width: inherit;
     color: inherit;
   }
+}
+
+.btn-right-bottom {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
 }

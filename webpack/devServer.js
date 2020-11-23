@@ -10,7 +10,8 @@ if (env === 'development') {
     port,
     contentBase: path.resolve(__dirname, '../dist'),
     compress: true,
-    writeToDisk: false
+    writeToDisk: false,
+    historyApiFallback: true
   }
 } else {
   devServer = {}

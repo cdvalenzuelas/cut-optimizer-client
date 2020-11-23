@@ -1,21 +1,39 @@
-// Dependencies
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { memo, useEffect } from 'react'
+import { Switch, Route } from 'react-router-dom'
+import BarsStore from './SubPages/BarsStore'
+import Optimizer from './SubPages/Optimizer'
+import EditAvailableBar from './SubPages/EditAvailableBar'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAvailableBarsByUser } from '@Firebase/cutOptimizer'
 
-import Layout1 from '../../layouts/Layout1'
-import SideBar from '../../components/SideBar'
-import MainInput from '../../components/MainInput'
-import MainOutput from '../../components/MainOutput'
+function CutOptimizer () {
+  const dispatch = useDispatch()
+  const { uid } = useSelector(state => {
+    const uid = state.global.user.uid || {}
+    const loading = state.global.loading
 
-const CutOptimizer = () => {
-  const { mode, currentShape } = useSelector(state => state.cutOptimizer)
+    return { uid, loading }
+  })
+
+  useEffect(() => {
+    dispatch({ type: 'global/SET_LOADING', payload: { loading: true } })
+
+    getAvailableBarsByUser(uid).then(data => {
+      dispatch({ type: 'cutOptimizer/SET_SERVER_AVAILABLEBARS', payload: { serverAvailableBars: data } })
+      dispatch({ type: 'global/SET_LOADING', payload: { loading: false } })
+    }).catch(err => {
+      dispatch({ type: 'global/SET_ERROR', payload: { error: 'GET AVAILABLE BARS ERROR' } })
+      dispatch({ type: 'global/SET_LOADING', payload: { loading: false } })
+    })
+  }, [])
 
   return (
-    <Layout1>
-      <SideBar />
-      {mode === 'input' && currentShape >= 0 ? <MainInput /> : <MainOutput />}
-    </Layout1>
+    <Switch>
+      <Route exact path='/cutOptimizer/bars_store' sensitive={false} component={BarsStore}/>
+      <Route exact path='/cutOptimizer/bars_store/:availableBarsId' sensitive={false} component={EditAvailableBar}/>
+      <Route sensitive={false} component={Optimizer}/>
+    </Switch>
   )
 }
 
-export default CutOptimizer
+export default memo(CutOptimizer)

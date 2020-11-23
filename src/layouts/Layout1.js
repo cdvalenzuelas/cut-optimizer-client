@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import Header from '../components/Header'
 
@@ -11,4 +11,4 @@ const Layout1 = ({ children }) => {
   )
 }
 
-export default Layout1
+export default memo(Layout1)

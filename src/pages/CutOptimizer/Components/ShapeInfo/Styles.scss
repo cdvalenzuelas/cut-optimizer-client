@@ -1,0 +1,40 @@
+@import "../../../../styles/mixins";
+
+.shapeInfo {
+  @include dimensions(100%, auto);
+  @include box(0.5rem 1rem 0.2rem, 0 0 1px 0);
+  display: block;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 1px 0 0 var(--secundary);
+  background-color: var(--white);
+
+  span,
+  h3 {
+    color: inherit;
+    background-color: inherit;
+    display: block;
+    width: 100%;
+    margin-bottom: 0.2rem;
+  }
+
+  span {
+    font-size: 0.75rem;
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    background-color: var(--gray2);
+  }
+
+  &-selected {
+    @extend .shapeInfo;
+    background-color: var(--gray1);
+  }
+}
+
+.hr {
+  @include dimensions(100%, 1px);
+  background-color: var(--primary);
+  border: none;
+}

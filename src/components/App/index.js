@@ -1,10 +1,8 @@
 // Dependencies
 import React, { useEffect } from 'react'
-import store from '../../redux/store'
+import store from '@Redux/store'
 import { Provider } from 'react-redux'
-
-// Pages
-import CutOptimizer from '../../pages/CutOptimizer'
+import Routes from './Routes'
 
 const App = () => {
   useEffect(() => {
@@ -19,7 +17,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <CutOptimizer />
+      <Routes />
     </Provider>
   )
 }

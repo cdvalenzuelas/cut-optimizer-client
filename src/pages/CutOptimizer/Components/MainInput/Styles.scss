@@ -1,0 +1,115 @@
+@import "../../../../styles/mixins";
+
+.Main {
+  display: inline-block;
+  position: static;
+  @include dimensions(100vw * 10/12, 100vh);
+  @include box(60px 0 0 0, 0 0 0 100vw * 2/12);
+
+  &-Container {
+    @include flexContainer(column, center, space-between, nowrap);
+    @include dimensions(80%, 100%);
+    @include box(0, auto);
+  }
+}
+
+.SettingsContainer {
+  @include flexContainer(row, flex-start, space-between, nowrap);
+  @include dimensions(100%, auto);
+  @include box(0.5rem 0, 0);
+}
+
+.ActionContainer {
+  @include dimensions(100%, auto);
+
+  hr {
+    @include dimensions(100%, 3px);
+    background-color: var(--primary);
+    margin-bottom: 0.5rem;
+    border: none;
+  }
+
+  &-Buttons {
+    @include flexContainer(row, flex-start, center, nowrap);
+    @include dimensions(100%, auto);
+    @include box(0, 20px auto);
+  }
+}
+
+.Items {  
+  @include flexContainer(column, flex-start, flex-start, nowrap);
+  @include dimensions(100%, auto);
+  flex-grow: 100;
+  overflow-y: scroll;
+
+  &-Title {
+    @include flexContainer(row, center, center, nowrap); 
+    @include dimensions (100%, auto);
+    
+    div {
+      @include box(0.5rem, 0);               
+    }   
+  }
+
+  &-Elements {
+    @include flexContainer(row, center, center, nowrap); 
+    @include dimensions (100%, auto);
+    
+    transition: 500ms;
+
+    &:hover {      
+      background-color: var(--gray1);
+
+      img {
+        opacity: 1;
+      }        
+      
+    }
+  }
+  
+  &-Elements input {
+    background-color: inherit;
+    border-top: 2px solid var(--gray1);
+    flex: 1 1 inherit;
+  }
+  
+  &-New {
+    @include dimensions (90%, auto);
+    border-bottom: 2px solid var(--gray1);
+    border-top: 2px solid var(--gray1); 
+    background-color: inherit;    
+    text-transform: capitalize;
+    text-align: left;
+    &:hover {
+      background-color: var(--gray1);
+    }
+  }
+
+  &-Delete {
+    background-color: inherit;
+    border-top: none;
+    @include dimensions(10%, 100%);
+
+    button {
+      @include dimensions(1rem, 90%);
+    }
+
+    img {
+      @include dimensions(1rem, 100%);
+      opacity: 0;
+    } 
+
+  }
+}
+
+@each $name in Name, Quantity, Length {
+  .Items-#{$name} {
+    width: 30%;
+    border-right: 2px solid var(--gray1);
+    text-align: left;
+  }
+}
+
+.Items-Quantity {
+  border-right: none;
+}

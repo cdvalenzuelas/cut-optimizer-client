@@ -1,10 +1,21 @@
-import React from 'react'
+import React, { memo, useMemo } from 'react'
 
-import './styles.scss'
+import './Styles.scss'
 
-const NumberInput = ({ label, value, placeholder, min, max, name, handleChange, style }) => {
+const NumberInput = ({ label, value, placeholder, name, handleChange, error }) => {
+  const styles = useMemo(() => {
+    return ({
+      error: {
+        backgroundColor: 'red'
+      },
+      succes: {
+        backgroundColor: 'inherit'
+      }
+    })
+  }, [])
+
   return (
-    <label className='NumberInput' style={{ backgroundColor: style }}>
+    <label className='NumberInput' style={error ? styles.error : styles.succes}>
       {`${label}`}
       <input
         className='NumberInput-Input'
@@ -13,11 +24,9 @@ const NumberInput = ({ label, value, placeholder, min, max, name, handleChange, 
         value={value}
         placeholder={placeholder}
         onChange={handleChange}
-        min={min}
-        max={max}
       />
     </label>
   )
 }
 
-export default NumberInput
+export default memo(NumberInput)

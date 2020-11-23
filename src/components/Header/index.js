@@ -1,25 +1,30 @@
-import React from 'react'
+import React, { memo, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
-import './styles.scss'
+import './Styles.scss'
 
-import SearchBar from '../SearchBar'
-import NavBar from '../NavBar'
+import SearchBar from './SearchBar'
+import NavBar from './NavBar'
 
 const Header = () => {
+  const { user } = useSelector(state => state.global)
+  const history = useHistory()
+
+  useEffect(() => {
+    if (!user) {
+      history.replace('/loggin')
+    }
+  }, [])
+
   return (
     <header className='Header'>
       <SearchBar />
-      <NavBar />
+      <NavBar
+        user={user}
+      />
     </header>
   )
 }
 
-export default Header
-
-/*  <input type="text"/>
-      <nav>
-        <ul>
-          <li className='button--main'><a href="#">Tools</a></li>
-          <li className='button--main'><a href="#">Projects</a></li>
-        </ul>
-      </nav>  */
+export default memo(Header)

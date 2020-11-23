@@ -1,0 +1,12 @@
+.Form {
+  @include flexContainer(column, center, center, nowrap);      
+  @include box(1rem 1.5rem, 0);  
+  box-shadow: var(--boxShadow1);
+  border-radius: 1rem;
+  background-color: var(--white);
+  width: max-content;  
+
+  label {
+    margin: 1rem 0;
+  }
+}

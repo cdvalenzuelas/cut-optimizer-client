@@ -1,0 +1,8 @@
+.Modal {
+  position: fixed;
+  top: 0;  
+  @include dimensions(100vw, 100vh);
+  @include flexContainer(row, center, center, nowrap);
+  @include blurBackGround(#ece7e7);  
+  z-index: var(--zindex1);  
+}

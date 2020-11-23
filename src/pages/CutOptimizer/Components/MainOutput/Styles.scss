@@ -1,0 +1,42 @@
+@import '../../../../Styles/mixins';
+
+.Main {
+
+  &-OutputBar {
+    @include flexContainer(column, space-between, center, nowrap);
+    @include dimensions(80%, auto);
+    @include box(0.5rem, 1rem auto); 
+    border-radius: 0.5rem;
+    box-shadow: var(--boxShadow1);
+    border: 1px solid var(--gray1);
+    background-color: var(--white);
+  }
+
+  &-OutputBarTitle {
+    @include flexContainer(row, center, space-between, nowrap);
+    @include dimensions(100%, auto);       
+
+    h3 {
+      @include dimensions(10%, 1rem);
+      text-align: center;
+    }
+
+    div {
+      @include dimensions(70%, 1rem);
+      background-color: var(--gray1);
+      border-radius: 0.5rem;
+      
+      div {
+        background-image: var(--gradient1);
+      }
+    }
+
+    svg {
+      @include dimensions(10%, auto)
+    }
+  }  
+
+  &-OutputBarDetails {
+    
+  }
+}
