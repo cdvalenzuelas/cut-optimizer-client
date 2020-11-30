@@ -14,9 +14,7 @@ function Routes () {
       <Switch>
         <Route exact sensitive={false} path='/' component={Home} />
         <Route exact sensitive={false} path='/projects' component={Projects} />
-        <Route sensitive={false} path='/cutOptimizer'>
-          <CutOptimizer />
-        </Route>
+        <Route sensitive={false} path='/cutOptimizer' component={CutOptimizer} />
         <Route exact sensitive={false} path='/loggin' component={Login} />
         <Route exact sensitive={false} path='/user' component={User} />
         <Route >

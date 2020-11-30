@@ -1,24 +1,21 @@
 import React, { memo } from 'react'
 import { useSelector } from 'react-redux'
-import Settings from './Settings'
 import Actions from './Actions'
 import Items from './Items'
 import AvailableBars from './AvailableBars'
 import './Styles.scss'
 
 const MainInput = () => {
-  const { newElements, mode, requestLength } = useSelector(state => {
+  const { newElements, mode, requestLength, loading } = useSelector(state => {
+    const { loading } = state.global
     const { newElements, mode, request = [] } = state.cutOptimizer
-    return { newElements, mode, requestLength: request.length }
+    return { newElements, mode, requestLength: request.length, loading }
   })
-
-  const { loading } = useSelector(state => state.global)
 
   if (mode === 'input' && requestLength > 0 && !loading) {
     return (
       <main className='Main'>
         <div className='Main-Container'>
-          <Settings />
           {newElements ? <Items /> : <AvailableBars />}
           <Actions />
         </div>

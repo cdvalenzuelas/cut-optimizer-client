@@ -20,7 +20,6 @@ const Projects = () => {
       .then(data => {
         dispatch({ type: 'global/SET_LOADING', payload: { loading: false } })
         data.forEach(item => {
-          console.log(item)
           item.createdAt = new Date(item.createdAt.seconds * 1000).toLocaleString()
           item.lastModified = new Date(item.lastModified.seconds * 1000).toLocaleString()
         })

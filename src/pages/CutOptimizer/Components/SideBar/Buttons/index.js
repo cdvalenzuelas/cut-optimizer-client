@@ -1,13 +1,15 @@
-import React, { useCallback, memo, useEffect } from 'react'
+import React, { useCallback, memo, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ButtonsPage from './ButtonsPage'
 import getShapesAndIndexes from '@Utils/getShapesAndIndexes'
 import { getOptimizedBars } from '@Utils/cutOptimizerApi'
 import { updateDocumentById } from '@Firebase/cutOptimizer'
 import { firebase } from '@Firebase'
+import NewShape from '../../NewShape'
 
 const Buttons = () => {
   const dispatch = useDispatch()
+  const [showModal, setShowModal] = useState(false)
   const { request, mode, response, readyToSend, request2, projectId } = useSelector(state => state.cutOptimizer)
 
   useEffect(() => {
@@ -66,11 +68,15 @@ const Buttons = () => {
   }, [request, request2, readyToSend])
 
   return (
-    <ButtonsPage
-      handleChange={handleChange}
-      mode={mode}
-      readyToSend={readyToSend}
-    />
+    <>
+      <ButtonsPage
+        handleChange={handleChange}
+        mode={mode}
+        readyToSend={readyToSend}
+        setShowModal={setShowModal}
+      />
+      { showModal && <NewShape setShowModal={setShowModal} mode={'create'} /> }
+    </>
   )
 }
 

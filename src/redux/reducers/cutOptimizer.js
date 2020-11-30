@@ -10,16 +10,6 @@ const INITIAL_STATE = {
   serverAvailableBars: []
 }
 
-const defaultShape = {
-  shapeName: 'HEA-180',
-  material: 'ASTM A36',
-  defaultlengthBar: 6000,
-  cutLength: 3,
-  availableBars: [],
-  error: { settings: false, items: true, availableBars: false },
-  list: []
-}
-
 let request3
 let current
 let comodin
@@ -47,20 +37,22 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
         request2: JSON.stringify(request3)
       })
     case 'cutOptimizer/ADD_SERVER_AVAILABLE_BAR':
-      // comodin = serverAvailableBars.filter(item => item.availableBarsId === payload.id)
-      // console.log(comodin)
-      // serverAvailableBars
       serverAvailableBars.push(payload)
 
       return Object.assign({}, state, { serverAvailableBars })
     case 'cutOptimizer/CHANGE_NEW_ELEMENTS':
       return Object.assign({}, state, { newElements: !newElements })
-    case 'cutOptimizer/CREATE_NEW_SHAPE':
-      comodin = JSON.stringify(defaultShape)
-      request.push(JSON.parse(comodin))
+    case 'cutOptimizer/CREATE_SHAPE':
+      comodin = {
+        ...payload,
+        list: [],
+        availableBars: [],
+        error: { settings: false, items: true, availableBars: false }
+      }
 
       request3 = JSON.parse(request2)
-      request3[request3.length] = JSON.parse(comodin)
+      request.push(comodin)
+      request3.push(comodin)
 
       return Object.assign({}, state, {
         request,
@@ -129,8 +121,17 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
         request,
         request2: name === 'name' ? JSON.stringify(request3) : request2
       })
-    case 'cutOptimizer/MODIFY_SHAPE':
-      if (name === 'shapeName' || name === 'material') {
+    case 'cutOptimizer/EDIT_SHAPE':
+      request3 = JSON.parse(request2)
+      request[currentShape] = Object.assign({}, request[currentShape], payload)
+      request3[currentShape] = Object.assign({}, request[currentShape], { shapeName: payload.shapeName, material: payload.material })
+
+      return Object.assign({}, state, {
+        request,
+        request2: JSON.stringify(request3)
+      })
+
+      /* if (name === 'shapeName' || name === 'material') {
         value = value.toUpperCase()
         request[currentShape][name] = value
         request3 = JSON.parse(request2)
@@ -138,12 +139,8 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
       } else if (name === 'defaultlengthBar' || name === 'cutLength') {
         value = Number(value)
         request[currentShape][name] = value
-      }
+      } */
 
-      return Object.assign({}, state, {
-        request,
-        request2: name === 'shapeName' || name === 'material' ? JSON.stringify(request3) : request2
-      })
     case 'cutOptimizer/OPTIMIZE':
       return Object.assign({}, state, {
         response: value,

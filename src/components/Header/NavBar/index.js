@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 
 import './Styles.scss'
@@ -108,4 +108,4 @@ const NavBar = ({ user }) => {
   )
 }
 
-export default NavBar
+export default memo(NavBar)

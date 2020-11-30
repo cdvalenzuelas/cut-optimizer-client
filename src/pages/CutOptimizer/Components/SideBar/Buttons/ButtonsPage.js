@@ -1,13 +1,13 @@
 import React, { memo } from 'react'
 
-const ButtonsPage = ({ mode, handleChange, readyToSend }) => {
+const ButtonsPage = ({ mode, handleChange, readyToSend, setShowModal }) => {
   if (mode === 'input') {
     return (
       <div className='SideBar-Buttons'>
         <button
           className='btn-secondary'
           name='newShape'
-          onClick={handleChange}
+          onClick={e => setShowModal(true)}
           style={{ width: '80%' }}
         >
           New

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import './Styles.scss'
 
@@ -48,4 +48,4 @@ const SeachBar = () => {
   )
 }
 
-export default SeachBar
+export default memo(SeachBar)

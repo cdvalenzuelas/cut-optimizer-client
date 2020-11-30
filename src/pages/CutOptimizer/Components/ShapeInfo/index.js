@@ -1,8 +1,10 @@
-import React, { useCallback, useMemo, memo } from 'react'
+import React, { useCallback, useMemo, memo, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import NewShape from '../NewShape'
 import './styles.scss'
 
 const ShapeInfo = ({ shape, shapeName, material, error, currentShape }) => {
+  const [showModal, setShowModal] = useState(false)
   const dispatch = useDispatch()
 
   const handleChange = useCallback((e, value) => {
@@ -29,6 +31,8 @@ const ShapeInfo = ({ shape, shapeName, material, error, currentShape }) => {
         {shape + 1}. {shapeName}
       </h3>
       <span>{material}</span>
+      {shape === currentShape && <button onClick={e => setShowModal(true)}>Edit</button>}
+      {showModal && <NewShape mode='edit' setShowModal={setShowModal}/>}
     </div>
   )
 }
