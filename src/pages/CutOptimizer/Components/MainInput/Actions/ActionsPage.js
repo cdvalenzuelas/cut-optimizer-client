@@ -4,19 +4,18 @@ const ActionsPage = ({ handleChange, newElements }) => {
   return (
     <section className='ActionContainer'>
       <hr />
-      <p>
-        {newElements ? 'Items' : 'Bars'}
-      </p>
       <div className='ActionContainer-Buttons'>
-        <button style={{ width: '15%' }} className='btn-secondary' name='items' onClick={handleChange}>
-          Items
-        </button>
-        <button style={{ width: '15%' }} className='btn-tertiary' name='bars' onClick={handleChange}>
-          Bars
-        </button>
-        <button style={{ width: '15%' }} className='btn-primary' name='delete' onClick={handleChange}>
-          Delete
-        </button>
+        {!newElements && <>
+          <button style={{ width: '15%' }} className='btn-primary' name='items' onClick={handleChange}>
+            Show Items
+          </button>
+          <button style={{ width: '15%' }} className='btn-primary' name='edit' onClick={handleChange}>
+            Edit Bars
+          </button>
+        </>}
+        {newElements && <button style={{ width: '15%' }} className='btn-primary' name='bars' onClick={handleChange}>
+            Show Bars
+        </button>}
       </div>
     </section>
   )

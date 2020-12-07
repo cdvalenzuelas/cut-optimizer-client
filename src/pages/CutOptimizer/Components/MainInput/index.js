@@ -6,10 +6,11 @@ import AvailableBars from './AvailableBars'
 import './Styles.scss'
 
 const MainInput = () => {
-  const { newElements, mode, requestLength, loading } = useSelector(state => {
+  const { newElements, mode, requestLength, loading, useAvailableBars } = useSelector(state => {
     const { loading } = state.global
-    const { newElements, mode, request = [] } = state.cutOptimizer
-    return { newElements, mode, requestLength: request.length, loading }
+    const { newElements, mode, request = [], currentShape } = state.cutOptimizer
+    const { useAvailableBars } = request[currentShape]
+    return { newElements, mode, requestLength: request.length, loading, useAvailableBars }
   })
 
   if (mode === 'input' && requestLength > 0 && !loading) {
@@ -17,7 +18,7 @@ const MainInput = () => {
       <main className='Main'>
         <div className='Main-Container'>
           {newElements ? <Items /> : <AvailableBars />}
-          <Actions />
+          {useAvailableBars && <Actions />}
         </div>
       </main>
     )

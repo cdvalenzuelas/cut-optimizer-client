@@ -17,14 +17,17 @@ const defaultElementName = 'PXXX'
 
 const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
   const { currentShape, newElements, request2 = '[]', request = [], serverAvailableBars = [] } = state
-  const { list = [], defaultlengthBar = 0, availableBars = [] } = request[currentShape] || []
+  const { list = [], defaultlengthBar = 0 } = request[currentShape] || []
   let { item, value, name } = payload
 
   switch (type) {
     case 'cutOptimizer/ADD_AVAILABLE_BARS':
-      availableBars.push({ quantity: 1, length: 6000 })
+      console.log(serverAvailableBars)
+      comodin = serverAvailableBars.filter(item => item.name === payload.shapeName && item.material === payload.material)[0].data || []
+      console.log(comodin)
+      request[currentShape].availableBars = comodin
       request3 = JSON.parse(request2)
-      request3[currentShape].availableBars[availableBars.length - 1] = { quantity: 'A', length: 'A' }
+      request3[currentShape].availableBars = true
 
       return Object.assign({}, state, { request, request2: JSON.stringify(request3) })
     case 'cutOptimizer/ADD_ELEMENT':
@@ -47,7 +50,7 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
         ...payload,
         list: [],
         availableBars: [],
-        error: { settings: false, items: true, availableBars: false }
+        error: { settings: false, items: true }
       }
 
       request3 = JSON.parse(request2)
@@ -71,10 +74,12 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
         request: [],
         response: []
       })
-    case 'cutOptimizer/DELETE_AVAILABLEBAR':
-      availableBars.splice(item, 1)
+    case 'cutOptimizer/DELETE_AVAILABLE_BARS':
+      request[currentShape].availableBars = []
+      request3 = JSON.parse(request2)
+      request3[currentShape].availableBars = false
 
-      return Object.assign({}, state, { request })
+      return Object.assign({}, state, { request, request2: JSON.stringify(request3) })
     case 'cutOptimizer/DELETE_ELEMENT':
       list.splice(item, 1)
       request3 = JSON.parse(request2)
@@ -100,12 +105,18 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
         request2: JSON.stringify(request3),
         currentShape: current
       })
+    case 'cutOptimizer/EDIT_SHAPE':
+      request3 = JSON.parse(request2)
+      request[currentShape] = Object.assign({}, request[currentShape], payload)
+      comodin = { shapeName: payload.shapeName, material: payload.material }
+      request3[currentShape] = Object.assign({}, request[currentShape], comodin)
+
+      return Object.assign({}, state, {
+        request,
+        request2: JSON.stringify(request3)
+      })
     case 'cutOptimizer/GET_DATA_FROM_PROJECT':
       return payload
-    case 'cutOptimizer/MODIFY_AVAILABLEBAR':
-      availableBars[item][name] = Number(value)
-
-      return Object.assign({}, state, { request })
     case 'cutOptimizer/MODIFY_ELEMENT':
       if (name === 'name') {
         value = value.toUpperCase()
@@ -121,26 +132,6 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
         request,
         request2: name === 'name' ? JSON.stringify(request3) : request2
       })
-    case 'cutOptimizer/EDIT_SHAPE':
-      request3 = JSON.parse(request2)
-      request[currentShape] = Object.assign({}, request[currentShape], payload)
-      request3[currentShape] = Object.assign({}, request[currentShape], { shapeName: payload.shapeName, material: payload.material })
-
-      return Object.assign({}, state, {
-        request,
-        request2: JSON.stringify(request3)
-      })
-
-      /* if (name === 'shapeName' || name === 'material') {
-        value = value.toUpperCase()
-        request[currentShape][name] = value
-        request3 = JSON.parse(request2)
-        request3[currentShape][name] = value
-      } else if (name === 'defaultlengthBar' || name === 'cutLength') {
-        value = Number(value)
-        request[currentShape][name] = value
-      } */
-
     case 'cutOptimizer/OPTIMIZE':
       return Object.assign({}, state, {
         response: value,
