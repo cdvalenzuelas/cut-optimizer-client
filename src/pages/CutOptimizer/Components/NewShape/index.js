@@ -58,7 +58,8 @@ const NewShape = ({ setShowModal, mode }) => {
       shapeName: shapeName2,
       useAvailableBars: useAvailableBars2,
       list = []
-    } = request[currentShape]
+    } = request[currentShape] || {}
+
     const availableBars2 = serverAvailableBars.filter(item => item.name === shapeName2 && item.material === material2)
     const descriptions = request.map(item => `${item.shapeName} ${item.material}`)
     const lengths = list.map(item => item.length)
@@ -155,10 +156,10 @@ const NewShape = ({ setShowModal, mode }) => {
 
     if (name === 'create') {
       dispatch({ type: 'cutOptimizer/CREATE_SHAPE', payload: { ...payload, defaultlengthBar, cutLength, useAvailableBars } })
-      dispatch({ type, payload })
+      dispatch({ type, payload: { ...payload, mode } })
     } else if (name === 'edit') {
       dispatch({ type: 'cutOptimizer/EDIT_SHAPE', payload: { ...payload, defaultlengthBar, cutLength, useAvailableBars } })
-      dispatch({ type, payload })
+      dispatch({ type, payload: { ...payload, mode } })
     } else if (name === 'delete') {
       dispatch({ type: 'cutOptimizer/DELETE_SHAPE' })
     }

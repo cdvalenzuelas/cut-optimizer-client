@@ -9,7 +9,7 @@ const MainInput = () => {
   const { newElements, mode, requestLength, loading, useAvailableBars } = useSelector(state => {
     const { loading } = state.global
     const { newElements, mode, request = [], currentShape } = state.cutOptimizer
-    const { useAvailableBars } = request[currentShape]
+    const { useAvailableBars } = request[currentShape] || false
     return { newElements, mode, requestLength: request.length, loading, useAvailableBars }
   })
 

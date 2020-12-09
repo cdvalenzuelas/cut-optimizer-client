@@ -44,9 +44,9 @@ const NewProject = ({ setShowModal }) => {
     const { name, value } = e.target
 
     if (name === 'name') {
-      setName(value)
+      setName(value.toUpperCase())
     } else if (name === 'description') {
-      setDescription(value)
+      setDescription(value.toUpperCase())
     }
   }, [])
 

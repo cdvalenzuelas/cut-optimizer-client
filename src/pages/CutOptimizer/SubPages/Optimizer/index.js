@@ -3,13 +3,14 @@ import Layout1 from '@Layouts/Layout1'
 import SideBar from '../../Components/SideBar'
 import MainInput from '../../Components/MainInput'
 import MainOutput from '../../Components/MainOutput'
+import { useSelector } from 'react-redux'
 
-const Optimizer = ({ history, location, match }) => {
+const Optimizer = () => {
+  const { mode } = useSelector(state => state.cutOptimizer)
   return (
     <Layout1>
       <SideBar />
-      <MainInput />
-      <MainOutput />
+      {mode === 'input' ? <MainInput /> : <MainOutput />}
     </Layout1>
   )
 }

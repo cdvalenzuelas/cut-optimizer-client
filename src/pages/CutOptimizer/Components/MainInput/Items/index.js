@@ -4,14 +4,14 @@ import ItemsPage from './ItemsPage'
 
 const Items = () => {
   const { names, lengths, quantities, defaultlengthBar, firstError } = useSelector(state => {
-    const { request: request2, currentShape: currentShape2 } = state.cutOptimizer
-    const currentShape = request2[currentShape2] || []
-    const items = currentShape.list || []
-    const firstError = currentShape.error.items
-    const names = items.map(item => item.name)
-    const lengths = items.map(item => item.length)
-    const quantities = items.map(item => item.quantity)
-    return { names, lengths, quantities, defaultlengthBar: currentShape.defaultlengthBar, firstError }
+    const { request, currentShape } = state.cutOptimizer
+    const { list = [], error = {}, defaultlengthBar = 6000 } = request[currentShape] || {}
+    const firstError = error.items || true
+    const names = list.map(item => item.name)
+    const lengths = list.map(item => item.length)
+    const quantities = list.map(item => item.quantity)
+
+    return { names, lengths, quantities, defaultlengthBar, firstError }
   })
   const dispatch = useDispatch()
 

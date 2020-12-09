@@ -14,16 +14,17 @@ const Buttons = () => {
 
   useEffect(() => {
     dispatch({ type: 'global/SET_LOADING', payload: { loading: true } })
+    console.log('Estoy subiendo el proyecto a firebase')
 
     const content = {
       data: {
         request,
-        mode,
+        mode: 'input',
         response,
         readyToSend,
         request2,
         projectId,
-        currentShape: 0,
+        currentShape: request.length === 0 ? -1 : 0,
         newElements: true
       },
       lastModified: firebase.firestore.Timestamp.fromDate(new Date())
