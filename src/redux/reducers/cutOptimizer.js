@@ -22,13 +22,11 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
 
   switch (type) {
     case 'cutOptimizer/ADD_AVAILABLE_BARS':
+      request3 = JSON.parse(request2)
       comodin = serverAvailableBars.filter(item => item.name === payload.shapeName && item.material === payload.material)
       comodin = comodin.length === 0 ? [] : comodin[0].data
-      current = payload.mode === 'create' ? 0 : currentShape
-      console.log(comodin)
-      request[current].availableBars = comodin
-      request3 = JSON.parse(request2)
-      request3[current].availableBars = true
+      request[currentShape].availableBars = comodin
+      request3[currentShape].availableBars = true
 
       return Object.assign({}, state, { request, request2: JSON.stringify(request3) })
     case 'cutOptimizer/ADD_ELEMENT':
@@ -81,7 +79,7 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
       request3 = JSON.parse(request2)
       request3[currentShape].availableBars = false
 
-      return Object.assign({}, state, { request, request2: JSON.stringify(request3) })
+      return Object.assign({}, state, { request, request2: JSON.stringify(request3), newElements: true })
     case 'cutOptimizer/DELETE_ELEMENT':
       list.splice(item, 1)
       request3 = JSON.parse(request2)
@@ -138,6 +136,7 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
       return Object.assign({}, state, {
         response: value,
         request2: JSON.stringify(request),
+        newElements: true,
         mode: 'output'
       })
     case 'cutOptimizer/SET_CURRENT_SHAPE':

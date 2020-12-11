@@ -10,35 +10,40 @@ import NewShape from '../../NewShape'
 const Buttons = () => {
   const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false)
+  const [upload, setUpload] = useState(false)
   const { request, mode, response, readyToSend, request2, projectId } = useSelector(state => state.cutOptimizer)
 
   useEffect(() => {
-    dispatch({ type: 'global/SET_LOADING', payload: { loading: true } })
-    console.log('Estoy subiendo el proyecto a firebase')
+    if (upload) {
+      dispatch({ type: 'global/SET_LOADING', payload: { loading: true } })
+      console.log('Estoy subiendo el proyecto a firebase')
 
-    const content = {
-      data: {
-        request,
-        mode: 'input',
-        response,
-        readyToSend,
-        request2,
-        projectId,
-        currentShape: request.length === 0 ? -1 : 0,
-        newElements: true
-      },
-      lastModified: firebase.firestore.Timestamp.fromDate(new Date())
+      const content = {
+        data: {
+          request,
+          mode: 'input',
+          response,
+          readyToSend,
+          request2,
+          projectId,
+          currentShape: request.length === 0 ? -1 : 0,
+          newElements: true
+        },
+        lastModified: firebase.firestore.Timestamp.fromDate(new Date())
+      }
+
+      projectId && updateDocumentById('projects', projectId, content)
+        .then(data => {
+          dispatch({ type: 'global/SET_LOADING', payload: { loading: false } })
+          setUpload(false)
+        })
+        .catch(err => {
+          dispatch({ type: 'global/SET_LOADING', payload: { loading: false } })
+          dispatch({ type: 'global/SET_ERROR', payload: { error: 'INTERNAL SERVER ERROR' } })
+          setUpload(false)
+        })
     }
-
-    projectId && updateDocumentById('projects', projectId, content)
-      .then(data => {
-        dispatch({ type: 'global/SET_LOADING', payload: { loading: false } })
-      })
-      .catch(err => {
-        dispatch({ type: 'global/SET_LOADING', payload: { loading: false } })
-        dispatch({ type: 'global/SET_ERROR', payload: { error: 'INTERNAL SERVER ERROR' } })
-      })
-  }, [JSON.stringify(response)])
+  }, [String(upload)])
 
   const handleChange = useCallback(e => {
     const { name } = e.target
@@ -57,6 +62,7 @@ const Buttons = () => {
           .then(({ data }) => {
             dispatch({ type: 'global/SET_LOADING', payload: { loading: false } })
             dispatch({ type: 'cutOptimizer/OPTIMIZE', payload: { value: data } })
+            setUpload(true)
           })
           .catch(err => {
             dispatch({ type: 'global/SET_LOADING', payload: { loading: false } })

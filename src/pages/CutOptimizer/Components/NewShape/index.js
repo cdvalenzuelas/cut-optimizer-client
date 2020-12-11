@@ -1,8 +1,10 @@
-import React, { useMemo, useEffect, useCallback, useReducer } from 'react'
+import React, { useEffect, useCallback, useReducer } from 'react'
 import { createPortal } from 'react-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import TextInput from '@Components/TextInput'
 import NumberInput from '@Components/NumberInput'
+
+const modalRoot = document.getElementById('modal')
 
 const initialState = {
   shapeName: 'HEA-120',
@@ -32,8 +34,7 @@ const reducer = (state, { type, payload }) => {
 
 const NewShape = ({ setShowModal, mode }) => {
   const dispatch = useDispatch()
-  const modalRoot = useMemo(() => document.getElementById('modal'), [])
-  const [state2, dispatch2] = useReducer(reducer, initialState)
+  const [state, dispatch2] = useReducer(reducer, initialState)
   const {
     shapeName,
     material,
@@ -46,50 +47,23 @@ const NewShape = ({ setShowModal, mode }) => {
     error,
     useAvailableBars,
     availableBars
-  } = state2
+  } = state
 
-  const { descriptions, lengths, cutLength2, defaultlengthBar2, material2, shapeName2, useAvailableBars2, availableBars2, serverAvailableBars } = useSelector(state => {
+  const { descriptions, lengths, initial } = useSelector(state => {
     const { request = [], currentShape, serverAvailableBars = [] } = state.cutOptimizer
 
-    const {
-      cutLength: cutLength2,
-      defaultlengthBar: defaultlengthBar2,
-      material: material2,
-      shapeName: shapeName2,
-      useAvailableBars: useAvailableBars2,
-      list = []
-    } = request[currentShape] || {}
-
-    const availableBars2 = serverAvailableBars.filter(item => item.name === shapeName2 && item.material === material2)
+    const { cutLength, defaultlengthBar, material, shapeName, useAvailableBars, list = [] } = request[currentShape] || {}
+    const availableBars = serverAvailableBars.some(item => item.name === shapeName && item.material === material)
     const descriptions = request.map(item => `${item.shapeName} ${item.material}`)
     const lengths = list.map(item => item.length)
+    const initial = { shapeName, material, defaultlengthBar, cutLength, useAvailableBars, availableBars }
 
-    return {
-      descriptions,
-      lengths,
-      cutLength2,
-      defaultlengthBar2,
-      material2,
-      shapeName2,
-      useAvailableBars2,
-      availableBars2,
-      serverAvailableBars
-    }
+    return { descriptions, lengths, initial }
   })
 
   useEffect(() => {
     if (mode === 'edit') {
-      dispatch2({
-        type: 'SET_STATE',
-        payload: {
-          shapeName: shapeName2,
-          material: material2,
-          defaultlengthBar: defaultlengthBar2,
-          cutLength: cutLength2,
-          useAvailableBars: useAvailableBars2,
-          availableBars: availableBars2
-        }
-      })
+      dispatch2({ type: 'SET_STATE', payload: initial })
     }
   }, [])
 
@@ -117,8 +91,14 @@ const NewShape = ({ setShowModal, mode }) => {
   }, [shapeName, material, defaultlengthBar, cutLength])
 
   useEffect(() => {
+    // console.log(initial)
     const cond1 = nameError || materialError || cutLengthError || defaultlengthBarError
-    const cond2 = descriptions.includes(`${shapeName} ${material}`)
+    const descriptions2 = mode === 'create'
+      ? descriptions
+      : descriptions.filter(item => item !== `${initial.shapeName} ${initial.material}`)
+    console.log(initial)
+    console.log(descriptions2)
+    const cond2 = descriptions2.includes(`${shapeName} ${material}`)
 
     if (cond1 && !error) {
       dispatch2({ type: 'MODIFY_FIELD', payload: { field: 'error', value: true } })
@@ -129,12 +109,7 @@ const NewShape = ({ setShowModal, mode }) => {
     } else if (!cond2 && error) {
       dispatch2({ type: 'MODIFY_FIELD', payload: { field: 'error', value: false } })
     }
-  }, [nameError, materialError, cutLengthError, defaultlengthBarError, shapeName, material])
-
-  useEffect(() => {
-    const availableBars2 = serverAvailableBars.filter(item => item.name === shapeName && item.material === material)
-    dispatch2({ type: 'MODIFY_FIELD', payload: { field: 'availableBars', value: availableBars2 } })
-  }, [shapeName, material, JSON.stringify(serverAvailableBars)])
+  }, [nameError, materialError, cutLengthError, defaultlengthBarError, shapeName, material, JSON.stringify(initial)])
 
   const handleChange = useCallback(e => {
     const { name, value } = e.target
@@ -156,10 +131,10 @@ const NewShape = ({ setShowModal, mode }) => {
 
     if (name === 'create') {
       dispatch({ type: 'cutOptimizer/CREATE_SHAPE', payload: { ...payload, defaultlengthBar, cutLength, useAvailableBars } })
-      dispatch({ type, payload: { ...payload, mode } })
+      dispatch({ type, payload })
     } else if (name === 'edit') {
       dispatch({ type: 'cutOptimizer/EDIT_SHAPE', payload: { ...payload, defaultlengthBar, cutLength, useAvailableBars } })
-      dispatch({ type, payload: { ...payload, mode } })
+      dispatch({ type, payload })
     } else if (name === 'delete') {
       dispatch({ type: 'cutOptimizer/DELETE_SHAPE' })
     }
@@ -202,9 +177,14 @@ const NewShape = ({ setShowModal, mode }) => {
           handleChange={handleChange}
           error={materialError}
         />
-        {availableBars.length > 0 && <label>
+        {availableBars && <label>
           <span>Use Bars from Store</span>
-          <input name='useAvailableBars' type='checkbox' checked={useAvailableBars === undefined ? false : useAvailableBars} onChange={handleChange} />
+          <input
+            name='useAvailableBars'
+            type='checkbox'
+            checked={useAvailableBars === undefined ? false : useAvailableBars}
+            onChange={handleChange}
+          />
         </label>}
         <div>
           <button name='cancel' className='btn-primary' onClick={e => setShowModal(false)}>Cancel</button>
