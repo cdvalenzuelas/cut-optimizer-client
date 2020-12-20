@@ -1,4 +1,6 @@
-const BASE_URL = 'https://cut-optimizer-api.now.sh/'
+// 'https://cut-optimizer-api.now.sh/'
+// 'http://localhost:5001'
+const BASE_URL = 'http://localhost:5001'
 
 export const getOptimizedBars = async (data, shapesThatChanges, currentResponse) => {
   let data2
@@ -18,17 +20,6 @@ export const getOptimizedBars = async (data, shapesThatChanges, currentResponse)
     data2.data.forEach((shape, index) => {
       const index2 = shapesThatChanges[index]
       currentResponse[index2] = shape
-      let description = ''
-
-      shape.bars.forEach(bar => {
-        bar.elements.forEach((element, index) => {
-          const { quantity2, name, length } = element
-          const more = index === bar.elements.length - 1 ? '' : ' + '
-          description += `${quantity2}x${name}[${length} mm]` + more
-        })
-        bar.description = description
-        description = ''
-      })
     })
   } catch (err) {
     error = 'INTERNAL SERVER ERROR'

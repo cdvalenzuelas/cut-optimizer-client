@@ -10,7 +10,7 @@ delete optimization.splitChunks
 module.exports = {
   mode: env,
   entry: {
-    libs: ['react', 'react-dom', 'redux', 'react-redux', 'react-router-dom']
+    libs: ['react', 'react-dom', 'redux', 'react-redux', 'react-router-dom', 'firebase']
   },
   output: {
     path: path.resolve(__dirname, 'build'),

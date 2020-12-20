@@ -11,7 +11,7 @@ function MainOutput () {
   return (
     <main className='Main'>
       {bars.map((item, index) => {
-        const { quantity, percentage, availableLength, length, description } = item
+        const { quantity, percentage, availableLength, length, elements, type } = item
         return (
           <OutputBar
             key={index}
@@ -19,7 +19,8 @@ function MainOutput () {
             percentage={percentage}
             availableLength={availableLength}
             length={length}
-            description={description}
+            elements={elements}
+            type={type}
           />)
       })}
     </main>

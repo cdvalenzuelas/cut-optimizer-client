@@ -1,11 +1,13 @@
 import React, { useCallback, useMemo, memo, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import NewShape from '../NewShape'
 import './styles.scss'
 
 const ShapeInfo = ({ shape, shapeName, material, error, currentShape }) => {
   const [showModal, setShowModal] = useState(false)
   const dispatch = useDispatch()
+
+  const { mode } = useSelector(state => state.cutOptimizer)
 
   const handleChange = useCallback((e, value) => {
     if (value !== currentShape) {
@@ -31,8 +33,8 @@ const ShapeInfo = ({ shape, shapeName, material, error, currentShape }) => {
         {shape + 1}. {shapeName}
       </h3>
       <span>{material}</span>
-      {shape === currentShape && <button onClick={e => setShowModal(true)}>Edit</button>}
-      {showModal && <NewShape mode='edit' setShowModal={setShowModal}/>}
+      {shape === currentShape && mode === 'input' && <button onClick={e => setShowModal(true)}>Edit</button>}
+      {showModal && <NewShape mode='edit' setShowModal={setShowModal} />}
     </div>
   )
 }

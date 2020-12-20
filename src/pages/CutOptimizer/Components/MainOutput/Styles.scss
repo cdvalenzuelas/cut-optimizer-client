@@ -37,6 +37,8 @@
   }  
 
   &-OutputBarDetails {
-    
+    .TableContainer {
+      @include box(0, 0.5rem auto 1rem);
+    }
   }
 }

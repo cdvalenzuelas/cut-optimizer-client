@@ -13,7 +13,10 @@ const getShapesAndIndexes = (request, request2) => {
     }
   })
 
-  request3.forEach(shape => shape.list.sort((a, b) => b.length - a.length))
+  request3.forEach(shape => {
+    shape.availableBars.sort((a, b) => a.length - b.length)
+    shape.list.sort((a, b) => b.length - a.length)
+  })
 
   return { indexes, request3 }
 }
