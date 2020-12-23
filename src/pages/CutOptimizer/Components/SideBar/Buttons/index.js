@@ -14,6 +14,10 @@ const Buttons = () => {
   const { request, mode, response, readyToSend, request2, projectId } = useSelector(state => state.cutOptimizer)
 
   useEffect(() => {
+    dispatch({ type: 'cutOptimizer/SET_REQUEST2' })
+  }, [])
+
+  useEffect(() => {
     if (upload) {
       dispatch({ type: 'global/SET_LOADING', payload: { loading: true } })
       console.log('Estoy subiendo el proyecto a firebase')
@@ -24,7 +28,7 @@ const Buttons = () => {
           mode: 'input',
           response,
           readyToSend,
-          request2,
+          request2: JSON.stringify(request),
           projectId,
           currentShape: request.length === 0 ? -1 : 0,
           newElements: true
@@ -54,6 +58,9 @@ const Buttons = () => {
       dispatch({ type: 'cutOptimizer/CREATE_NEW_SHAPE' })
     } else if (name === 'optimize' && readyToSend) {
       const { request3, indexes } = getShapesAndIndexes(request, request2)
+
+      console.log(request3)
+
       if (request3.length > 0) {
         console.log('me estoy optimizando')
         dispatch({ type: 'global/SET_LOADING', payload: { loading: true } })

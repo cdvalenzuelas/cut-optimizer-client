@@ -16,7 +16,7 @@ let comodin
 const defaultElementName = 'PXXX'
 
 const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
-  const { currentShape, newElements, request2 = '[]', request = [], serverAvailableBars = [] } = state
+  const { currentShape, newElements, request2 = '[]', request = [], serverAvailableBars = [], response = [] } = state
   const { list = [], defaultlengthBar = 0 } = request[currentShape] || []
   let { item, value, name } = payload
 
@@ -85,6 +85,10 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
       request3 = JSON.parse(request2)
       request3[currentShape].list.splice(item, 1)
 
+      if (JSON.stringify(request) === JSON.stringify(request3)) {
+        request3[currentShape].list.forEach(item => { item.length = '' })
+      }
+
       return Object.assign({}, state, {
         request,
         request2: JSON.stringify(request3)
@@ -119,7 +123,19 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
       return payload
     case 'cutOptimizer/MODIFY_ELEMENT':
       if (name === 'name') {
+        const name2 = list[item][name]
         value = value.toUpperCase()
+
+        if (response.length > 0) {
+          response[currentShape].bars.forEach(({ elements }, index) => {
+            elements.forEach((item2, index2) => {
+              if (item2.name === name2) {
+                response[currentShape].bars[index].elements[index2].name = value
+              }
+            })
+          })
+        }
+
         list[item][name] = value
         request3 = JSON.parse(request2)
         request3[currentShape].list[item][name] = value
@@ -130,7 +146,8 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
 
       return Object.assign({}, state, {
         request,
-        request2: name === 'name' ? JSON.stringify(request3) : request2
+        request2: name === 'name' ? JSON.stringify(request3) : request2,
+        response
       })
     case 'cutOptimizer/OPTIMIZE':
       return Object.assign({}, state, {
@@ -147,6 +164,8 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
       return Object.assign({}, state, { mode: value })
     case 'cutOptimizer/SET_READY_TO_SEND':
       return Object.assign({}, state, { readyToSend: value })
+    case 'cutOptimizer/SET_REQUEST2':
+      return Object.assign({}, state, { request2: JSON.stringify(request) })
     case 'cutOptimizer/SET_SERVER_AVAILABLEBARS':
       return Object.assign({}, state, payload)
     case 'cutOptimizer/SET_SHAPE_ERROR':

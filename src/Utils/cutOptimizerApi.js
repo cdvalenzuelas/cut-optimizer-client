@@ -1,6 +1,6 @@
-// 'https://cut-optimizer-api.now.sh/'
-// 'http://localhost:5001'
-const BASE_URL = 'http://localhost:5001'
+// 'https://cut-optimizer.vercel.app/optimizer'
+// 'http://localhost:5001/optimizer'
+const BASE_URL = 'http://localhost:5001/optimizer'
 
 export const getOptimizedBars = async (data, shapesThatChanges, currentResponse) => {
   let data2
