@@ -126,7 +126,7 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
         const name2 = list[item][name]
         value = value.toUpperCase()
 
-        if (response.length > 0) {
+        if (response.length > 0 && currentShape < response.length) {
           response[currentShape].bars.forEach(({ elements }, index) => {
             elements.forEach((item2, index2) => {
               if (item2.name === name2) {
@@ -182,6 +182,19 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
       } else {
         return state
       }
+    case 'cutOptimizer/UPDATE_SERVER_AVAILABLEBARS':
+      console.log(payload)
+      payload.forEach(({ name, material, data }) => {
+        const index = serverAvailableBars.findIndex(item => name === item.name && material === item.material)
+
+        if (index !== -1) {
+          serverAvailableBars[index].data = data
+        } else {
+          serverAvailableBars.push({ name, material, data })
+        }
+      })
+
+      return Object.assign({}, state, { serverAvailableBars })
     default:
       return state
   }

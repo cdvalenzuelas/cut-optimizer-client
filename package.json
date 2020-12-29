@@ -8,9 +8,9 @@
     "url": "https://github.com/cdvalenzuelas/cut-optimizer-client"
   },
   "scripts": {
-    "client:dll": "cross-env NODE_ENV=production webpack --config webpack.dll.config.js",
-    "client:build": "cross-env NODE_ENV=production webpack",
-    "client:dev": "webpack-dev-server",
+    "dll": "cross-env NODE_ENV=production webpack --config webpack.dll.config.js",
+    "build": "cross-env NODE_ENV=production webpack",
+    "dev": "webpack-dev-server",
     "lint": "eslint . --fix"
   },
   "keywords": [],

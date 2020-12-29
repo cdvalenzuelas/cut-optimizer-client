@@ -1,42 +1,34 @@
 import React, { memo, useCallback } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import OutputBar from './OutpuBar'
-import { barsStoreApi } from '@Utils/barsStoreApi'
+import { getNewStoreBars } from '@Utils/cutOptimizerApi'
 
 function MainOutput () {
-  const { bars, response, request, uid } = useSelector(state => {
-    const { currentShape, response, request } = state.cutOptimizer
+  const dispatch = useDispatch()
+  const { bars, response, request, uid, serverAvailableBars } = useSelector(state => {
+    const { currentShape, response, request, serverAvailableBars } = state.cutOptimizer
     const { uid } = state.global.user
 
-    return { bars: response.length === 0 ? [] : response[currentShape].bars, response, request, uid }
+    return {
+      bars: response.length === 0 ? [] : response[currentShape].bars,
+      response,
+      request,
+      uid,
+      serverAvailableBars
+    }
   })
 
   const handleClick = useCallback(e => {
-    const response2 = []
-
-    response.forEach(({ bars }, index) => {
-      const newAvailableBars = []
-      const storeAvailableBars = []
-
-      bars.forEach(({ availableLength, quantity, type, length }) => {
-        if (availableLength > 0) {
-          newAvailableBars.push({ length: availableLength, quantity })
-        }
-
-        if (type === 'store') {
-          storeAvailableBars.push({ length, quantity })
-        }
+    dispatch({ type: 'global/SET_LOADING', payload: { loading: true } })
+    getNewStoreBars(uid, request, response, serverAvailableBars)
+      .then(data => {
+        dispatch({ type: 'cutOptimizer/UPDATE_SERVER_AVAILABLEBARS', payload: data })
+        dispatch({ type: 'global/SET_LOADING', payload: { loading: false } })
       })
-
-      response2.push({
-        name: request[index].shapeName,
-        material: request[index].material,
-        newAvailableBars,
-        storeAvailableBars
+      .catch(err => {
+        dispatch({ type: 'global/SET_LOADING', payload: { loading: false } })
+        dispatch({ type: 'global/SET_ERROR', payload: { error: 'INTERNAL SERVER ERROR' } })
       })
-    })
-
-    barsStoreApi(uid, response2)
   }, [Object.assign(response)])
 
   return (
