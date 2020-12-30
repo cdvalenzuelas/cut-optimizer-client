@@ -1,7 +1,7 @@
 import { updateDocumentById, addNewAvailableBar } from '@Firebase/cutOptimizer'
-// 'https://cut-optimizer.vercel.app/'
-// 'http://localhost:5001/'
-const BASE_URL = 'http://localhost:5001'
+// https://cut-optimizer.cdvalenzuelas.vercel.app
+// http://localhost:5001
+const BASE_URL = 'https://cut-optimizer.cdvalenzuelas.vercel.app'
 
 export const getOptimizedBars = async (data, shapesThatChanges, currentResponse, projectId, content) => {
   try {
@@ -15,14 +15,14 @@ export const getOptimizedBars = async (data, shapesThatChanges, currentResponse,
     })
     data2 = await data2.json()
 
-    data2.data.forEach((shape, index) => {
+    data2.body.forEach((shape, index) => {
       const index2 = shapesThatChanges[index]
       currentResponse[index2] = shape
     })
 
     await updateDocumentById('projects', projectId, content)
 
-    return { data: data2.data }
+    return { data: data2.body }
   } catch (err) {
     throw new Error(err)
   }
@@ -76,22 +76,27 @@ export const getNewStoreBars = async (uid, request, response, serverAvailableBar
 
     const storeBarsPromises = []
     const newBarsPromises = []
+    const indexes2 = []
 
     indexes.forEach((item, index) => {
       if (item !== -1) {
         const id = serverAvailableBars[item].availableBarsId
-        const data = data2.data[index].data
+        const data = data2.body[index].data
         storeBarsPromises.push(updateDocumentById('availableBars', id, { data }))
       } else {
-        const { name, material, data } = data2.data[index]
+        indexes2.push(index)
+        const { name, material, data } = data2.body[index]
         newBarsPromises.push(addNewAvailableBar(uid, name, material, data))
       }
     })
 
-    console.log(storeBarsPromises)
-    console.log(newBarsPromises)
+    const news = await Promise.all(newBarsPromises)
 
-    return data2.data
+    indexes2.forEach((item, index) => {
+      data2.body[item].availableBarsId = news[index].id
+    })
+
+    return data2.body
   } catch (err) {
     throw new Error(err)
   }

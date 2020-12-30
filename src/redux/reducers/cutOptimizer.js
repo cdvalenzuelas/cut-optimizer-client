@@ -183,14 +183,13 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
         return state
       }
     case 'cutOptimizer/UPDATE_SERVER_AVAILABLEBARS':
-      console.log(payload)
-      payload.forEach(({ name, material, data }) => {
+      payload.forEach(({ name, material, data, availableBarsId }) => {
         const index = serverAvailableBars.findIndex(item => name === item.name && material === item.material)
 
         if (index !== -1) {
           serverAvailableBars[index].data = data
         } else {
-          serverAvailableBars.push({ name, material, data })
+          serverAvailableBars.push({ name, material, data, availableBarsId })
         }
       })
 
