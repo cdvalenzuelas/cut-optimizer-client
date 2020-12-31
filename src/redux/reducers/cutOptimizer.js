@@ -95,6 +95,7 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
       })
     case 'cutOptimizer/DELETE_SHAPE':
       request.splice(currentShape, 1)
+      response.splice(currentShape, 1)
 
       if (currentShape === 0) {
         current = request.length === 0 ? -1 : 0
@@ -106,7 +107,9 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
       request3.splice(currentShape, 1)
 
       return Object.assign({}, state, {
+        request,
         request2: JSON.stringify(request3),
+        response,
         currentShape: current
       })
     case 'cutOptimizer/EDIT_SHAPE':
@@ -150,6 +153,8 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
         response
       })
     case 'cutOptimizer/OPTIMIZE':
+      console.log(value)
+
       return Object.assign({}, state, {
         response: value,
         request2: JSON.stringify(request),

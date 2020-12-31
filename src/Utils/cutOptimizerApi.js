@@ -5,6 +5,9 @@ const BASE_URL = 'https://cut-optimizer.cdvalenzuelas.vercel.app'
 
 export const getOptimizedBars = async (data, shapesThatChanges, currentResponse, projectId, content) => {
   try {
+    currentResponse = JSON.stringify(currentResponse)
+    currentResponse = JSON.parse(currentResponse)
+
     let data2 = await fetch(`${BASE_URL}/optimizer`, {
       method: 'POST',
       body: JSON.stringify({ items: data, user: {} }),
@@ -22,7 +25,7 @@ export const getOptimizedBars = async (data, shapesThatChanges, currentResponse,
 
     await updateDocumentById('projects', projectId, content)
 
-    return { data: data2.body }
+    return { data: currentResponse }
   } catch (err) {
     throw new Error(err)
   }

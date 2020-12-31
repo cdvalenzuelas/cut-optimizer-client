@@ -46,17 +46,18 @@ const NewShape = ({ setShowModal, mode }) => {
     cutLengthError,
     error,
     useAvailableBars,
-    availableBars
+    showCheckBox
   } = state
 
   const { descriptions, lengths, initial } = useSelector(state => {
     const { request = [], currentShape, serverAvailableBars = [] } = state.cutOptimizer
 
     const { cutLength, defaultlengthBar, material, shapeName, useAvailableBars, list = [] } = request[currentShape] || {}
-    const availableBars = serverAvailableBars.some(item => item.name === shapeName && item.material === material)
+    const availableBars = serverAvailableBars.map(({ name, material }) => `${name} ${material}`)
+    const showCheckBox = true
     const descriptions = request.map(item => `${item.shapeName} ${item.material}`)
     const lengths = list.map(item => item.length)
-    const initial = { shapeName, material, defaultlengthBar, cutLength, useAvailableBars, availableBars }
+    const initial = { shapeName, material, defaultlengthBar, cutLength, useAvailableBars, availableBars, showCheckBox }
 
     return { descriptions, lengths, initial }
   })
@@ -91,13 +92,10 @@ const NewShape = ({ setShowModal, mode }) => {
   }, [shapeName, material, defaultlengthBar, cutLength])
 
   useEffect(() => {
-    // console.log(initial)
     const cond1 = nameError || materialError || cutLengthError || defaultlengthBarError
     const descriptions2 = mode === 'create'
       ? descriptions
       : descriptions.filter(item => item !== `${initial.shapeName} ${initial.material}`)
-    console.log(initial)
-    console.log(descriptions2)
     const cond2 = descriptions2.includes(`${shapeName} ${material}`)
 
     if (cond1 && !error) {
@@ -110,6 +108,12 @@ const NewShape = ({ setShowModal, mode }) => {
       dispatch2({ type: 'MODIFY_FIELD', payload: { field: 'error', value: false } })
     }
   }, [nameError, materialError, cutLengthError, defaultlengthBarError, shapeName, material, JSON.stringify(initial)])
+
+  useEffect(() => {
+    const cond = initial.availableBars.some(item => `${shapeName} ${material}` === item)
+
+    dispatch2({ type: 'MODIFY_FIELD', payload: { field: 'showCheckBox', value: cond } })
+  }, [shapeName, material, JSON.stringify(initial.availableBars)])
 
   const handleChange = useCallback(e => {
     const { name, value } = e.target
@@ -177,7 +181,7 @@ const NewShape = ({ setShowModal, mode }) => {
           handleChange={handleChange}
           error={materialError}
         />
-        {availableBars && <label>
+        {showCheckBox && <label>
           <span>Use Bars from Store</span>
           <input
             name='useAvailableBars'
