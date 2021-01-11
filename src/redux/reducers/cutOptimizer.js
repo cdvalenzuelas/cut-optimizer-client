@@ -3,11 +3,11 @@ const INITIAL_STATE = {
   mode: 'input',
   currentShape: -1,
   newElements: true,
-  readyToSend: false,
   request2: '[]',
   request: [],
   response: [],
-  serverAvailableBars: []
+  serverAvailableBars: [],
+  status: 'active'
 }
 
 let request3
@@ -49,7 +49,7 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
         ...payload,
         list: [],
         availableBars: [],
-        error: { settings: false, items: true }
+        error: true
       }
 
       request3 = JSON.parse(request2)
@@ -68,11 +68,11 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
         mode: 'input',
         currentShape: -1,
         newElements: true,
-        readyToSend: false,
         request2: '[]',
         request: [],
         response: [],
-        serverAvailableBars: []
+        serverAvailableBars: [],
+        status: 'active'
       })
     case 'cutOptimizer/DELETE_AVAILABLE_BARS':
       request[currentShape].availableBars = []
@@ -153,8 +153,6 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
         response
       })
     case 'cutOptimizer/OPTIMIZE':
-      console.log(value)
-
       return Object.assign({}, state, {
         response: value,
         request2: JSON.stringify(request),
@@ -167,26 +165,19 @@ const cutOptimizer = (state = INITIAL_STATE, { type, payload = {} }) => {
         : state
     case 'cutOptimizer/SET_MODE':
       return Object.assign({}, state, { mode: value })
-    case 'cutOptimizer/SET_READY_TO_SEND':
-      return Object.assign({}, state, { readyToSend: value })
     case 'cutOptimizer/SET_REQUEST2':
       return Object.assign({}, state, { request2: JSON.stringify(request) })
     case 'cutOptimizer/SET_SERVER_AVAILABLEBARS':
       return Object.assign({}, state, payload)
     case 'cutOptimizer/SET_SHAPE_ERROR':
-      comodin = request[currentShape] || {}
-      if (comodin.error) {
-        request[currentShape].error[name] = value
-        request3 = JSON.parse(request2)
-        request3[currentShape].error[name] = value
+      request[currentShape].error = value
+      request3 = JSON.parse(request2)
+      request3[currentShape].error = value
 
-        return Object.assign({}, state, {
-          request,
-          request2: JSON.stringify(request3)
-        })
-      } else {
-        return state
-      }
+      return Object.assign({}, state, {
+        request,
+        request2: JSON.stringify(request3)
+      })
     case 'cutOptimizer/UPDATE_SERVER_AVAILABLEBARS':
       payload.forEach(({ name, material, data, availableBarsId }) => {
         const index = serverAvailableBars.findIndex(item => name === item.name && material === item.material)

@@ -1,24 +1,22 @@
 import React, { memo } from 'react'
 
-const ButtonsPage = ({ mode, handleChange, readyToSend, setShowModal }) => {
+const ButtonsPage = ({ mode, handleChange, readyToSend, setShowModal, status, diff }) => {
   if (mode === 'input') {
     return (
       <div className='SideBar-Buttons'>
-        <button
+        {status === 'active' && <button
           className='btn-secondary'
           name='newShape'
           onClick={e => setShowModal(true)}
           style={{ width: '80%' }}
-        >
-          New
-        </button>
+        >New</button>}
         <button
           className='btn-primary'
           name='optimize'
           onClick={handleChange}
           style={{ width: '80%', display: readyToSend ? 'initial' : 'none' }}
         >
-          Optimize
+          {status === 'active' && diff ? 'Optimize' : 'Results'}
         </button>
       </div>
     )
@@ -31,7 +29,7 @@ const ButtonsPage = ({ mode, handleChange, readyToSend, setShowModal }) => {
           name='edit'
           onClick={handleChange}
         >
-        Edit
+          {status === 'active' ? 'Edit' : 'Items'}
         </button>
       </div>
     )

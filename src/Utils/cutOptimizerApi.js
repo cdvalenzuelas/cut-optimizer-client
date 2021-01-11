@@ -1,4 +1,4 @@
-import { updateDocumentById, addNewAvailableBar } from '@Firebase/cutOptimizer'
+import { updateDocumentById, addNewAvailableBar, getAvailableBarsByUser } from '@Firebase/cutOptimizer'
 // https://cut-optimizer.cdvalenzuelas.vercel.app
 // http://localhost:5001
 const BASE_URL = 'https://cut-optimizer.cdvalenzuelas.vercel.app'
@@ -23,6 +23,8 @@ export const getOptimizedBars = async (data, shapesThatChanges, currentResponse,
       currentResponse[index2] = shape
     })
 
+    content.data.response = currentResponse
+
     await updateDocumentById('projects', projectId, content)
 
     return { data: currentResponse }
@@ -31,7 +33,7 @@ export const getOptimizedBars = async (data, shapesThatChanges, currentResponse,
   }
 }
 
-export const getNewStoreBars = async (uid, request, response, serverAvailableBars) => {
+export const getNewStoreBars = async (uid, request, response, serverAvailableBars, projectId) => {
   try {
     const data = []
     const indexes = []
@@ -93,6 +95,8 @@ export const getNewStoreBars = async (uid, request, response, serverAvailableBar
       }
     })
 
+    await updateDocumentById('projects', projectId, { status: 'complete' })
+
     const news = await Promise.all(newBarsPromises)
 
     indexes2.forEach((item, index) => {
@@ -100,6 +104,16 @@ export const getNewStoreBars = async (uid, request, response, serverAvailableBar
     })
 
     return data2.body
+  } catch (err) {
+    throw new Error(err)
+  }
+}
+
+export const setInitialState = async (uid) => {
+  try {
+    const data = await getAvailableBarsByUser(uid)
+
+    return data
   } catch (err) {
     throw new Error(err)
   }

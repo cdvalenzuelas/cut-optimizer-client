@@ -40,22 +40,6 @@ export const getAvailableBarsByUser = uid => {
     .catch(err => new Error(err))
 }
 
-export const getProjectsByUser = uid => {
-  return db.collection('projects').where('uid', '==', uid).get()
-    .then(data => {
-      const data2 = []
-      data.forEach(project => {
-        data2.push({
-          projectId: project.id,
-          ...project.data()
-        })
-      })
-
-      return data2
-    })
-    .catch(err => new Error(err))
-}
-
 export const addNewAvailableBar = (uid, name, material, data) => {
   return db.collection('availableBars').add({
     name,
@@ -65,20 +49,4 @@ export const addNewAvailableBar = (uid, name, material, data) => {
   }).then(data => {
     return { id: data.id }
   }).catch(err => new Error(err))
-}
-
-export const addNewProject = (uid, name, description, tool) => {
-  return db.collection('projects').add({
-    name,
-    description: description,
-    uid,
-    tool,
-    createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
-    lastModified: firebase.firestore.Timestamp.fromDate(new Date()),
-    data: {}
-  })
-    .then(data => {
-      return { id: data.id, tool }
-    })
-    .catch(err => new Error(err))
 }

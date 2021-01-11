@@ -29,13 +29,6 @@ const EditAvailableBar = () => {
       updateDocumentById('availableBars', availableBarsId, { data: tableState.data })
         .then(data => {
           dispatch({ type: 'global/SET_LOADING', payload: { loading: false } })
-          /* dispatch({
-            type: 'cutOptimizer/ADD_SERVER_AVAILABLE_BAR',
-            payload: {
-              id: availableBarsId,
-              data: tableState.data
-            }
-          }) */
           history.goBack()
         })
         .catch(err => {

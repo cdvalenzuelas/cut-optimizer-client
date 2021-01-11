@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect, useCallback } from 'react'
-import { getProjectsByUser } from '@Firebase/cutOptimizer'
+import { getProjectsByUser } from '@Firebase/projects'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import Layout1 from '@Layouts/Layout1'
@@ -32,7 +32,7 @@ const Projects = () => {
   }, [])
 
   const handleClick = useCallback((e, item, index) => {
-    dispatch({ type: 'cutOptimizer/GET_DATA_FROM_PROJECT', payload: item.data })
+    dispatch({ type: 'cutOptimizer/GET_DATA_FROM_PROJECT', payload: { ...item.data, status: item.status } })
     history.push(`/cutOptimizer/project/${item.projectId}`)
   }, [JSON.stringify(data)])
 
@@ -40,14 +40,14 @@ const Projects = () => {
     <Layout1>
       <main className='Main'>
         <Table
-          fields={['name', 'description', 'tool', 'createdAt', 'lastModified']}
+          fields={['name', 'description', 'tool', 'createdAt', 'lastModified', 'status']}
           titles={{ lastModified: 'LAST MODIFIED', createdAt: 'CREATED AT' }}
           data={data}
           editable={false}
-          newRow={false}
+          reSize={false}
           handleClick={handleClick}
         />
-        <button className='btn-primary btn-right-bottom' onClick={e => setShowModal(true)} >New</button>
+        <button className='btn-primary btn-right-bottom' onClick={e => setShowModal(true)}>New</button>
         {showModal && <NewProject setShowModal={setShowModal} />}
       </main>
     </Layout1>

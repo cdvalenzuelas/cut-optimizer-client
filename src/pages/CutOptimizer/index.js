@@ -14,13 +14,14 @@ function CutOptimizer () {
   useEffect(() => {
     dispatch({ type: 'global/SET_LOADING', payload: { loading: true } })
 
-    getAvailableBarsByUser(uid).then(data => {
-      dispatch({ type: 'cutOptimizer/SET_SERVER_AVAILABLEBARS', payload: { serverAvailableBars: data } })
-      dispatch({ type: 'global/SET_LOADING', payload: { loading: false } })
-    }).catch(err => {
-      dispatch({ type: 'global/SET_ERROR', payload: { error: 'GET AVAILABLE BARS ERROR' } })
-      dispatch({ type: 'global/SET_LOADING', payload: { loading: false } })
-    })
+    getAvailableBarsByUser(uid)
+      .then(data => {
+        dispatch({ type: 'cutOptimizer/SET_SERVER_AVAILABLEBARS', payload: { serverAvailableBars: data } })
+        dispatch({ type: 'global/SET_LOADING', payload: { loading: false } })
+      }).catch(err => {
+        dispatch({ type: 'global/SET_ERROR', payload: { error: 'GET AVAILABLE BARS ERROR' } })
+        dispatch({ type: 'global/SET_LOADING', payload: { loading: false } })
+      })
 
     return () => dispatch({ type: 'cutOptimizer/CREATE_NEW_PROJECT', payload: { value: '' } })
   }, [])
@@ -28,9 +29,9 @@ function CutOptimizer () {
   return (
     <Switch>
       <Route exact path='/cutOptimizer/' sensitive={false} component={Home} />
-      <Route exact path='/cutOptimizer/bars_store' sensitive={false} component={BarsStore}/>
-      <Route exact path='/cutOptimizer/bars_store/:availableBarsId' sensitive={false} component={EditAvailableBar}/>
-      <Route sensitive={false} component={Optimizer}/>
+      <Route exact path='/cutOptimizer/bars_store' sensitive={false} component={BarsStore} />
+      <Route exact path='/cutOptimizer/bars_store/:availableBarsId' sensitive={false} component={EditAvailableBar} />
+      <Route sensitive={false} component={Optimizer} />
     </Switch>
   )
 }

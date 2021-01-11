@@ -2,7 +2,7 @@ import React, { memo, useMemo } from 'react'
 
 import './Styles.scss'
 
-const TextInput = ({ label, value, placeholder, name, handleChange, error }) => {
+const TextInput = ({ label, value, placeholder, name, handleChange, error, disabled = false }) => {
   const styles = useMemo(() => {
     return ({
       error: {
@@ -25,6 +25,7 @@ const TextInput = ({ label, value, placeholder, name, handleChange, error }) => 
         placeholder={placeholder}
         onChange={handleChange}
         autoComplete='false'
+        disabled={disabled}
       />
     </label>
   )

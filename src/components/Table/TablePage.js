@@ -1,11 +1,12 @@
 import React, { memo } from 'react'
+import trash from './trash.svg'
 
-function TablePage ({ data, editable, newRow, widths, fields, handleClick, addNewRow, types, handleChange, titles }) {
+function TablePage ({ data, editable, reSize, widths, fields, handleClick, addNewRow, deleteRow, types, handleChange, titles, errors }) {
   return (
     <div className='TableContainer'>
       <table className='Table'>
         <colgroup>
-          {widths && widths.map((item, index) => <col key={index} style={{ width: widths[index] }}/>)}
+          {widths && widths.map((item, index) => <col key={index} style={{ width: widths[index] }} />)}
         </colgroup>
         <thead className='TableTitles'>
           <tr>
@@ -42,8 +43,9 @@ function TablePage ({ data, editable, newRow, widths, fields, handleClick, addNe
               return (
                 <tr key={index} className='TableRow'>
                   {fields.map((field, index2) => {
+                    const error = errors.length <= index ? undefined : errors[index][field]
                     return (
-                      <td className='TableData' key={index2}>
+                      <td className={`TableData ${error === true ? 'DataError' : ''}`} key={index2}>
                         <input
                           name={field}
                           type={types[index2]}
@@ -53,13 +55,18 @@ function TablePage ({ data, editable, newRow, widths, fields, handleClick, addNe
                       </td>
                     )
                   })}
+                  {reSize && editable && <td className='DeletreRow'>
+                    <button>
+                      <img src={trash} onClick={() => deleteRow(index)} />
+                    </button>
+                  </td>}
                 </tr>
               )
             }
           })}
         </tbody>
       </table>
-      {newRow && editable && <button className='NewRow' onClick={addNewRow}>New</button>}
+      {reSize && editable && <button className='NewRow' onClick={addNewRow}>New</button>}
     </div>
   )
 }

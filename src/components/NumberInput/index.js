@@ -2,7 +2,7 @@ import React, { memo, useMemo } from 'react'
 
 import './Styles.scss'
 
-const NumberInput = ({ label, value, placeholder, name, handleChange, error }) => {
+const NumberInput = ({ label, value, placeholder, name, handleChange, error, disabled = false }) => {
   const styles = useMemo(() => {
     return ({
       error: {
@@ -24,6 +24,7 @@ const NumberInput = ({ label, value, placeholder, name, handleChange, error }) =
         value={value}
         placeholder={placeholder}
         onChange={handleChange}
+        disabled={disabled}
       />
     </label>
   )

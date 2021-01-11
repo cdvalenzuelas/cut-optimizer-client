@@ -1,30 +1,19 @@
 import React, { memo } from 'react'
-import Item from './Item'
+import Table from '@Components/Table'
 
-function ItemsPage ({ handleChange, currentNames, defaultlengthBar, currenLengths, currentQuantities, getDataFromElements }) {
-  return (
-    <section className='Items'>
-      <div className='Items-Title'>
-        <div className='Items-Name'>Name</div>
-        <div className='Items-Length'>Length</div>
-        <div className='Items-Quantity'>Quantity</div>
-        <div className='Items-Delete'></div>
-      </div>
-      {currentNames.length >= 0 && currentNames.map((item, index) => {
-        return (<Item
-          key={index}
-          item={index}
-          name={currentNames[index]}
-          length={currenLengths[index]}
-          quantity={currentQuantities[index]}
-          currentNames={currentNames}
-          defaultlengthBar={defaultlengthBar}
-          getDataFromElements={getDataFromElements}
-        />)
-      })}
-      <button className='Items-New' name='add' onClick={handleChange}>+ New</button>
-    </section>
-  )
+function ItemsPage ({ data, editable, reSize, getItem, defaultlengthBar, onAddRow, onDeleteRow, tableError }) {
+  return <Table
+    fields={['name', 'length', 'quantity']}
+    types={{ length: 'number', name: 'text', quantity: 'number' }}
+    defaultItem={{ name: 'PXXX', length: Math.round(defaultlengthBar * 0.5), quantity: 1 }}
+    data={data}
+    editable={editable}
+    reSize={reSize}
+    getItem={getItem}
+    onAddRow={onAddRow}
+    onDeleteRow={onDeleteRow}
+    tableError={tableError}
+  />
 }
 
 export default memo(ItemsPage)

@@ -8,8 +8,6 @@ const EditAvailableBarPage = ({ availableBar, getState, toSend, toggleTosend }) 
       <div className='Main'>
         <Table
           data={availableBar}
-          editable={true}
-          newRow={true}
           types={{ length: 'number', quantity: 'number' }}
           getState={{ state: toSend, action: getState }}
         />

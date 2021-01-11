@@ -20,6 +20,8 @@ module.exports = {
   ],
   rules: {
     'react/prop-types': 'off',
-    'handle-callback-err': 'off'
+    'handle-callback-err': 'off',
+    'react/jsx-tag-spacing': 'off',
+    'react/jsx-closing-tag-location': 'off'
   }
 }

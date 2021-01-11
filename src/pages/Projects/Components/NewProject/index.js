@@ -1,7 +1,7 @@
 import React, { memo, useMemo, useState, useEffect, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { useHistory } from 'react-router-dom'
-import { addNewProject } from '@Firebase/cutOptimizer'
+import { addNewProject } from '@Firebase/projects'
 import { useSelector, useDispatch } from 'react-redux'
 import TextInput from '@Components/TextInput'
 

@@ -49,8 +49,8 @@ const NewShape = ({ setShowModal, mode }) => {
     showCheckBox
   } = state
 
-  const { descriptions, lengths, initial } = useSelector(state => {
-    const { request = [], currentShape, serverAvailableBars = [] } = state.cutOptimizer
+  const { descriptions, lengths, initial, status } = useSelector(state => {
+    const { request = [], currentShape, serverAvailableBars = [], status } = state.cutOptimizer
 
     const { cutLength, defaultlengthBar, material, shapeName, useAvailableBars, list = [] } = request[currentShape] || {}
     const availableBars = serverAvailableBars.map(({ name, material }) => `${name} ${material}`)
@@ -59,7 +59,7 @@ const NewShape = ({ setShowModal, mode }) => {
     const lengths = list.map(item => item.length)
     const initial = { shapeName, material, defaultlengthBar, cutLength, useAvailableBars, availableBars, showCheckBox }
 
-    return { descriptions, lengths, initial }
+    return { descriptions, lengths, initial, status }
   })
 
   useEffect(() => {
@@ -156,6 +156,7 @@ const NewShape = ({ setShowModal, mode }) => {
           placeholder='HEA-120'
           handleChange={handleChange}
           error={nameError}
+          disabled={status === 'complete'}
         />
         <NumberInput
           name='defaultlengthBar'
@@ -164,6 +165,7 @@ const NewShape = ({ setShowModal, mode }) => {
           placeholder={6000}
           handleChange={handleChange}
           error={defaultlengthBarError}
+          disabled={status === 'complete'}
         />
         <NumberInput
           name='cutLength'
@@ -172,6 +174,7 @@ const NewShape = ({ setShowModal, mode }) => {
           placeholder={3}
           handleChange={handleChange}
           error={cutLengthError}
+          disabled={status === 'complete'}
         />
         <TextInput
           name='material'
@@ -180,6 +183,7 @@ const NewShape = ({ setShowModal, mode }) => {
           placeholder='ASTM A36'
           handleChange={handleChange}
           error={materialError}
+          disabled={status === 'complete'}
         />
         {showCheckBox && <label>
           <span>Use Bars from Store</span>
@@ -188,13 +192,14 @@ const NewShape = ({ setShowModal, mode }) => {
             type='checkbox'
             checked={useAvailableBars === undefined ? false : useAvailableBars}
             onChange={handleChange}
+            disabled={status === 'complete'}
           />
         </label>}
         <div>
           <button name='cancel' className='btn-primary' onClick={e => setShowModal(false)}>Cancel</button>
-          <button name='delete' className='btn-primary' onClick={handleClick}>Delete</button>
-          {!error && mode === 'create' && <button name='create' className='btn-secondary' onClick={handleClick}>Create</button>}
-          {!error && mode === 'edit' && <button name='edit' className='btn-secondary' onClick={handleClick}>Edit</button>}
+          {status === 'active' && <button name='delete' className='btn-primary' onClick={handleClick}>Delete</button>}
+          {!error && mode === 'create' && status === 'active' && <button name='create' className='btn-secondary' onClick={handleClick}>Create</button>}
+          {!error && mode === 'edit' && status === 'active' && <button name='edit' className='btn-secondary' onClick={handleClick}>Edit</button>}
         </div>
       </form>
     </div>,
